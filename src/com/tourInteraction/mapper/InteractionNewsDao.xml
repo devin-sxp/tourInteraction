@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tourInteraction.dao.InteractionNewsDao">
+	<!-- 查询全部 -->
+	<select id="getNews" resultType="InteractionNews">
+		select n.id as id,
+		n.module_id as moduleId,
+		n.news_title as newsTitle,
+		n.news_content as newsContent,
+		n.news_label as newsLabel,
+		n.news_address as newsAddress,
+		n.create_time as createTime,
+		n.create_user as createUser,
+		n.update_time as updateTime,
+		n.update_user
+		as updateUser,
+		n.status as status,
+		u.user_name as createUserName
+		from
+		news as n
+		left join user as u
+		on n.create_user = u.id
+		where n.status="1"
+		<if test="null != moduleId and '' != moduleId">
+			and n.module_id = #{moduleId}
+		</if>
+		<if test="null != newsTitle and '' != newsTitle">
+			and( n.news_title LIKE CONCAT('%',#{newsTitle},'%')
+		</if>
+		<if test="null != newsLabel and '' != newsLabel">
+			or n.news_label LIKE CONCAT('%',#{newsLabel},'%')
+		</if>
+		<if test="null != createUserName and '' != createUserName">
+			or u.user_name LIKE CONCAT('%',#{createUserName},'%'))
+		</if>
+		ORDER BY n.create_time DESC
+		limit #{limit},#{offset}
+	</select>
+
+	<select id="getNewsCount" resultType="int">
+		select
+		count(*)
+		from news as n
+		left join user as u
+		on n.create_user = u.id
+		where n.status="1"
+		<if test="null != moduleId and '' != moduleId">
+			and n.module_id = #{moduleId}
+		</if>		
+		<if test="null != newsTitle and '' != newsTitle">
+			and( n.news_title LIKE CONCAT('%',#{newsTitle},'%')
+		</if>
+		<if test="null != newsLabel and '' != newsLabel">
+			or n.news_label LIKE CONCAT('%',#{newsLabel},'%')
+		</if>
+		<if test="null != createUserName and '' != createUserName">
+			or u.user_name LIKE CONCAT('%',#{createUserName},'%'))
+		</if>
+	</select>
+
+	<select id="getNewsById" resultType="InteractionNews">
+		select n.id as id,
+		n.module_id as moduleId,
+		m.module_name as moduleName,
+		n.news_title as newsTitle,
+		n.news_content as newsContent,
+		n.news_label as newsLabel,
+		n.news_address as newsAddress,
+		n.create_time as createTime,
+		n.create_user as createUser,
+		n.update_time as updateTime,
+		n.update_user
+		as updateUser,
+		n.status as status,
+		u.user_name as createUserName
+		from
+		news as n
+		left join user as u
+		on n.create_user = u.id
+		left join module as m
+		on n.module_id=m.id
+		where n.status="1"
+		and n.id = #{newsId}
+	</select>
+
+	<insert id="addNews" parameterType="InteractionNews"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into news
+		(module_id,news_title,news_content,news_label,news_address,create_time,create_user,update_time,update_user,status)
+		VALUES
+		(#{moduleId},#{newsTitle},#{newsContent},#{newsLabel},#{newsAddress},#{createTime},#{createUser},#{updateTime},#{updateUser},#{status})
+	</insert>
+
+	<!-- 删除操作 -->
+	<delete id="delNewsById" parameterType="int">
+	  delete from news where id=#{id}
+	</delete>
+</mapper>

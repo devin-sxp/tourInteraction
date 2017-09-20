@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tourInteraction.dao.article.ArticleSubjectDao">
+	<!-- 查询全部 -->
+	<select id="getSubject" resultType="ArticleSubject">
+	   select asu.id as id,
+	   asu.subject_title as subjectTitle,
+	   asu.subject_description as moduleName,
+	   asu.subject_description as subjectDescription,
+	   f.file_path as subjectIconPath,
+	   asu.create_time as createTime, 
+	   asu.create_user as createUser, 
+	   u.user_name as createUserName,
+	   asu.update_time as updateTime, 
+	   asu.update_user as updateUser,
+	   asu.status as status 
+	   from article_subject as asu
+	   left join user as u
+	   on asu.create_user = u.id
+	   left join files as f
+	   on asu.subject_icon_id = f.id
+	   where asu.status="1"  
+	   order by asu.create_time desc
+	   <if test="null != limit and '' != limit and null != offset and '' != offset">
+	   	   limit ${limit},${offset} 
+	   </if>
+	</select>
+	
+</mapper>

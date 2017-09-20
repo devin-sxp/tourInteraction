@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tourInteraction.dao.HomeDao">
+    <!-- 插入操作 -->
+ 	<insert id="insertNews" parameterType="int">
+	   insert into news(title,content) values("1","2")
+	</insert> 
+	
+	<!-- 查询全部 -->
+	<select id="getTopNews" resultType="Home">
+	   select * from news limit ${limit},${offset}
+	</select>
+	
+	<!-- 删除操作 -->
+ <!-- 	<delete id="delete" parameterType="int">
+	  delete from tb_member where id=#{id}
+	</delete>
+	
+	<update id="update" parameterType="Home">
+	  update tb_member set tel=#{tel},pwd=#{pwd} where id=#{id}
+	</update>
+	
+	<select id="findById" parameterType="int" resultType="Home">
+	  select * from tb_member where id=#{id}
+	</select> -->
+	 
+	
+</mapper>

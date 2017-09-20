@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tourInteraction.dao.InteractionModelDao">
+	<!-- 查询全部 -->
+	<select id="getModel" resultType="InteractionModel">
+	   select m.id as id,
+	   m.module_icon as moduleIcon,
+	   m.module_name as moduleName,
+	   m.module_discription as moduleDiscription,
+	   m.module_label as moduleLabel,
+	   m.create_time as createTime, 
+	   m.create_user as createUser, 
+	   u.user_name as createUserName,
+	   m.update_time as updateTime, 
+	   m.update_user as updateUser,
+	   m.status as status 
+	   from module as m
+	   left join user as u
+	   on m.create_user = u.id
+	   where m.status="1"  
+	   order by m.create_time desc
+	   <if test="null != limit and '' != limit and null != offset and '' != offset">
+	   	   limit ${limit},${offset} 
+	   </if>
+	</select>
+	 
+	 <select id="getModuleById" resultType="InteractionModel">
+	   select id as id,
+	   module_icon as moduleIcon,
+	   module_name as moduleName,
+	   module_discription as moduleDiscription,
+	   module_label as moduleLabel,
+	   create_time as createTime, 
+	   create_user as createUser, 
+	   update_time as updateTime, 
+	   update_user as updateUser,
+	   status as status 
+	   from module 
+	   where id=#{id}  
+
+	</select>
+	
+		
+	<update id="updateModule" parameterType="Map">
+	  update module 
+	  set 
+	 <if test="null != moduleIcon and '' != moduleIcon">
+	  module_icon=#{moduleIcon},
+	 </if>
+	  module_name=#{moduleName}, 
+	  module_discription=#{moduleDiscription}, 
+	  module_label=#{moduleLabel}, 
+	  update_time=#{updateTime},
+	  update_user=#{updateUser}
+	  where id=#{id}
+	</update>
+
+
+	<insert id="addModule" useGeneratedKeys="true" parameterType="Map">
+		insert into module(module_icon,module_name,module_discription,module_label,create_time,create_user,status) 
+	   values(#{moduleIcon},#{moduleName},#{moduleDiscription},#{moduleLabel},#{createTime},#{createUser},#{status})
+	</insert>
+	<!-- 删除操作 -->
+	<delete id="delModuleById" parameterType="int">
+	  delete from module where id=#{id}
+	</delete>
+	
+	
+</mapper>

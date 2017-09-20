@@ -1,0 +1,35 @@
+@CHARSET "UTF-8";
+.pop {
+    background: rgba(0,0,0,.4);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#66000000,endColorstr=#66000000);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 101;
+}
+
+.popinto {
+	display: block;
+    background: #fff;
+    width: 70%;
+    position: fixed;
+    left: 15%;
+    top: 50%;
+    display: none;
+    border-radius: 6px;
+    z-index: 102;
+    padding: 0 20px 0 20px;
+}
+
+.pop_p{
+	margin:10px;
+	text-align: center;
+}
+.pop_btn{
+	width:30%;
+	margin-left:15px;
+	margin-right:15px;
+}

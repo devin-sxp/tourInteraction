@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tourInteraction.dao.UserManageDao">
+
+	<select id="getUserCount" resultType="int">
+	   select count(*) 
+	   from user as u
+	   left join role as r
+	   on u.role_id = r.id
+	</select>
+	
+	<select id="getUser" resultType="User">
+	   select 
+	   u.id as id,
+	   u.user_name as userName,
+	   u.password as passWord,
+	   u.email as email,
+	   u.phone_number as phoneNumber,
+	   u.role_id as roleId,
+	   r.role_name as roleName,
+	   u.integration as integration,
+	   u.status as status 
+	   from user as u
+	   left join role as r
+	   on u.role_id = r.id
+	   order by u.create_time desc
+	   limit #{limit},#{offset}
+	</select>
+	
+	<select id="getUserByInteraction" resultType="User">
+	   select 
+	   u.id as id,
+	   u.user_name as userName,
+	   u.password as passWord,
+	   u.email as email,
+	   u.phone_number as phoneNumber,
+	   u.role_id as roleId,
+	   r.role_name as roleName,
+	   u.integration as integration,
+	   u.status as status 
+	   from user as u
+	   left join role as r
+	   on u.role_id = r.id
+	   order by u.integration desc
+	   limit #{limit},#{offset}
+	</select>
+	
+	<select id="getUserById" resultType="User">
+	   select 
+	   u.id as id,
+	   u.user_name as userName,
+	   u.password as passWord,
+	   u.email as email,
+	   u.phone_number as phoneNumber,
+	   u.role_id as roleId,
+	   r.role_name as roleName,
+	   u.integration as integration,
+	   u.status as status  
+	   from user as u
+	   left join role as r
+	   on u.role_id = r.id
+	   where u.id = #{userId}
+	</select>
+	
+	<select id="getUserRole" resultType="Role">
+	   select 
+	   id as id,
+	   role_name as roleName
+	   from role
+	</select>
+	
+		
+	<update id="updateUser" parameterType="Map">
+	  update user 
+	  set 
+	  <if test="null != userName  and '' != userName">
+	  		user_name=#{userName},
+	  </if>
+	  <if test="null != passWord  and '' != passWord">
+	  	  	password=#{passWord}, 
+	  </if>
+	  <if test="null != email  and '' != email">
+	  		email=#{email}, 
+	  </if>
+	    <if test="null != phoneNumber  and '' != phoneNumber">
+	  		phone_number=#{phoneNumber}, 
+	  </if>
+	  <if test="null != roleId  and '' != roleId">
+	  	  role_id=#{roleId}, 
+	  </if>
+	  <if test="null != integration  and '' != integration">
+	  	  integration=#{integration},
+	  </if>
+	  update_time=#{updateTime},
+	  update_user=#{updateUser}
+	  where id=#{id}
+	</update>
+	<!-- 解锁、锁定用户 -->	
+	<update id="lockUserById">
+	  update user 
+	  set 
+	  status = #{status}
+	  where id=#{userId}
+	</update>
+
+	<insert id="addUser" useGeneratedKeys="true" parameterType="Map">
+		insert into user(user_name,password,email,phone_number,role_id,integration,create_time,create_user,status) 
+	   values(#{userName},#{passWord},#{email},#{phoneNumber},#{roleId},#{integration},#{createTime},#{createUser},#{status})
+	</insert>
+	<!-- 删除操作 -->
+	<delete id="delUserById" parameterType="int">
+	  delete from user where id=#{userId}
+	</delete>
+ 
+	
+</mapper>

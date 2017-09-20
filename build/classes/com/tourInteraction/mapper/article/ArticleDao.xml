@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tourInteraction.dao.article.ArticleDao">
+	<select id="getArticle" resultType="Article">
+
+	   <if test="null != limit and '' != limit and null != offset and '' != offset">
+	   	   limit ${limit},${offset} 
+	   </if>
+	</select>
+	
+	<!-- 插入操作 -->
+ 	<insert id="writeArticle" parameterType="int">
+	   insert into article(article_name,article_content,article_icon_id,article_look_count,article_love_count
+	   ,article_support_count,create_time,create_user,status) 
+	   values(#{articleName},#{articleContent},#{articleIconId},#{articleLookCount},#{articleLoveCount}
+	   ,#{articleSupportCount},#{createTime},#{createUser},#{status})
+	</insert> 
+	
+	
+	<select id="getRequestSubmitNewsBySubjectId" resultType="ArticleRequestSubmit">
+
+	   <if test="null != limit and '' != limit and null != offset and '' != offset">
+	   	   limit ${limit},${offset} 
+	   </if>
+	</select>
+</mapper>

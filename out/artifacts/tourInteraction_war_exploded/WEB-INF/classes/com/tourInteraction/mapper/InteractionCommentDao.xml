@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tourInteraction.dao.InteractionCommentDao">
+	<select id="getComment" resultType="InteractionComment">
+		select c.id as id,
+		c.news_id
+		as newsId,
+		c.comment_content as commentContent,
+		c.create_time as
+		createTime,
+		c.create_user as createUser,
+		c.update_time as updateTime,
+		c.update_user as updateUser,
+		c.status as status,
+		u.user_name as
+		createUserName
+		from
+		comment as c
+		left join user as u
+		on c.create_user =
+		u.id
+		where c.status="1"
+		and news_id = #{newsId}
+	</select>
+
+	<select id="getCommentCount" resultType="int">
+		select
+		count(*)
+		from
+		comment as c
+		left join user as u
+		on c.create_user = u.id
+		where
+		c.status="1"
+		and news_id = #{newsId}
+
+	</select>
+
+	<select id="getReplyByCommentId" resultType="InteractionReply">
+		select r.id as id,
+		r.comment_id as commentId,
+		r.reply_content as replyContent,
+		r.target_user as targetUser,
+		r.create_time as createTime,
+		r.create_user
+		as createUser,
+		r.update_time as updateTime,
+		r.update_user as updateUser,
+		r.status as status,
+		u.user_name as createUserName,
+		u1.user_name as
+		targetUserName
+		from reply as r
+		left join user as u
+		on r.create_user =
+		u.id
+		left join user as u1
+		on r.target_user = u1.id
+		where r.status="1"
+		and
+		comment_id = #{commentId}
+	</select>
+
+	<select id="getReplyCountByCommentId" resultType="int">
+		select
+		count(*)
+		from reply as r
+		left join user as u
+		on r.create_user = u.id
+		left join
+		user as u1
+		on r.target_user = u1.id
+		where r.status="1"
+		and comment_id =
+		#{commentId}
+
+	</select>
+
+	<insert id="addComment" useGeneratedKeys="true" parameterType="Map"
+		keyProperty="id">
+		insert into comment
+		(news_id,comment_content,create_time,create_user,update_time,update_user,status)
+		values
+		(#{newsId},#{commentOrReplyContent},#{createTime},#{createUser},#{updateTime},#{updateUser},#{status})
+	</insert>
+
+	<insert id="addReply" useGeneratedKeys="true" parameterType="Map"
+		keyProperty="id">
+		insert into reply
+		(comment_id,reply_content,target_user,create_time,create_user,update_time,update_user,status)
+		values
+		(#{commentId},#{commentOrReplyContent},#{targetUser},#{createTime},#{createUser},#{updateTime},#{updateUser},#{status})
+	</insert>
+	
+</mapper>
