@@ -30,6 +30,11 @@ public class PageController {
 		return "userCenter";
 	}
 	
+	@RequestMapping("/userPage")
+	public String userPage(HttpServletRequest req){
+		return "userPage";
+	}
+	
 	@RequestMapping("/interactionModel")
 	public String modelDisplay(HttpServletRequest req){
 		return "interactionModel";
