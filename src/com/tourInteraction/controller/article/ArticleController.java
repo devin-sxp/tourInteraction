@@ -27,17 +27,26 @@ public class ArticleController {
 	@Resource(name="articleServiceImpl")
 	private IArticleService	articleService;
 	
-	@RequestMapping("/getArticle.do")
-	public @ResponseBody String getArticle(String limit,String offset){
-		System.out.println("article/getArticle.do被调用");
-
+	@RequestMapping("/getNowUserArticle.do")
+	public @ResponseBody String getNowUserArticle(HttpServletRequest request,
+			@RequestParam("limit")String limit,
+			@RequestParam("offset")String offset){
+		System.out.println("article/getNowUserArticle.do被调用");
+		User user = SignInAndUpController.getSignInUser(request);
 		List<Article> list = new ArrayList<Article>();
-		list = articleService.getArticle(limit,offset);
+		list = articleService.getNowUserArticle(user.getId(),limit,offset);
 		Map map = new HashMap<String , Object>();
 		map.put("list", list);
-		map.put("count", 10);
 		String result = JSONUtil.map2json(map);
 		return result;
+	}
+	
+	@RequestMapping("/getNowUserArticleCount.do")
+	public @ResponseBody int getNowUserArticleCount(HttpServletRequest request){
+		System.out.println("article/getNowUserArticleCount.do被调用");
+		User user = SignInAndUpController.getSignInUser(request);
+		int count = articleService.getNowUserArticleCount(user.getId());
+		return count;
 	}
 	
 	@RequestMapping("getArticleById.do")

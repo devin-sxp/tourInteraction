@@ -20,10 +20,8 @@
 	href="<%=contextPath%>/resource/css/article/web.css">
 <link rel="stylesheet" media="all"
 	href="<%=contextPath%>/resource/css/article/entry-private-main.css">
-<link href="<%=contextPath%>/resource/css/pop/pop.css" type="text/css"
-	rel="stylesheet" media="all">
-<link href="<%=contextPath%>/resource/css/fileInput/fileinput.css"
-	type="text/css" rel="stylesheet" media="all">
+<link rel="stylesheet" media="all"
+	href="<%=contextPath%>/resource/css/common/tourCss.css">
 <script src="<%=contextPath%>/resource/js/jquery.min.js"></script>
 
 <script type="text/javascript">
@@ -55,7 +53,7 @@
 		<!-- container -->
 		<div class="container person">
         <div class="row">
-            <div class="col-xs-1 main">
+            <div id="main_content_left" class="col-xs-1 main">
                 <div class="main-top">
                     <a class="avatar" href="http://www.jianshu.com/u/2d0700f3a80a">
                         <img src="<%=contextPath%>/resource/images/article/3.jpg" alt="240">
@@ -84,15 +82,15 @@
                             </li>
                             <li>
                                 <div class="meta-block">
-                                    <a href="http://www.jianshu.com/u/2d0700f3a80a">
-                                        <p>1</p>
-                                        文章 <i class="iconfont ic-arrow"></i>
+                                    <a>
+                                        <p id="my_article_count">0</p>
+                                                        文章 <i class="iconfont ic-arrow"></i>
                                     </a>
                                 </div>
                             </li>
                             <li>
                                 <div class="meta-block">
-                                    <p>372</p>
+                                    <p id="my_article_words_count">0</p>
                                     <div>字数</div>
                                 </div>
                             </li>
@@ -117,38 +115,13 @@
                     <!-- 文章列表模块 -->
                     <ul class="note-list" infinite-scroll-url="/u/2d0700f3a80a?order_by=shared_at">
 
-                        <li id="note-17278058" data-note-id="17278058" class="">
-                            <div class="content">
-                                <div class="author">
-                                    <a class="avatar" target="_blank" href="http://www.jianshu.com/u/2d0700f3a80a">
-                                        <img src="<%=contextPath%>/resource/images/article/3.jpg" alt="64">
-                                    </a>
-                                    <div class="name">
-                                        <a class="blue-link" target="_blank" href="http://www.jianshu.com/u/2d0700f3a80a">Dreamer_2099</a>
-                                        <span class="time" data-shared-at="2017-09-19T16:26:26+08:00">昨天 16:26</span>
-                                    </div>
-                                </div>
-                                <a class="title" target="_blank" href="http://www.jianshu.com/p/7f285db8cdc4">DjangoLearn1 项目创建及模板标签</a>
-                                <p class="abstract">
-                                    1、创建第一个项目 使用 django-admin.py 来创建 HelloWorld 项目： django-admin.py startproject HelloWorld...
-                                </p>
-                                <div class="meta">
-                                    <a target="_blank" href="http://www.jianshu.com/p/7f285db8cdc4">
-                                        <i class="iconfont ic-list-read"></i> 0
-                                    </a>
-                                    <a target="_blank" href="http://www.jianshu.com/p/7f285db8cdc4#comments">
-                                        <i class="iconfont ic-list-comments"></i> 0
-                                    </a> <span><i class="iconfont ic-list-like"></i> 0</span>
-                                </div>
-                            </div>
-                        </li>
 
                     </ul>
-
+					<a class="load-more">阅读更多</a>
                 </div>
             </div>
 
-            <div class="col-xs-2 col-xs-offset-1 aside">
+            <div id="main_content_right" class="col-xs-2 col-xs-offset-1 aside">
                 <div class="title">个人介绍</div>
                 <a class="function-btn" data-action="start-edit-intro" href="javascript:void(0)"><i class="iconfont ic-edit-s"></i>编辑</a>
                 <form class="profile-edit js-intro-form" data-type="json" id="edit_user_8000859" action="http://www.jianshu.com/users/2d0700f3a80a" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="_method" value="patch">
@@ -213,17 +186,9 @@
 	<jsp:include page="common/footer.jsp"></jsp:include>
 	<!-- footer -->
 
-	<script defer src="<%=contextPath%>/resource/js/pop/pop.js"></script>
-	<script defer src="<%=contextPath%>/resource/js/fileInput/fileinput.js"></script>
-	<script defer
-		src="<%=contextPath%>/resource/js/fileInput/fileinput_locale_zh.js"></script>
-
-	<script defer src="<%=contextPath%>/resource/js/myJs/article.js"></script>
+	<script defer src="<%=contextPath%>/resource/js/myJs/userPage.js"></script>
 	<script type="text/javascript"
 		src="<%=contextPath%>/resource/js/common/convertTime.js"></script>
-	<script type="text/javascript"
-	src="<%=contextPath%>/resource/js/common/fileUpload.js"></script>
-	<div class="pop" onclick="closepop()"></div>
 	
 </body>
 <script type="text/javascript">
@@ -232,7 +197,6 @@
 			$(this).removeClass("active");
 		});
 		$(this).addClass('active');
-		
 	});
 	
 	$(".function-btn").on('click',function(){
@@ -241,5 +205,10 @@
 	$("#cancel-edit-intro").on('click',function(){
 		$(this).parent().css({'display':'none'});
 	});
+	
+	if (isPhone()) {
+		$("#main_content_right").addClass("hidden");
+		$("#main_content_left").css({'width':"100%"});
+	} 
 </script>
 </html>

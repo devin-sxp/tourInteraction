@@ -8,7 +8,7 @@ import com.tourInteraction.entity.article.Article;
 
 public interface ArticleDao{
 
-	List<Article> getArticle(@Param("limit") String limit,@Param("offset") String offset);
+	List<Article> getNowUserArticle(@Param("userId") int userId, @Param("limit") String limit,@Param("offset") String offset);
 
 	Article getArticleById(@Param("id")int id);
 
@@ -16,4 +16,5 @@ public interface ArticleDao{
 
 	Article getRequestSubmitNewsBySubjectId(int subjectId);
 
+	int getNowUserArticleCount(int userId);
 }

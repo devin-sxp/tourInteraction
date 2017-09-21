@@ -3,11 +3,18 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.tourInteraction.dao.article.ArticleDao">
-	<select id="getArticle" resultType="Article">
-
+	<select id="getNowUserArticle" resultType="Article">
+		select * from article 
+		where status = "1" and create_user = #{userId}
+		order by create_time desc
 	   <if test="null != limit and '' != limit and null != offset and '' != offset">
 	   	   limit ${limit},${offset} 
 	   </if>
+	</select>
+	
+	<select id="getNowUserArticleCount" resultType="int">
+		select count(*) from article 
+		where status = "1" and create_user = #{userId}
 	</select>
 	
 	<!-- 插入操作 -->

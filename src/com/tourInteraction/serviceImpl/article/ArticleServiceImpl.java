@@ -15,9 +15,9 @@ public class ArticleServiceImpl implements IArticleService {
 	private ArticleDao articleDao;
 
 	@Override
-	public List<Article> getArticle(String limit, String offset) {
+	public List<Article> getNowUserArticle(int userId, String limit, String offset) {
 		// TODO Auto-generated method stub
-		return articleDao.getArticle(limit, offset);
+		return articleDao.getNowUserArticle(userId, limit, offset);
 	}
 
 	@Override
@@ -36,6 +36,12 @@ public class ArticleServiceImpl implements IArticleService {
 	public Article getRequestSubmitNewsBySubjectId(int subjectId) {
 		// TODO Auto-generated method stub
 		return articleDao.getRequestSubmitNewsBySubjectId(subjectId);
+	}
+
+	@Override
+	public int getNowUserArticleCount(int userId) {
+		// TODO Auto-generated method stub
+		return articleDao.getNowUserArticleCount(userId);
 	}
 
 

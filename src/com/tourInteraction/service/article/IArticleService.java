@@ -6,12 +6,14 @@ import com.tourInteraction.entity.article.ArticleSubject;
 
 public interface IArticleService {
 
-	List<Article> getArticle(String limit, String offset);
+	List<Article> getNowUserArticle(int userId, String limit, String offset);
 
 	Article getArticleById(int id);
 
 	int writeArticle(Article article);
 
 	Article getRequestSubmitNewsBySubjectId(int subjectId);
+
+	int getNowUserArticleCount(int userId);
 
 }
