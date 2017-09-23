@@ -12,6 +12,27 @@
 	   </if>
 	</select>
 	
+	<select id="getArticleById" resultType="Article">
+		select
+		a.id as id,
+		a.subject_id as subjectId,
+		a.article_name as articleName,
+		a.article_content as articleContent,
+		f.file_path as filePath,
+		a.article_look_count as articleLookCount,
+		a.article_love_count as articleLoveCount,
+		a.article_support_count as articleSupportCount,
+		a.create_time as createTime,
+		a.create_user as createUser,
+		u.user_name as createUserName
+		from article as a
+		left join user as u
+		on a.create_user = u.id
+		left join files as f
+		on a.article_icon_id = f.id
+		where a.status = "1" and a.id = #{id}
+	</select>
+	
 	<select id="getNowUserArticleCount" resultType="int">
 		select count(*) from article 
 		where status = "1" and create_user = #{userId}

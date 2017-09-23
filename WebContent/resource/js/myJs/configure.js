@@ -88,6 +88,7 @@ function getStaticSelect(staticType){
 	},'json');
 	
 }
+
 /**
  * 通过id获取信息
  * @param id

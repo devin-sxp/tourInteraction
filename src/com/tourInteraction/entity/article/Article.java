@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Article implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8416485920329348802L;
 	private int id;
 	private int subjectId;
 	private String articleName;
@@ -12,6 +16,7 @@ public class Article implements Serializable{
 	private int articleLookCount;
 	private int articleLoveCount;
 	private int articleSupportCount;
+	private String filePath;
 	private Date createTime;
 	private Date updateTime;
 	private int createUser;
@@ -65,6 +70,13 @@ public class Article implements Serializable{
 	}
 	public void setArticleSupportCount(int articleSupportCount) {
 		this.articleSupportCount = articleSupportCount;
+	}
+	
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 	public Date getCreateTime() {
 		return createTime;

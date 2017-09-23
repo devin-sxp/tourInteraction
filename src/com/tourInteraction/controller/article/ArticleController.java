@@ -50,10 +50,10 @@ public class ArticleController {
 	}
 	
 	@RequestMapping("getArticleById.do")
-	public @ResponseBody String getArticleById( @RequestParam("id") int id){
+	public @ResponseBody String getArticleById( @RequestParam("articleId") int articleId){
 		Article article = new Article();
 		System.out.println("article/getArticleById.do被调用");
-		article = articleService.getArticleById(id);
+		article = articleService.getArticleById(articleId);
 		String result = JSONUtil.object2json(article);
 		return result;
 	}

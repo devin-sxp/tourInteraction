@@ -55,6 +55,11 @@ public class PageController {
 		
 	}
 	
+	@RequestMapping(value="articleNews")
+	public String articleNews(HttpServletRequest req) {
+		return "articleNews";
+	}
+	
 	/**
 	 * 后台页面
 	 */

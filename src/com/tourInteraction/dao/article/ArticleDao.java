@@ -10,7 +10,7 @@ public interface ArticleDao{
 
 	List<Article> getNowUserArticle(@Param("userId") int userId, @Param("limit") String limit,@Param("offset") String offset);
 
-	Article getArticleById(@Param("id")int id);
+	Article getArticleById(int id);
 
 	int writeArticle(Article article);
 
