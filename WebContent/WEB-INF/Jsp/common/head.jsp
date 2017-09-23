@@ -9,10 +9,36 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
+<link rel="stylesheet"
+	href="<%=contextPath%>/resource/css/common/tourCss.css">
+<link rel="stylesheet"
+	href="<%=contextPath%>/resource/css/article/web.css">
+
 <style type="text/css">
 .top_menu {
 	background: gold
 }
+
+.header {
+	position: fixed;
+	width: 100%;
+	z-index: 100;
+	background-color: white;
+	border-bottom-color: darkkhaki;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+.user:hover > .dropdown-menu{
+	display:block;
+}
+
+.dropdown-menu i{
+	margin-right: 15px;
+    font-size: 18px; 
+    color: #ea6f5a; 
+    vertical-align: middle; 
+}
+
 </style>
 
 </head>
@@ -28,40 +54,33 @@
 						<a href="<%=contextPath%>/page/homeDisplay"><span>Tour</span>Interaction</a>
 					</h1>
 				</div>
-				<!--navbar-header-->
-				<div class="header-dropdown hidden">
-					<div class="emergency-grid">
-						<ul>
-							<li>服务电话:</li>
-							<li class="call">+1 234 567 8901</li>
-							<div id="div_user_center" class="pull-right hidden">
-								<a class="btn btn-success"
-									href="<%=contextPath%>/page/userCenter"><span>个人中心</span></a>
-							</div>
-							<li class="call">${msg}</li>
-						</ul>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-				<div class="clearfix"></div>
 
 			</div>
 			<div class="nav-top">
-				<div class="top-nav" style="position: absolute;z-index: 1;">
+				<div class="top-nav">
 					<span class="menu"><img
 						src="<%=contextPath%>/resource/images/menu.png" alt="" /></span>
 					<ul class="nav1">
 						<li id="li_index"
-							style="width: 25%; margin-right: 5%; margin-left: 0%"><a
+							style="width: 15%; margin-right: 2%; margin-left: 0%"><a
 							href="<%=contextPath%>/page/homeDisplay"
 							style="text-align: center;" class="top_menu">首页</a></li>
 						<li id="li_interaction"
-							style="width: 25%; margin-right: 5%;  margin-left: 0% "><a
+							style="width: 15%; margin-right: 2%;  margin-left: 0% "><a
 							href="<%=contextPath%>/page/interactionModel"
 							style="text-align: center;" class="top_menu">互动区</a></li>
-						<li id="li_article" style="width: 25%; margin-left: 0% "><a
+						<li id="li_article"
+							style="width: 15%; margin-right: 2%; margin-left: 0% "><a
 							href="<%=contextPath%>/page/article" style="text-align: center;"
 							class="top_menu">文章区</a></li>
+						<li style="width: 40%; margin-left: 0% ">
+							<div class="wrap">
+								<input type="text" placeholder="开始输入吧"> <a
+									style="border:none;"><i class="iconfont ic-search"></i></a>
+							</div>
+
+						</li>
+
 					</ul>
 					<div class="clearfix"></div>
 					<!-- script-for-menu -->
@@ -75,11 +94,38 @@
 					<!-- /script-for-menu -->
 				</div>
 
-				<div class="dropdown-grids">
-
-					<div id="div_loginup" style="padding: 0.35em;" hidden>${user.getUserName()}已登录<button
-							class="btn-danger" id="btn_loginup">注销</button>
+				<div class="dropdown-grids" style="top: 3px;position: fixed;right: 3%;">
+					<div id="div_loginup" class="user" hidden>
+						<div data-hover="dropdown">
+							<a class="avatar"><img
+								src="//upload.jianshu.io/users/upload_avatars/8000859/df425399-8a3d-4c97-88c2-0e635e94f78f?imageMogr2/auto-orient/strip|imageView2/1/w/120/h/120"
+								alt="120"></a>
+						</div>
+						<ul class="dropdown-menu" style="left:auto;right:0px;top:auto;min-width:120px">
+							<li><a href="<%=contextPath %>/page/userPage"> <i
+									class="iconfont ic-navigation-profile"></i><span>我的主页</span>
+							</a></li>
+							<li>
+								<!-- TODO bookmarks_path --> <a href="/bookmarks"> <i
+									class="iconfont ic-navigation-mark"></i><span>收藏的文章</span>
+							</a>
+							</li>
+							<li><a href="/users/2d0700f3a80a/liked_notes"> <i
+									class="iconfont ic-navigation-like"></i><span>喜欢的文章</span>
+							</a></li>
+							<li>
+							<li><a href="<%=contextPath %>/page/userCenter"> <i
+									class="iconfont ic-navigation-settings"></i><span>设置</span>
+							</a></li>
+							<li><a href="/faqs"> <i
+									class="iconfont ic-navigation-feedback"></i><span>帮助与反馈</span>
+							</a></li>
+							<li><a id="btn_loginup" rel="nofollow" data-method="delete">
+									<i class="iconfont ic-navigation-signout"></i><span>退出</span>
+							</a></li>
+						</ul>
 					</div>
+
 					<input type="hidden" id="userId" value="${user.getId()}" />
 					<div id="loginContainer">
 						<a id="loginButton"><span>登录</span></a>
@@ -125,11 +171,10 @@
 					</div>
 
 				</div>
-				<div class="clearfix"></div>
 			</div>
 		</div>
 	</div>
-	<div id="header_hide" class="hidden"></div>
+	<div id="header_hide"></div>
 
 </body>
 <!--pop-up 登录弹窗-->
@@ -147,8 +192,13 @@
 <script src="<%=contextPath%>/resource/js/easyResponsiveTabs.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
+	$("#header_hide").css({
+		'height' : $('.header').height()
+	});
+
 	if (!isPhone()) {
 		$(".header-dropdown").removeClass("hidden");
+		$(".avatar").css({'width': '49px','height':'46px','right':'10px'});
 	} else {
 		$(".header").css({
 			'position' : 'fixed',
@@ -166,14 +216,14 @@
 			'padding-left' : '0px',
 			'padding-right' : '0px'
 		});
-		$("#header_hide").css({
-			'height' : $('.header').height()
-		});
-		$("#header_hide").removeClass("hidden")
 
 		$("#loginContainer").css({
-			'top' : '3px'
+			'top' : '6px'
 		});
+		
+		$("ul.nav1").css({'position':'fixed'});
+		$("li .wrap").addClass("hidden");
+		
 	}
 </script>
 <script type="text/javascript">
@@ -194,8 +244,11 @@
 		$('#div_loginup').show();
 
 	} else {
+	
 		$('#loginContainer').show();
 		$('#div_loginup').hide();
+		$('.dropdown-grids').css({'top': 'auto','position': 'fixed'}); 
+		
 
 	}
 	

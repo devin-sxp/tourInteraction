@@ -17,4 +17,8 @@ public interface ArticleDao{
 	Article getRequestSubmitNewsBySubjectId(int subjectId);
 
 	int getNowUserArticleCount(int userId);
+
+	List<Article> getArticles(@Param("limit") String limit,@Param("offset") String offset);
+
+	int getArticleCount();
 }

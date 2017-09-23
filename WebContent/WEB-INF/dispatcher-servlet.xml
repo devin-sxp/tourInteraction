@@ -65,6 +65,10 @@
     <!-- 	<bean class="com.tourInteraction.interceptor.AllInterceptor"/>   -->
     	<mvc:interceptor>  
     		<!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->  
+	        <mvc:mapping path="/**/userPage"/>
+	        <bean class="com.tourInteraction.interceptor.LoginInterceptor"></bean>
+    	</mvc:interceptor>
+    	<mvc:interceptor>  
 	        <mvc:mapping path="/**/backgroundManagement*"/>
 <!--    	<mvc:mapping path="/**/backgroundManagementUserManage"/>
    	        <mvc:mapping path="/**/backgroundManagementNewsManage"/>
@@ -72,7 +76,7 @@
    	        <mvc:mapping path="/**/backgroundManagementConfigure"/>
 	        
 			<mvc:exclude-mapping path="/**/backgroundManagementLogin"/> -->
-	        <bean class="com.tourInteraction.interceptor.LoginInterceptor"></bean>
-    	</mvc:interceptor>  
+	        <bean class="com.tourInteraction.interceptor.BackLoginInterceptor"></bean>
+    	</mvc:interceptor>    
 	</mvc:interceptors>    
 </beans>

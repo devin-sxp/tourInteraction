@@ -304,7 +304,7 @@
 						</ul>
 						<!-- 文章列表模块 -->
 					</div>
-					<a data-page="3" href="http://www.jianshu.com/" class="load-more">阅读更多</a>
+					<a class="load-more">阅读更多</a>
 				</div>
 				<div class="aside">
 					<div class="board">

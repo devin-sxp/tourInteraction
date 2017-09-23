@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tourInteraction.entity.User;
 
-public class LoginInterceptor implements  HandlerInterceptor{
+public class BackLoginInterceptor implements  HandlerInterceptor{
 
 	@Override
 	public void afterCompletion(HttpServletRequest req, HttpServletResponse res, Object arg2, Exception arg3)
@@ -30,10 +30,10 @@ public class LoginInterceptor implements  HandlerInterceptor{
 	  	  // 从session 里面获取用户名的信息  
 	  	  	User user = (User)session.getAttribute("user");  
 	  	  // 判断如果没有取到用户信息，就跳转到登陆页面，提示用户进行登陆  
-	  	  if (user == null || "".equals(user.toString())) {  
-	  		  res.sendRedirect("appWebLogin");  
+	  	  if (user == null || "".equals(user.toString()) || user.getRoleId() != 1) {  
+	  		  res.sendRedirect("backgroundLogin");  
 	  	  }
-	  	  System.out.println("appWebLogin interceptor-------------");
+	  	  System.out.println("backgroundLogin interceptor-------------");
 	  	  return true; 
 	}
 

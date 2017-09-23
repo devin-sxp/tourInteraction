@@ -25,3 +25,66 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
 }
+
+ 
+.wrap{ 
+  position: relative;
+  margin-bottom: -3.5%;
+  overflow: hidden;
+  z-index: 0;  
+  background: #fff;
+  box-shadow: -1px -1px 1px rgba(0,0,0,.4),
+              1px 1px 1px rgba(255,255,255,.4);
+}
+.wrap:after,
+.wrap:before{
+  content: '请输入内容进行查询';
+  text-align: center;
+  display: block;
+  position: absolute;
+  top: 0;left: 0;
+  overflow: hidden;
+  line-height: 35px;
+  color:rgba(255,255,255,.3);
+  font-size: 14px;
+  width: 100%;height: 50%;
+  background: #000;
+  z-index: 1;
+  box-shadow: 1px 1px 100px rgba(255,255,255,1), inset  1px 1px 60px rgba(255,255,255,.4);
+  transition:.3s all;
+  -webkit-transition:.3s all;
+  -webkit-transform:translate3d(0,0,0);
+  transform:translate3d(0,0,0);
+}
+.wrap:before{
+  top: auto;
+  bottom: 0;
+  line-height: 0px;
+}
+.wrap:hover:after{
+  top: -50%;
+}
+.wrap:hover:before{
+  bottom: -50%;
+}
+input{
+  width: 100%;
+  height: 35px;
+  padding: 0 65px 0 10px;
+  font-size: 16px;
+  border:0;
+  box-shadow: inset 1px 1px 11px rgba(0,0,0,.3);  
+} 
+input:focus { 
+  outline: none; 
+}
+.wrap a{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+

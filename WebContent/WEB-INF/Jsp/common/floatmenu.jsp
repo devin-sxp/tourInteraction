@@ -42,7 +42,7 @@ background-position: center;}
 		<a id="a_back" href="javascript:history.go(-1);" class="to_back" ><span>返回</span></a>
 		<a id="a_forward" href="javascript:history.go(1);" class="to_forward" ><span>前进</span></a>		
 		<a id="a_search" href="#" class="find" title="找论坛"><span>搜索</span></a>
-		<a id="a_user" href="<%=contextPath %>/page/userCenter" class="to_user hidden" title="个人中心"><span>个人</span></a>
+		<a id="a_user" href="<%=contextPath %>/page/userPage" class="to_user hidden" title="个人中心"><span>个人</span></a>
 		<a id="a_menu" class="to_menu" title="显示隐藏"><span>隐藏</span></a>
 	</div>
 </div>

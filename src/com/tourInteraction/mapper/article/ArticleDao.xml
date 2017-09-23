@@ -12,6 +12,35 @@
 	   </if>
 	</select>
 	
+	<select id="getArticles" resultType="Article">
+		select
+		a.id as id,
+		a.subject_id as subjectId,
+		ast.subject_title as subjectTitle,
+		a.article_name as articleName,
+		a.article_content as articleContent,
+		f.file_path as filePath,
+		a.article_look_count as articleLookCount,
+		a.article_love_count as articleLoveCount,
+		a.article_support_count as articleSupportCount,
+		a.article_comment_count as articleCommentCount,
+		a.create_time as createTime,
+		a.create_user as createUser,
+		u.user_name as createUserName
+		from article as a
+		left join user as u
+		on a.create_user = u.id
+		left join files as f
+		on a.article_icon_id = f.id
+		left join article_subject as ast
+		on a.subject_id = ast.id
+		where a.status = "1"
+		order by a.create_time desc
+	   <if test="null != limit and '' != limit and null != offset and '' != offset">
+	   	   limit ${limit},${offset} 
+	   </if>
+	</select>
+	
 	<select id="getArticleById" resultType="Article">
 		select
 		a.id as id,
@@ -22,6 +51,7 @@
 		a.article_look_count as articleLookCount,
 		a.article_love_count as articleLoveCount,
 		a.article_support_count as articleSupportCount,
+		a.article_comment_count as articleCommentCount,
 		a.create_time as createTime,
 		a.create_user as createUser,
 		u.user_name as createUserName
@@ -36,6 +66,11 @@
 	<select id="getNowUserArticleCount" resultType="int">
 		select count(*) from article 
 		where status = "1" and create_user = #{userId}
+	</select>
+	
+	<select id="getArticleCount" resultType="int">
+		select count(*) from article 
+		where status = "1"
 	</select>
 	
 	<!-- 插入操作 -->

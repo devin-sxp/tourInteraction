@@ -16,4 +16,8 @@ public interface IArticleService {
 
 	int getNowUserArticleCount(int userId);
 
+	List<Article> getArticles(String limit, String offset);
+
+	int getArticleCount();
+
 }

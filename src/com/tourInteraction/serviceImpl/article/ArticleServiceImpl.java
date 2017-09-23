@@ -44,6 +44,17 @@ public class ArticleServiceImpl implements IArticleService {
 		return articleDao.getNowUserArticleCount(userId);
 	}
 
+	@Override
+	public List<Article> getArticles(String limit, String offset) {
+		// TODO Auto-generated method stub
+		return articleDao.getArticles(limit,offset);
+	}
+
+	@Override
+	public int getArticleCount() {
+		return articleDao.getArticleCount();
+	}
+
 
 
 	

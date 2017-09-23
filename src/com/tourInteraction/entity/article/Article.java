@@ -10,12 +10,14 @@ public class Article implements Serializable{
 	private static final long serialVersionUID = -8416485920329348802L;
 	private int id;
 	private int subjectId;
+	private String subjectTitle;
 	private String articleName;
 	private String articleContent;
 	private int articleIconId;
 	private int articleLookCount;
 	private int articleLoveCount;
 	private int articleSupportCount;
+	private int articleCommentCount;
 	private String filePath;
 	private Date createTime;
 	private Date updateTime;
@@ -34,6 +36,13 @@ public class Article implements Serializable{
 	}
 	public void setSubjectId(int subjectId) {
 		this.subjectId = subjectId;
+	}
+	
+	public String getSubjectTitle() {
+		return subjectTitle;
+	}
+	public void setSubjectTitle(String subjectTitle) {
+		this.subjectTitle = subjectTitle;
 	}
 	public String getArticleName() {
 		return articleName;
@@ -72,6 +81,12 @@ public class Article implements Serializable{
 		this.articleSupportCount = articleSupportCount;
 	}
 	
+	public int getArticleCommentCount() {
+		return articleCommentCount;
+	}
+	public void setArticleCommentCount(int articleCommentCount) {
+		this.articleCommentCount = articleCommentCount;
+	}
 	public String getFilePath() {
 		return filePath;
 	}

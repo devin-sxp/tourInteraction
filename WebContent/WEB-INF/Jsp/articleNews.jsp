@@ -75,7 +75,7 @@
 							<i class="iconfont ic-search-notebook"></i> <span>书评</span>
 						</a>
 						<div class="copyright" data-toggle="tooltip" data-html="true"
-							data-original-title="转载请联系作者获得授权，并标注“简书作者”。">© 著作权归作者所有</div>
+							data-original-title="转载请联系作者获得授权，并标注“tour作者”。">© 著作权归作者所有</div>
 						<div class="modal-wrap" data-report-note="">
 							<a id="report-modal">举报文章</a>
 						</div>
@@ -86,14 +86,13 @@
 				<div class="follow-detail">
 					<div class="info">
 						<a class="avatar" href="http://www.jianshu.com/u/74307f7c1d61">
-							<img src="./7.jpeg" alt="96">
-						</a> <a class="btn btn-success follow"><i
-							class="iconfont ic-follow"></i><span>关注</span></a> <a class="title"
-							href="http://www.jianshu.com/u/74307f7c1d61">雪花如糖</a> <span
-							class="tag">签约作者</span>
+							<img src="./7.jpeg" alt="96"></a> 
+						<a class="btn btn-success follow"><i class="iconfont ic-follow"></i><span>关注</span></a> 
+						<a id="a_create_user_name" class="title" href=""></a> <span	class="tag">签约作者</span>
 						<p>写了 207145 字，被 15203 人关注，获得了 4162 个喜欢</p>
 					</div>
-					<div class="signature">大学教师，文字爱好者。喜欢简单的生活，随心所欲的写作。约稿、转载请简信。&amp;lt;br&amp;gt;我已委托“维权骑士”（rightknights.com）进行维权行动。
+					<div class="signature">
+					文字爱好者。喜欢简单的生活，随心所欲的写作。我已委托“维权骑士”进行维权行动。
 					</div>
 				</div>
 
@@ -165,7 +164,7 @@
 							<div>
 								<div>
 									<div class="top">
-										<span>28条评论</span> <a class="author-only">只看作者</a> <a
+										<span id="s_article_comment_count">未知评论</span> <a class="author-only">只看作者</a> <a
 											class="close-btn" style="display: none;">关闭评论</a>
 										<div class="pull-right">
 											<a class="active">按喜欢排序</a><a class="">按时间正序</a><a class="">按时间倒序</a>

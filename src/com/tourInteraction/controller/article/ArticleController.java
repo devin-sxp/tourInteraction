@@ -27,6 +27,26 @@ public class ArticleController {
 	@Resource(name="articleServiceImpl")
 	private IArticleService	articleService;
 	
+	@RequestMapping("/getArticles.do")
+	public @ResponseBody String getArticles(HttpServletRequest request,
+			@RequestParam("limit")String limit,
+			@RequestParam("offset")String offset){
+		System.out.println("article/getArticles.do被调用");
+		List<Article> list = new ArrayList<Article>();
+		list = articleService.getArticles(limit,offset);
+		Map map = new HashMap<String , Object>();
+		map.put("list", list);
+		String result = JSONUtil.map2json(map);
+		return result;
+	}
+	
+	@RequestMapping("/getArticleCount.do")
+	public @ResponseBody int getArticleCount(HttpServletRequest request){
+		System.out.println("article/getArticleCount.do被调用");
+		int count = articleService.getArticleCount();
+		return count;
+	}
+	
 	@RequestMapping("/getNowUserArticle.do")
 	public @ResponseBody String getNowUserArticle(HttpServletRequest request,
 			@RequestParam("limit")String limit,
@@ -73,6 +93,7 @@ public class ArticleController {
 		article.setArticleLookCount(0);
 		article.setArticleLoveCount(0);
 		article.setArticleSupportCount(0);
+		article.setArticleCommentCount(0);
 		article.setCreateUser(user.getId());
 		article.setStatus("1");
 		int num = articleService.writeArticle(article);
