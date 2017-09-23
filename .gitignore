@@ -5,13 +5,5 @@
 .idea/
 *.class
 *.iml
-EWRP-FJ-api/target/
-EWRP-FJ-common/target/
-EWRP-FJ-mobile/target/
-EWRP-FJ-service/target/
-EWRP-FJ-web/target/
 logs/
 build/
-*.class
-*.class
-*.class
