@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tourInteraction.dao.article.ArticleDao">
+	<select id="getNowUserArticle" resultType="Article">
+		select * from article 
+		where status = "1" and create_user = #{userId}
+		order by create_time desc
+	   <if test="null != limit and '' != limit and null != offset and '' != offset">
+	   	   limit ${limit},${offset} 
+	   </if>
+	</select>
+	
+	<select id="getArticles" resultType="Article">
+		select
+		a.id as id,
+		a.subject_id as subjectId,
+		ast.subject_title as subjectTitle,
+		a.article_name as articleName,
+		a.article_content as articleContent,
+		f.file_path as filePath,
+		a.article_look_count as articleLookCount,
+		a.article_love_count as articleLoveCount,
+		a.article_support_count as articleSupportCount,
+		a.article_comment_count as articleCommentCount,
+		a.create_time as createTime,
+		a.create_user as createUser,
+		u.user_name as createUserName
+		from article as a
+		left join user as u
+		on a.create_user = u.id
+		left join files as f
+		on a.article_icon_id = f.id
+		left join article_subject as ast
+		on a.subject_id = ast.id
+		where a.status = "1"
+		order by a.create_time desc
+	   <if test="null != limit and '' != limit and null != offset and '' != offset">
+	   	   limit ${limit},${offset} 
+	   </if>
+	</select>
+	
+	<select id="getArticleById" resultType="Article">
+		select
+		a.id as id,
+		a.subject_id as subjectId,
+		a.article_name as articleName,
+		a.article_content as articleContent,
+		f.file_path as filePath,
+		a.article_look_count as articleLookCount,
+		a.article_love_count as articleLoveCount,
+		a.article_support_count as articleSupportCount,
+		a.article_comment_count as articleCommentCount,
+		a.create_time as createTime,
+		a.create_user as createUser,
+		u.user_name as createUserName
+		from article as a
+		left join user as u
+		on a.create_user = u.id
+		left join files as f
+		on a.article_icon_id = f.id
+		where a.status = "1" and a.id = #{id}
+	</select>
+	
+	<select id="getNowUserArticleCount" resultType="int">
+		select count(*) from article 
+		where status = "1" and create_user = #{userId}
+	</select>
+	
+	<select id="getArticleCount" resultType="int">
+		select count(*) from article 
+		where status = "1"
+	</select>
+	
+	<!-- 插入操作 -->
+ 	<insert id="writeArticle" parameterType="int">
+	   insert into article(article_name,article_content,article_icon_id,article_look_count,article_love_count
+	   ,article_support_count,create_time,create_user,status) 
+	   values(#{articleName},#{articleContent},#{articleIconId},#{articleLookCount},#{articleLoveCount}
+	   ,#{articleSupportCount},#{createTime},#{createUser},#{status})
+	</insert> 
+	
+	
+	<select id="getRequestSubmitNewsBySubjectId" resultType="ArticleRequestSubmit">
+
+	   <if test="null != limit and '' != limit and null != offset and '' != offset">
+	   	   limit ${limit},${offset} 
+	   </if>
+	</select>
+</mapper>
