@@ -6,6 +6,8 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +27,7 @@ public class FileManageController {
 	
 	@Autowired
 	private IFileManageService fileManageService;
-	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	 /**
      * 上传
      * @param 
@@ -39,7 +41,7 @@ public class FileManageController {
     		) throws Exception{
         response.setHeader("X-Frame-Options","SAMEORIGIN");
         
-        System.out.println("invoke----------/fileManage/uploadFile.do");
+        logger.debug("invoke----------/fileManage/uploadFile.do");
         /**构建文件保存的目录**/
 //        String logoPathDir = "/files";
         String logoPathDir = "/files/"+fileUse;

@@ -2,7 +2,6 @@ package com.tourInteraction.controller.article;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +12,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,14 +34,15 @@ public class ArticleSubjectController {
 	
 	@Resource(name="articleSubjectServiceImpl")
 	private IArticleSubjectService	articleSubjectService;
-	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@RequestMapping("/getSubject.do")
 	public @ResponseBody String getSubject(String limit,String offset){
-		System.out.println("articleSubject/getSubject.do被调用");
+		logger.debug("articleSubject/getSubject.do被调用");
 
 		List<ArticleSubject> list = new ArrayList<ArticleSubject>();
 		list = articleSubjectService.getSubject(limit,offset);
-		Map map = new HashMap<String , Object>();
+		Map<String, Object> map = new HashMap<String , Object>();
 		map.put("list", list);
 		map.put("count", 10);
 		String result = JSONUtil.map2json(map);
@@ -50,7 +52,7 @@ public class ArticleSubjectController {
 	@RequestMapping("getSubjectById.do")
 	public @ResponseBody String getSubjectById( @RequestParam("id") int id){
 		ArticleSubject articleSubject = new ArticleSubject();
-		System.out.println("articleSubject/getSubjectById.do被调用");
+		logger.debug("articleSubject/getSubjectById.do被调用");
 		articleSubject = articleSubjectService.getSubjectById(id);
 	
 		String result = JSONUtil.object2json(articleSubject);
@@ -59,7 +61,7 @@ public class ArticleSubjectController {
 	
 	@RequestMapping("delSubjectById.do")
 	public @ResponseBody String delSubjectById( @RequestParam("id") int id){
-		System.out.println("articleSubject/delSubjectById.do被调用");
+		logger.debug("articleSubject/delSubjectById.do被调用");
 		
 		int num = articleSubjectService.delSubjectById(id);
 		String result = "删除失败!";
@@ -76,7 +78,7 @@ public class ArticleSubjectController {
 			@RequestParam("SubjectDiscription") String SubjectDiscription,
 			@RequestParam("SubjectLabel") String SubjectLabel,
 			@RequestParam("SubjectIcon") String SubjectIcon){
-		System.out.println("articleSubject/updateSubject.do被调用");
+		logger.debug("articleSubject/updateSubject.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		mapParam.put("id", id);
@@ -103,7 +105,7 @@ public class ArticleSubjectController {
 			@RequestParam("SubjectDiscription") String SubjectDiscription,
 			@RequestParam("SubjectLabel") String SubjectLabel,
 			@RequestParam("SubjectIcon") String SubjectIcon){
-		System.out.println("articleSubject/addSubject.do被调用");
+		logger.debug("articleSubject/addSubject.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		mapParam.put("SubjectName", SubjectName);
@@ -132,10 +134,8 @@ public class ArticleSubjectController {
     @RequestMapping(value = "/uploadFile.do")
     public @ResponseBody String uploadFile(HttpServletRequest request,HttpServletResponse response) throws Exception{
         response.setHeader("X-Frame-Options","SAMEORIGIN");
-        System.out.println("invoke----------/articleSubject/uploadFile.do");
+        logger.debug("invoke----------/articleSubject/uploadFile.do");
         List<String> result = new ArrayList<String>();
-        List<Long> rs=new ArrayList<Long>();
-        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd/HH");
         /**构建文件保存的目录**/
         String logoPathDir = "/files";
         /**得到文件保存目录的真实路径**/

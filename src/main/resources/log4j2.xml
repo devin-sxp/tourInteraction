@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="error">  
+<!--     先定义所有的appender -->  
+    <appenders>  
+<!--         这个输出控制台的配置 -->  
+        <Console name="Console" target="SYSTEM_OUT">  
+<!--             控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->  
+            <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY"/>  
+<!--             这个都知道是输出日志的格式 -->  
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>  
+        </Console>  
+
+<!--         文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用 -->  
+<!--         append为TRUE表示消息增加到指定文件中，false表示消息覆盖指定的文件内容，默认值是true -->  
+        <File name="log" fileName="log/test.log" append="false">  
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>  
+        </File>  
+
+<!--          添加过滤器ThresholdFilter,可以有选择的输出某个级别以上的类别  onMatch="ACCEPT" onMismatch="DENY"意思是匹配就接受,否则直接拒绝  -->  
+        <File name="ERROR" fileName="logs/error.log">  
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>  
+            <PatternLayout pattern="%d{yyyy.MM.dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>  
+        </File>  
+
+<!--         这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->  
+        <RollingFile name="RollingFile" fileName="logs/web.log"  
+                     filePattern="logs/$${date:yyyy-MM}/web-%d{MM-dd-yyyy}-%i.log.gz">  
+            <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>  
+            <SizeBasedTriggeringPolicy size="2MB"/>  
+        </RollingFile>  
+    </appenders>  
+
+	<!-- 然后定义logger，只有定义了logger并引入的appender，appender才会生效 -->  
+    <loggers>  
+		<!--
+		建立一个默认的root的logger
+			trace： 
+				是追踪，就是程序推进以下，你就可以写个trace输出，所以trace应该会特别多，不过没关系，我们可以设置最低日志级别不让他输出。
+		
+			debug： 调试么，我一般就只用这个作为最低级别，trace压根不用。是在没办法就用eclipse或者idea的debug功能就好了么。
+		
+			info： 输出一下你感兴趣的或者重要的信息，这个用的最多了。
+		
+			warn： 有些信息不是错误信息，但是也要给程序员的一些提示，类似于eclipse中代码的验证不是有error 
+					和warn（不算错误但是也请注意，比如以下depressed的方法）。
+		
+			error： 错误信息。用的也比较多。
+		
+			fatal： 级别比较高了。重大错误，这种级别你可以直接停止程序了，是不应该出现的错误么！不用那么紧张，其实就是一个程度的问题
+		 -->
+        <root level="error">  
+            <appender-ref ref="RollingFile"/>  
+            <appender-ref ref="Console"/>  
+            <appender-ref ref="ERROR" />  
+            <appender-ref ref="log"/>  
+        </root>  
+
+    </loggers>  
+</configuration>  

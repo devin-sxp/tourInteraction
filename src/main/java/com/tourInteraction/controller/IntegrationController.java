@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +21,8 @@ public class IntegrationController {
 	
 	@Resource(name="integrationServiceImpl")
 	private IIntegrationtService integrationtService ;
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 //	
 //	@RequestMapping("/getCommentByNewsId.do")
 //	public @ResponseBody String getCommentByNewsId(@RequestParam("newsId") int newsId){
@@ -41,7 +45,7 @@ public class IntegrationController {
 	public @ResponseBody String addIntegration(HttpServletRequest req, 
 			@RequestParam("integration") long integration){
 		
-		System.out.println("addIntegration.do被调用");
+		logger.debug("addIntegration.do被调用");
 		int num = 0;
 		User user = SignInAndUpController.getSignInUser(req);
 		integration = user.getIntegration()+integration;

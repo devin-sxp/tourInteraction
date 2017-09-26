@@ -5,11 +5,12 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +27,8 @@ public class SignInAndUpController {
 	
 	@Resource(name="loginServiceImpl")
 	private ILoginService loginservice ;
-	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@RequestMapping("register.do")
 	private String register(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		boolean isSuccess = false;
@@ -74,7 +76,7 @@ public class SignInAndUpController {
 			@RequestParam("name") String name,
 			@RequestParam("password") String password,
 			@RequestParam("checkbox_save_password") String checkbox_save_password){
-		System.out.println("loginIn.do");
+		logger.debug("loginIn.do");
 		User user = new User();
 		System.out.println(checkbox_save_password);
 		user.setUserName(name);
@@ -99,7 +101,7 @@ public class SignInAndUpController {
 	@RequestMapping("signup.do")
 	private String signup(HttpServletRequest request,HttpSession sin){
 		try {
-			System.out.println("signup.do被调用");
+			logger.debug("signup.do被调用");
 			HttpSession session = request.getSession();
 			session.removeAttribute("user");
 		} catch (Exception e) {
@@ -110,7 +112,7 @@ public class SignInAndUpController {
 	}
 	@RequestMapping("backSignIn.do")
 	private String backSignIn(HttpServletRequest request,HttpSession sin){
-		System.out.println("backSignIn.do被调用");
+		logger.debug("backSignIn.do被调用");
 		User user = new User();
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
@@ -152,7 +154,6 @@ public class SignInAndUpController {
 			return "index";
 
 		}else{
-			HttpSession session = request.getSession();
 			request.setAttribute("msg", "糟糕！登录失败请重试！");
 		}
 		return "appWeb/login";
@@ -206,7 +207,7 @@ public class SignInAndUpController {
 	}
 	@RequestMapping("getNowSignInUser.do")
 	public @ResponseBody String getNowSignInUser(HttpServletRequest request){
-		System.out.println("getNowSignInUser被调用");
+		logger.debug("getNowSignInUser被调用");
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		String result = JSONUtil.object2json(user);
@@ -224,7 +225,6 @@ public class SignInAndUpController {
 			return "更新session完毕";
 
 		} catch (Exception e) {
-			// TODO: handle exception
 			return "更新session失败";
 		}
 		

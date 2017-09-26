@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,12 +27,13 @@ public class InteractionNewsController {
 	
 	@Resource(name="interactionNewsServiceImpl")
 	private IInteractionNewsService interactionNewsService;
-	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@RequestMapping("/getNews.do")
 	public @ResponseBody String getNews(@RequestParam(value = "moduleId",defaultValue="0") int moduleId, @RequestParam("limit") int limit,
 								@RequestParam("offset") int offset, String newsTitle, String newsLabel, String createUserName){
 		
-		System.out.println("getNews.do被调用");
+		logger.debug("getNews.do被调用");
 		List<InteractionNews> list = new ArrayList<InteractionNews>();
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		
@@ -54,7 +57,7 @@ public class InteractionNewsController {
 		mapParam.put("offset", offset);
 		int count = interactionNewsService.getNewsCount(mapParam);
 		list = interactionNewsService.getNews(mapParam);
-		Map map = new HashMap<String , Object>();
+		Map<String, Object> map = new HashMap<String , Object>();
 		map.put("list", list);
 		map.put("count", count);
 		String result = JSONUtil.map2json(map);
@@ -87,7 +90,7 @@ public class InteractionNewsController {
 	@RequestMapping("/getNewsById.do")
 	public @ResponseBody String getNewsById(@RequestParam("newsId") int newsId){
 		
-		System.out.println("getNewsById.do被调用");
+		logger.debug("getNewsById.do被调用");
 		
 		InteractionNews interactionNews = interactionNewsService.getNewsById(newsId);
 
@@ -98,7 +101,7 @@ public class InteractionNewsController {
 	@RequestMapping("/delNewsById.do")
 	public @ResponseBody String delNewsById(@RequestParam("id") int id){
 		
-		System.out.println("interactionNews/delNewsById.do被调用");
+		logger.debug("interactionNews/delNewsById.do被调用");
 		
 		int num = interactionNewsService.delNewsById(id);
 		String result = "删除失败";

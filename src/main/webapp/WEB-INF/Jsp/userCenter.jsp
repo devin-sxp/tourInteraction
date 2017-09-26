@@ -79,13 +79,13 @@ rel="stylesheet" media="all">
 							<form>
 								<p>用户名</p>
 								<input type="text" value="" id="userName"
-									onblur="if (this.value == '') {this.value ='';}" maxlength="10">
+									onblur="if (this.value.length != 6) toastr.info('请设置6位以上用户名')" maxlength="10">
 								<p>电话</p>
 								<input type="text" value="" id="phone"
-									onblur="if (this.value == '') {this.value ='';}" maxlength="11">
+									onblur="if (this.value.length != 11) toastr.info('请设置11位电话号码')" maxlength="11">
 								<p>电子邮箱</p>
 								<input type="text" value="" id="email"
-									onblur="if (this.value == '') {this.value ='';}" maxlength="20">
+									onblur="if (this.value.indexOf('@') == -1) toastr.info('请设置正确的邮箱格式')" maxlength="20">
 								<p>身份</p>
 								<input type="text" value="" id="role"
 									onblur="if (this.value == '') {this.value ='';}" maxlength="20" disabled="disabled">

@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,11 +28,12 @@ public class UserManageController {
 	
 	@Resource(name="userManageServiceImpl")
 	private IUserManageService userManageService;
-	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@RequestMapping("getUser.do")
 	public @ResponseBody String getUser( @RequestParam("limit") int limit,@RequestParam("offset") int offset){
 		
-		System.out.println("userManage/getUser.do被调用");
+		logger.debug("userManage/getUser.do被调用");
 		List<User> list = new ArrayList<User>();
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		
@@ -38,7 +41,7 @@ public class UserManageController {
 		mapParam.put("offset", offset);
 		int count = userManageService.getUserCount(mapParam);
 		list = userManageService.getUser(mapParam);
-		Map map = new HashMap<String , Object>();
+		Map<String,Object> map = new HashMap<String , Object>();
 		map.put("list", list);
 		map.put("count", count);
 		String result = JSONUtil.map2json(map);
@@ -48,7 +51,7 @@ public class UserManageController {
 	@RequestMapping("getUserByInteraction.do")
 	public @ResponseBody String getUserByInteraction( @RequestParam("limit") int limit,@RequestParam("offset") int offset){
 		
-		System.out.println("userManage/getUser.do被调用");
+		logger.debug("userManage/getUser.do被调用");
 		List<User> list = new ArrayList<User>();
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		
@@ -56,7 +59,7 @@ public class UserManageController {
 		mapParam.put("offset", offset);
 		int count = userManageService.getUserCount(mapParam);
 		list = userManageService.getUserByInteraction(mapParam);
-		Map map = new HashMap<String , Object>();
+		Map<String,Object> map = new HashMap<String , Object>();
 		map.put("list", list);
 		map.put("count", count);
 		String result = JSONUtil.map2json(map);
@@ -66,7 +69,7 @@ public class UserManageController {
 	@RequestMapping("getUserById.do")
 	public @ResponseBody String getUserById( @RequestParam("userId") int userId){
 		User user = new User();
-		System.out.println("userManage/getUser.do被调用");
+		logger.debug("userManage/getUser.do被调用");
 		user = userManageService.getUserById(userId);
 	
 		String result = JSONUtil.object2json(user);
@@ -75,7 +78,7 @@ public class UserManageController {
 	
 	@RequestMapping("delUserById.do")
 	public @ResponseBody String delUserById( @RequestParam("userId") int userId){
-		System.out.println("userManage/delUserById.do被调用");
+		logger.debug("userManage/delUserById.do被调用");
 		
 		int num = userManageService.delUserById(userId);
 		String result = "删除失败!";
@@ -87,7 +90,7 @@ public class UserManageController {
 	
 	@RequestMapping("lockUserById.do")
 	public @ResponseBody String lockUserById( @RequestParam("userId") int userId,@RequestParam("status") String status){
-		System.out.println("userManage/lockUserById.do被调用");
+		logger.debug("userManage/lockUserById.do被调用");
 		
 		int num = userManageService.lockUserById(userId,status);
 		String result = "操作失败!";
@@ -100,7 +103,7 @@ public class UserManageController {
 	@RequestMapping("getUserRole.do")
 	public @ResponseBody String getUserRole(){
 		List<Role> list = new ArrayList<Role>();
-		System.out.println("userManage/getUserRole.do被调用");
+		logger.debug("userManage/getUserRole.do被调用");
 		list = userManageService.getUserRole();
 		String result = JSONUtil.list2json(list);
 		return result;
@@ -110,7 +113,7 @@ public class UserManageController {
 	public @ResponseBody String updateUser(HttpServletRequest req, 
 		int id,String userName, String passWord,String email,
 		 String phoneNumber,String integration,String roleId){
-		System.out.println("userManage/updateUser.do被调用");
+		logger.debug("userManage/updateUser.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		mapParam.put("id", id);
@@ -138,7 +141,7 @@ public class UserManageController {
 	@RequestMapping("/updateUserIcon.do")
 	public @ResponseBody String updateUserIcon(HttpServletRequest req, 
 		int userIconId){
-		System.out.println("userManage/updateUserIcon.do被调用");
+		logger.debug("userManage/updateUserIcon.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		mapParam.put("userIconId", userIconId);
@@ -161,7 +164,7 @@ public class UserManageController {
 			@RequestParam("phoneNumber") String phoneNumber,
 			@RequestParam("integration") String integration,
 			@RequestParam("roleId") String roleId){
-		System.out.println("userManage/addUser.do被调用");
+		logger.debug("userManage/addUser.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		mapParam.put("passWord", MD5Util.md5("000000"));

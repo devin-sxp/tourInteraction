@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.tourInteraction.entity.InteractionComment;
-import com.tourInteraction.entity.InteractionNews;
 import com.tourInteraction.entity.InteractionReply;
 
 public interface InteractionCommentDao {

@@ -13,6 +13,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,11 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.tourInteraction.entity.InteractionModel;
-import com.tourInteraction.entity.Role;
 import com.tourInteraction.entity.User;
 import com.tourInteraction.service.IInteractionModelService;
 import com.tourInteraction.utils.JSONUtil;
-import com.tourInteraction.utils.MD5Util;
 import com.tourInteraction.utils.UUIDUitl;
 
 @Controller
@@ -34,14 +34,13 @@ public class InteractionModelController {
 	
 	@Resource(name="interactionModelServiceImpl")
 	private IInteractionModelService interactionModelService;
-	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@RequestMapping("/getModel.do")
 	public @ResponseBody String getModel(String limit,String offset){
-		System.out.println("interactionModel/getModel.do被调用");
-
+		logger.info("interactionModel/getModel.do被调用");
 		List<InteractionModel> list = new ArrayList<InteractionModel>();
 		list = interactionModelService.getModel(limit,offset);
-		Map map = new HashMap<String , Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("count", 10);
 		String result = JSONUtil.map2json(map);
@@ -51,7 +50,7 @@ public class InteractionModelController {
 	@RequestMapping("getModuleById.do")
 	public @ResponseBody String getModuleById( @RequestParam("id") int id){
 		InteractionModel interactionModel = new InteractionModel();
-		System.out.println("interactionModel/getModuleById.do被调用");
+		logger.info("interactionModel/getModuleById.do被调用");
 		interactionModel = interactionModelService.getModuleById(id);
 	
 		String result = JSONUtil.object2json(interactionModel);
@@ -60,7 +59,7 @@ public class InteractionModelController {
 	
 	@RequestMapping("delModuleById.do")
 	public @ResponseBody String delModuleById( @RequestParam("id") int id){
-		System.out.println("interactionModel/delModuleById.do被调用");
+		logger.info("interactionModel/delModuleById.do被调用");
 		
 		int num = interactionModelService.delModuleById(id);
 		String result = "删除失败!";
@@ -77,7 +76,7 @@ public class InteractionModelController {
 			@RequestParam("moduleDiscription") String moduleDiscription,
 			@RequestParam("moduleLabel") String moduleLabel,
 			@RequestParam("moduleIcon") String moduleIcon){
-		System.out.println("interactionModel/updateModule.do被调用");
+		logger.info("interactionModel/updateModule.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		mapParam.put("id", id);
@@ -104,7 +103,7 @@ public class InteractionModelController {
 			@RequestParam("moduleDiscription") String moduleDiscription,
 			@RequestParam("moduleLabel") String moduleLabel,
 			@RequestParam("moduleIcon") String moduleIcon){
-		System.out.println("interactionModel/addModule.do被调用");
+		logger.info("interactionModel/addModule.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		mapParam.put("moduleName", moduleName);
@@ -133,7 +132,7 @@ public class InteractionModelController {
     @RequestMapping(value = "/uploadFile.do")
     public @ResponseBody String uploadFile(HttpServletRequest request,HttpServletResponse response) throws Exception{
         response.setHeader("X-Frame-Options","SAMEORIGIN");
-        System.out.println("invoke----------/interactionModel/uploadFile.do");
+        logger.info("invoke----------/interactionModel/uploadFile.do");
         List<String> result = new ArrayList<String>();
         List<Long> rs=new ArrayList<Long>();
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd/HH");

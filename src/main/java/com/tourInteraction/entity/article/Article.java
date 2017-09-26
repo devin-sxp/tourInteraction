@@ -1,14 +1,9 @@
 package com.tourInteraction.entity.article;
+import com.tourInteraction.entity.base.Base;
 
-import java.io.Serializable;
-import java.util.Date;
+public class Article extends Base{
 
-public class Article implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8416485920329348802L;
-	private int id;
+	private static final long serialVersionUID = 1L;
 	private int subjectId;
 	private String subjectTitle;
 	private String articleName;
@@ -19,19 +14,8 @@ public class Article implements Serializable{
 	private int articleSupportCount;
 	private int articleCommentCount;
 	private String filePath;
-	private Date createTime;
-	private Date updateTime;
-	private int createUser;
-	private String createUserName;
 	private String userIconPath;
-	private int updateUser;
-	private String status;
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 	public int getSubjectId() {
 		return subjectId;
 	}
@@ -94,48 +78,12 @@ public class Article implements Serializable{
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-	public int getCreateUser() {
-		return createUser;
-	}
-	public void setCreateUser(int createUser) {
-		this.createUser = createUser;
-	}
-	public String getCreateUserName() {
-		return createUserName;
-	}
-	public void setCreateUserName(String createUserName) {
-		this.createUserName = createUserName;
-	}
 	
 	public String getUserIconPath() {
 		return userIconPath;
 	}
 	public void setUserIconPath(String userIconPath) {
 		this.userIconPath = userIconPath;
-	}
-	public int getUpdateUser() {
-		return updateUser;
-	}
-	public void setUpdateUser(int updateUser) {
-		this.updateUser = updateUser;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
 	}
 	
 }

@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -24,11 +26,12 @@ public class ConfigureController {
 	@Autowired
 	@Qualifier(value = "configureServiceImpl")
 	private IConfigureService configureService;
-	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@RequestMapping("/getConfigure.do")
 	public @ResponseBody String getConfigure(HttpServletRequest req){
 		
-		System.out.println("getConfigure.do被调用");
+		logger.debug("getConfigure.do被调用");
 		List<Configure> list = new ArrayList<Configure>();
 		list = configureService.getConfigure();
 		String result = JSONUtil.list2json(list);
@@ -38,7 +41,7 @@ public class ConfigureController {
 	@RequestMapping("/getConfigureById.do")
 	public @ResponseBody String getConfigureById(HttpServletRequest req,
 			@RequestParam("id") long id){
-		System.out.println("getConfigure.do被调用");
+		logger.debug("getConfigure.do被调用");
 		String result="";
 
 		Configure configure = configureService.getConfigureById(id);
@@ -55,7 +58,7 @@ public class ConfigureController {
 			@RequestParam("title") String title,
 			@RequestParam("description") String description,
 			@RequestParam("file") String file){
-		System.out.println("addConfigure.do被调用");
+		logger.debug("addConfigure.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Configure configure = new Configure();
 		configure.setStaticCodeConfigure("configure_pic");
@@ -63,7 +66,7 @@ public class ConfigureController {
 		configure.setTitle(title);
 		configure.setDescription(description);
 		configure.setFile(file);
-		configure.setCreateUser((long)user.getId());
+		configure.setCreateUser(user.getId());
 		configure.setCreateTime(new Date());
 		configure.setStatus("1");
 		int num = configureService.addConfigure(configure);
@@ -77,13 +80,13 @@ public class ConfigureController {
 	
 	@RequestMapping("/updateConfigure.do")
 	public @ResponseBody String updateConfigure(HttpServletRequest req, 
-			@RequestParam("id") Long id, 
+			@RequestParam("id") int id, 
 			@RequestParam("staticCodeConfigure") String staticCodeConfigure, 
 			@RequestParam("staticCodeUse") String staticCodeUse,
 			@RequestParam("title") String title,
 			@RequestParam("description") String description,
 			@RequestParam("file") String file) throws Throwable{
-		System.out.println("updateConfigure.do被调用");
+		logger.debug("updateConfigure.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Configure configure = new Configure();
 		configure.setId(id);
@@ -92,7 +95,7 @@ public class ConfigureController {
 		configure.setTitle(title);
 		configure.setDescription(description);
 		configure.setFile(file);
-		configure.setUpdateUser((long)user.getId());
+		configure.setUpdateUser(user.getId());
 		configure.setUpdateTime(new Date());
 		int num = configureService.updateConfigure(configure);		
 		String result = "修改配置失败";
@@ -107,7 +110,7 @@ public class ConfigureController {
 	@RequestMapping("/delConfigureById.do")
 	public @ResponseBody String delConfigureById(@RequestParam("id") int id){
 		
-		System.out.println("configure/delConfigureById.do被调用");
+		logger.debug("configure/delConfigureById.do被调用");
 		
 		int num = configureService.delConfigureById(id);
 		String result = "删除失败";

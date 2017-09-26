@@ -9,13 +9,14 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tourInteraction.entity.InteractionComment;
-import com.tourInteraction.entity.InteractionNews;
 import com.tourInteraction.entity.InteractionReply;
 import com.tourInteraction.entity.User;
 import com.tourInteraction.service.IInteractionCommentService;
@@ -27,18 +28,19 @@ public class InteractionCommentController {
 	
 	@Resource(name="interactionCommentServiceImpl")
 	private IInteractionCommentService interactionCommentService;
-	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@RequestMapping("/getCommentByNewsId.do")
 	public @ResponseBody String getCommentByNewsId(@RequestParam("newsId") int newsId){
 		
-		System.out.println("getCommentByNewsId.do被调用");
+		logger.debug("getCommentByNewsId.do被调用");
 		List<InteractionComment> list = new ArrayList<InteractionComment>();
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		
 		mapParam.put("newsId", newsId);
 		int count = interactionCommentService.getCommentCount(mapParam);
 		list = interactionCommentService.getComment(mapParam);
-		Map map = new HashMap<String , Object>();
+		Map<String, Object> map = new HashMap<String , Object>();
 		map.put("list", list);
 		map.put("count", count);
 		String result = JSONUtil.map2json(map);
@@ -48,14 +50,14 @@ public class InteractionCommentController {
 	@RequestMapping("/getReplyByCommentId.do")
 	public @ResponseBody String getReplyByCommentId(@RequestParam("commentId") int commentId){
 		
-		System.out.println("getReplyByCommentId.do被调用");
+		logger.debug("getReplyByCommentId.do被调用");
 		List<InteractionReply> list = new ArrayList<InteractionReply>();
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		
 		mapParam.put("commentId", commentId);
 		int count = interactionCommentService.getReplyCountByCommentId(mapParam);
 		list = interactionCommentService.getReplyByCommentId(mapParam);
-		Map map = new HashMap<String , Object>();
+		Map<String,Object> map = new HashMap<String , Object>();
 		map.put("list", list);
 		map.put("count", count);
 		String result = JSONUtil.map2json(map);
@@ -70,7 +72,7 @@ public class InteractionCommentController {
 			@RequestParam(value="targetUser",defaultValue="0") int targetUser,
 			@RequestParam("commentContent") String commentContent){
 		
-		System.out.println("addCommentAndReply.do被调用");
+		logger.debug("addCommentAndReply.do被调用");
 		int num = 0;
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
