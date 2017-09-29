@@ -48,6 +48,9 @@ rel="stylesheet" media="all">
 	    border: 1px solid #ddd;
 	    border-radius: 50%;
 	}
+	.autoMail {
+		margin-top:-1.5em;
+	}
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -164,6 +167,8 @@ rel="stylesheet" media="all">
 		src="<%=contextPath%>/resource/js/fileInput/fileinput_locale_zh.js"></script>
 	<script type="text/javascript"
 	src="<%=contextPath%>/resource/js/common/fileUpload.js"></script>
+	<script type="text/javascript"
+	src="<%=contextPath%>/resource/js/common/autoMail.1.0.js"></script>
 	
 </body>
 </html>

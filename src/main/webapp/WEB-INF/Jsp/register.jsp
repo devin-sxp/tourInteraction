@@ -34,6 +34,7 @@ rel="stylesheet" media="all">
 	.book-left-form input[type="text"],.book-left-form input[type="password"] {
 	    margin-bottom: 0em; 
 	}
+	
 </style>
 <!-- fonts -->
 <link
@@ -120,9 +121,7 @@ rel="stylesheet" media="all">
 	
 	
 </script>
-<!--pop-up-->
-<script src="<%=contextPath%>/resource/js/menu_jquery.js"></script>
-<!--//pop-up-->
+
 </head>
 <body>
 	<!--header-->
@@ -144,12 +143,12 @@ rel="stylesheet" media="all">
 								<p>电话</p>
 								<input type="text" value="" name="phone" maxlength="11" placeholder="请输入手机号"/>
 								<p>电子邮箱</p>
-								<input type="text" value="" name="email" placeholder="请输入邮箱地址"/>
+								<input type="text" value="" name="email" id="email" placeholder="请输入邮箱地址"/>
 								<p>密码</p>
 								<input type="password" name="password" id="password" maxlength="16" placeholder="请输入密码"/>
 								<p>确认密码</p>
 								<input type="password" name="comfirm_password" maxlength="16" placeholder="请再次输入密码"/>
-								<label for="checkbox"><input type="checkbox"
+								<label for="checkbox" style="width: auto;"><input type="checkbox" 
 									id="checkbox"> <i>记住</i></label> <input type="submit"
 									id="regiseter" value="注册"/>
 								<p style="color: red">${msgRegister}</p>
@@ -158,7 +157,7 @@ rel="stylesheet" media="all">
 					</div>
 					<div class="col-md-6 book-left book-right">
 						<div class="book-left-info">
-							<h3>Recommended</h3>
+							<h3>提示</h3>
 						</div>
 						<div class="book-left-bottom">
 							<div class="book-left-facebook">
@@ -169,11 +168,11 @@ rel="stylesheet" media="all">
 							</div>
 						</div>
 						<ul>
-							<li>Access booking history with upcoming trips</li>
-							<li>Print tickets and invoices</li>
-							<li>Make checkouts simpler</li>
-							<li>Enter your contact details only once</li>
-							<li>Get alerts for low fares</li>
+							<li>输入你的注册信息</li>
+							<li>加入我们的平台</li>
+							<li>好吧，我们需要你</li>
+							<li>好了，开始了</li>
+							<li>注册你的账号吧</li>
 						</ul>
 					</div>
 					<div class="clearfix"></div>
@@ -190,6 +189,14 @@ rel="stylesheet" media="all">
 	<!-- footer -->
 	<jsp:include page="common/footer.jsp"></jsp:include>
 	<!-- footer -->
-	
+	<script type="text/javascript"
+	src="<%=contextPath%>/resource/js/common/autoMail.1.0.js"></script>
+	<script type="text/javascript">
+		$(function(){
+				$('#email').autoMail({
+				emails:['qq.com','163.com','126.com','sina.com','sohu.com','yahoo.cn','gmail.com','hotmail.com','live.cn']
+		});
+		});
+	</script>
 </body>
 </html>

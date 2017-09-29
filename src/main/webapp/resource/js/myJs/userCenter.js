@@ -8,6 +8,11 @@ $(function() {
 		inputFile : 'input_file' //input file标签的name值传到后台，用于后台获取file
 	}
 	upLoadUserIconInput("input_file", uploadUrl, data);
+	
+	$('#email').autoMail({
+		emails:['qq.com','163.com','126.com','sina.com','sohu.com','yahoo.cn','gmail.com','hotmail.com','live.cn']
+	});
+	
 });
 
 
