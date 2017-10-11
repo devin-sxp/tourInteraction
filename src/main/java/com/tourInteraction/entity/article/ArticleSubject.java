@@ -8,7 +8,7 @@ public class ArticleSubject extends Base{
 	private String subjectTitle;
 	private String subjectDescription;
 	private String subjectIconPath;
-
+	private String subjectTypeName;
 	public String getSubjectTitle() {
 		return subjectTitle;
 	}
@@ -27,6 +27,12 @@ public class ArticleSubject extends Base{
 	}
 	public void setSubjectIconPath(String subjectIconPath) {
 		this.subjectIconPath = subjectIconPath;
+	}
+	public String getSubjectTypeName() {
+		return subjectTypeName;
+	}
+	public void setSubjectTypeName(String subjectTypeName) {
+		this.subjectTypeName = subjectTypeName;
 	}
 	
 }

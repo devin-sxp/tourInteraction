@@ -75,6 +75,10 @@ public class PageController {
 	public String backgroundManagementUserManage(HttpServletRequest req){
 		return "backgroundManagement/userManage";
 	}
+	@RequestMapping("/backgroundManagementRoleManage")
+	public String backgroundManagementRoleManage(HttpServletRequest req){
+		return "backgroundManagement/roleManage";
+	}
 	@RequestMapping("/backgroundManagementNewsManage")
 	public String backgroundManagementNewsManage(HttpServletRequest req){
 		return "backgroundManagement/newsManage";

@@ -47,6 +47,12 @@ public class ArticleSubjectServiceImpl implements IArticleSubjectService {
 		return articleSubjectDao.addSubject(mapParam);
 	}
 
+	@Override
+	public List<ArticleSubject> getSubjectsByUserId(int userId) {
+		// TODO Auto-generated method stub
+		return articleSubjectDao.getSubjectsByUserId(userId);
+	}
+
 	
 
 }

@@ -12,6 +12,7 @@ public class User extends Base{
 	private int roleId;
 	private String roleName;
 	private String userIconPath;
+	private String userDescription;
 	private long integration;
 	
 	public String getUserName() {
@@ -56,6 +57,13 @@ public class User extends Base{
 	}
 	public void setUserIconPath(String userIconPath) {
 		this.userIconPath = userIconPath;
+	}
+	
+	public String getUserDescription() {
+		return userDescription;
+	}
+	public void setUserDescription(String userDescription) {
+		this.userDescription = userDescription;
 	}
 	public long getIntegration() {
 		return integration;

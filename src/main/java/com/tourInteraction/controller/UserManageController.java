@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,6 +134,33 @@ public class UserManageController {
 		String result = "修改用户失败";
 		if(num>0){
 			result = "修改用户成功";
+			return result;
+		}
+		return result;
+	}
+	
+	@RequestMapping("/updateUserDescription.do")
+	public @ResponseBody String updateUserDescription(HttpServletRequest req,String userDescription){
+		logger.debug("userManage/updateUserDescription.do被调用");
+		User user = SignInAndUpController.getSignInUser(req);
+		Map<String, Object> mapParam = new HashMap<String, Object>();
+		mapParam.put("id", user.getId());
+		
+		mapParam.put("userDescription", userDescription);
+		mapParam.put("updateTime", new Date());
+		mapParam.put("updateUser", user.getId());
+		mapParam.put("status", "1");
+
+		int num = userManageService.updateUser(mapParam);
+		
+		HttpSession session = req.getSession();
+		user.setUserDescription(userDescription);
+		session.removeAttribute("user");
+		session.setAttribute("user", user);
+		
+		String result = "修改个人介绍失败";
+		if(num>0){
+			result = "修改个人介绍成功";
 			return result;
 		}
 		return result;

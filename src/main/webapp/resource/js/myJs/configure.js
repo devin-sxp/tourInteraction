@@ -79,8 +79,8 @@ function getStaticSelect(staticType){
 	$("#control_select_pic").empty();
 	$.post(getRootPath()+"/static/getStatic.do",{staticType:staticType},function(data){
 		var data = eval("("+data+")")
-		$.each(data,function(index,static){
-			var html = "<option value=\""+static.staticCode+"\">"+static.staticName+"</option>"
+		$.each(data,function(index,stc){
+			var html = "<option value=\""+stc.staticCode+"\">"+stc.staticName+"</option>"
 			$("#control_select_pic").append(html);
 			
 		});

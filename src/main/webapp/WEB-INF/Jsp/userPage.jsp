@@ -1,8 +1,11 @@
+<%@page import="com.tourInteraction.entity.User"%>
 <%@page import="java.net.CookiePolicy"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%
 	String contextPath = request.getContextPath();
+	User user = new User();
+	user = (User) session.getAttribute("user");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -22,6 +25,11 @@
 	href="<%=contextPath%>/resource/css/article/entry-private-main.css">
 <link rel="stylesheet" media="all"
 	href="<%=contextPath%>/resource/css/common/tourCss.css">
+<link href="<%=contextPath%>/resource/css/pop/pop.css" type="text/css"
+	rel="stylesheet" media="all">
+
+<link href="<%=contextPath%>/resource/css/fileInput/fileinput.css"
+	type="text/css" rel="stylesheet" media="all">
 <script src="<%=contextPath%>/resource/js/jquery.min.js"></script>
 
 <script type="text/javascript">
@@ -55,12 +63,20 @@
         <div class="row">
             <div id="main_content_left" class="col-xs-1 main">
                 <div class="main-top">
-                    <a class="avatar" href="http://www.jianshu.com/u/2d0700f3a80a">
-                        <img src="<%=contextPath%>/resource/images/article/3.jpg" alt="240">
+                    <a class="avatar" href="<%=contextPath%>/page/userPage">
+                        <img src="<%=contextPath%><%
+                        	if(user != null){
+                        		out.print(user.getUserIconPath());
+                        	}
+                        %>" alt="240">
                     </a>
 
                     <div class="title">
-                        <a class="name" href="http://www.jianshu.com/u/2d0700f3a80a">Dreamer_2099</a>
+                        <a class="name" href="<%=contextPath%>/page/userPage"><%
+                        	if(user != null){
+                        		out.print(user.getUserName());
+                        	}
+                        %></a>
                     </div>
                     <div class="info">
                         <ul>
@@ -123,16 +139,20 @@
 
             <div id="main_content_right" class="col-xs-2 col-xs-offset-1 aside">
                 <div class="title">个人介绍</div>
-                <a class="function-btn" data-action="start-edit-intro" href="javascript:void(0)"><i class="iconfont ic-edit-s"></i>编辑</a>
-                <form class="profile-edit js-intro-form" data-type="json" id="edit_user_8000859" action="http://www.jianshu.com/users/2d0700f3a80a" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="_method" value="patch">
-                    <textarea name="user[intro]" id="user_intro"></textarea>
-                    <input type="submit" name="commit" value="保存" class="btn btn-hollow" data-action="save-edit-intro" data-disable-with="保存">
-                    <a id="cancel-edit-intro" data-action="cancel-edit-intro" href="javascript:void(null);">取消</a>
-                </form>
+                <a class="function-btn" href="javascript:void(0)"><i class="iconfont ic-edit-s"></i>编辑</a>
+                <div class="profile-edit js-intro-form" >
+                    <textarea id="text_user_description"><%
+                    			if (user != null){
+			                     out.print(user.getUserDescription());
+			                   } %></textarea>
+                    <input type="button" id="btn_save_user_description" value="保存" style="width:30%" class="btn btn-hollow btn-info" >
+                    <a id="cancel-edit-intro" href="javascript:void(null);">取消</a>
+                </div>
                 <div class="description">
-                    <div class="js-intro"></div>
-
-
+                    <div class="js-intro"><%
+							if (user != null){
+		                     out.print(user.getUserDescription());
+		                   } %></div>
                 </div>
                 <div id="user-publications">
                 </div>
@@ -152,21 +172,21 @@
                 <div>
                     <div>
                         <!---->
-                        <div class="title">我创建的专题</div>
-                        <div class="new-collection-block"><a href="http://www.jianshu.com/collections/new" class="new-collection-btn"><i class="iconfont ic-follow"></i><span>创建一个新专题</span></a></div>
+                        <div class="title">我创建的栏目</div>
+                        <a class="function-btn new-collection-btn"><i class="iconfont ic-follow"></i><span>新建栏目</span></a>
+                    	<ul class="my_subject_list list">
+<!--                     		<li>
+                    			<a href="" target="_blank" class="avatar-collection">
+                    				<img style="width:32px;height:32px;" src="">
+                    			</a> 
+                    			<a href="" target="_blank" class="name">
+                    			Django
+                    			</a>
+                    		</li> -->
+                    	 
+                    	</ul>
                     </div>
-                    <!---->
-                    <div>
-                        <div class="title">
-                            我的文集
-                        </div>
-                        <ul class="list">
-                            <li><a href="http://www.jianshu.com/nb/16690692" target="_blank"><i class="iconfont ic-search-notebook"></i></a> <a href="http://www.jianshu.com/nb/16690692" target="_blank" class="name">随笔</a></li>
-                            <li>
-
-                            </li>
-                        </ul>
-                    </div>
+                   
                 </div>
             </div>
 
@@ -185,13 +205,62 @@
 	<!-- footer -->
 	<jsp:include page="common/footer.jsp"></jsp:include>
 	<!-- footer -->
+	<!--创建栏目  start-->
+
+	<div class="popinto" id="create_subject">
+		<h3 class="" style="margin-top: 5px">
+			<span class="pull-left ">创建栏目</span> <i
+				class="fa fa-times pull-right font18" onclick="closepop()"></i>
+		</h3>
+		<br>
+		<hr>
+		<div class="popcon">
+			<ul class="list-group">
+				<li class="list-group-item"><input type="text"
+					id="input_subject_title" placeholder="请输入标题" class="form-control"
+					maxlength="50"></li>
+				<li class="list-group-item">
+					<label>请选择栏目图标：</label>
+					<input type="file" id="input_file" name="input_file"
+					class="form-control" multiple="multiple" data-show-caption="true"></li>
+
+				<li class="list-group-item">
+				<textarea id="textarea_subject_description"
+					style="height: 200px; width: 100%;border: 1px solid #ccc;border-radius: 4px;">
+        	    </textarea>
+				</li>
+			</ul>
+
+			<p class="pop_p">
+				<button type="button" class="btn btn-primary pop_btn"
+					style="padding: 10px" id="btn_news_create_subject_sure">创建</button>
+				<button type="button" class="btn btn-defalut pop_btn"
+					style="padding: 10px" onclick="closepop()">取消</button>
+			</p>
+		</div>
+	</div>
+	<!--发布弹窗 end-->
+	<div class="pop" onclick="closepop()"></div>
+	<script defer src="<%=contextPath%>/resource/js/pop/pop.js"></script>
 
 	<script defer src="<%=contextPath%>/resource/js/myJs/userPage.js"></script>
 	<script type="text/javascript"
 		src="<%=contextPath%>/resource/js/common/convertTime.js"></script>
-	
-</body>
-<script type="text/javascript">
+	<script defer src="<%=contextPath%>/resource/js/fileInput/fileinput.js"></script>
+	<script defer
+		src="<%=contextPath%>/resource/js/fileInput/fileinput_locale_zh.js"></script>
+	<script type="text/javascript"
+	src="<%=contextPath%>/resource/js/common/fileUpload.js"></script>
+	<div class="pop" onclick="closepop()"></div>
+
+	<script type="text/javascript">
+		if (isPhone()) {
+			$(".aside .board a img").css({
+				'width' : "100%"
+			})
+		}
+	</script>
+	<script type="text/javascript">
 	$(".trigger-menu li").on('click', function(){
 		$(".trigger-menu li").each(function(){
 			$(this).removeClass("active");
@@ -211,4 +280,6 @@
 		$("#main_content_left").css({'width':"100%"});
 	} 
 </script>
+</body>
+
 </html>

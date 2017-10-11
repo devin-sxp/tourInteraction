@@ -11,7 +11,7 @@ ul,li{ list-style-type:none;}
 .mainer{margin-left:180px;}
 .field-icon-right .icon{ bottom:0px; top:auto}
 .logo{ float:left; color:#FFF; margin-top:10px; line-height:45px;}
-.logo img{ float:left; margin-right:10px;}
+.logo img{ float:left; margin-right:10px;width:50px;height:50px;}
 .loginbox { background:url(../images/tmbg-white.png); border:0px;}
 /********头部******/
 .header{height:70px; overflow:hidden; background:url(../images/bg.jpg) no-repeat 0 -1000px; }

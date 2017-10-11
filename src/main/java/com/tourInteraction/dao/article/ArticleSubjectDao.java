@@ -19,4 +19,6 @@ public interface ArticleSubjectDao{
 
 	int addSubject(Map<String, Object> mapParam);
 
+	List<ArticleSubject> getSubjectsByUserId(int userId);
+
 }

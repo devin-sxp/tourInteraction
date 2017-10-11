@@ -1,3 +1,4 @@
+<%@page import="com.tourInteraction.entity.User"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%
@@ -18,7 +19,7 @@
 <body style="background-color:#f2f9fd;">
 <div class="header bg-main">
   <div class="logo margin-big-left fadein-top">
-    <h1><img src="<%=contextPath%>/resource/images/y.jpg" class="radius-circle rotate-hover" height="50" alt="" />管理中心</h1>
+    <h1><a title="点击进入设置" href="<%=contextPath%>/page/userCenter"><img id="nav_user_icon" src="<%=contextPath%>/resource/images/y.jpg" class="radius-circle rotate-hover" height="50" alt="个人头像" /></a>管理中心</h1>
   </div>
   <div class="head-l"><a class="button button-little bg-green" href="<%=contextPath%>/page/homeDisplay" target="_blank"><span class="icon-home"></span> 前台首页</a> &nbsp;&nbsp;
 <!--   <a href="##" class="button button-little bg-blue"><span class="icon-wrench"></span> 清除缓存</a> &nbsp;&nbsp;
@@ -28,15 +29,26 @@
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
   <h2 class="on"><span class="icon-user"></span>基本设置</h2>
   <ul style="display:block">
-    <li><a href="<%=contextPath%>/page/backgroundManagementUserManage" target="right" class="on"><span class="icon-caret-right"></span>用户管理</a></li>   
-    <li><a href="<%=contextPath%>/page/backgroundManagementModuleManage" target="right"><span class="icon-caret-right"></span>模块管理</a></li>  
-    <li><a href="<%=contextPath%>/page/backgroundManagementNewsManage" target="right"><span class="icon-caret-right"></span>信息管理</a></li>     
-
+    <li><a href="<%=contextPath%>/page/backgroundManagementUserManage" target="right" class="on"><span class="icon-user-md"></span>用户管理</a></li>   
+   
   </ul>   
- <h2><span class="icon-pencil-square-o"></span>栏目管理</h2>
+ <h2><span class="icon-exclamation-circle"></span>配置</h2>
   <ul>
-    <li><a href="<%=contextPath%>/page/backgroundManagementConfigure" target="right"><span class="icon-caret-right"></span>主页配置</a></li>
+    <li><a href="<%=contextPath%>/page/backgroundManagementConfigure" target="right"><span class="icon-briefcase"></span>主页配置</a></li>
   
+  </ul>
+   <h2><span class="icon-wechat"></span>互动管理</h2>
+   <ul>
+ 	<li><a href="<%=contextPath%>/page/backgroundManagementModuleManage" target="right"><span class="icon-bullhorn"></span>模块管理</a></li>  
+    <li><a href="<%=contextPath%>/page/backgroundManagementNewsManage" target="right"><span class="icon-comments"></span>信息管理</a></li>     
+  </ul>
+   <h2><span class="icon-pencil-square-o"></span>文章管理</h2>
+   <ul>
+    <li><a href="#" target="right"><span class="icon-bell"></span>审核</a></li>
+  </ul>
+  <h2><span class="icon-code"></span>系统管理</h2>
+   <ul>
+    <li><a href="<%=contextPath%>/page/backgroundManagementRoleManage" target="right"><span class="icon-pinterest"></span>角色管理</a></li>
   </ul>
 </div>
 <script type="text/javascript">
@@ -64,6 +76,13 @@ $(function(){
 </body>
  
 <script type="text/javascript">
+
+<%User user = new User();
+user = (User) session.getAttribute("user");%>
+
+$("#nav_user_icon").attr('src','<%if (user != null) out.print(contextPath+user.getUserIconPath());%>'.trim());
+
+
 $(function() {
 /* 	getSignInUser() */
 })

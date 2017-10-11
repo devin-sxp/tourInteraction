@@ -18,4 +18,6 @@ public interface IArticleSubjectService {
 
 	int addSubject(Map<String, Object> mapParam);
 
+	List<ArticleSubject> getSubjectsByUserId(int userId);
+
 }

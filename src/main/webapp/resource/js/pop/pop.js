@@ -96,3 +96,24 @@ var edit_password = function(){
 	
 	$("#edit_password").show("fast");
 };
+
+var create_subject = function(){
+    popshow();
+    if(!isPhone()){
+        $("#create_subject").css({
+            'marginTop':-$("#create_subject").height()/2,
+        })
+    }else{
+    	$("#create_subject").css({
+    		'left':'0px',
+    		'top':'0px',
+    		'width':'100%',
+    		'height':'100%'
+    		
+    	});
+
+    }
+    $("#create_subject").show("fast");  
+
+    $("#create_subject").css("overflow", "visible");//用于解决wangeditor全屏花屏问题
+}

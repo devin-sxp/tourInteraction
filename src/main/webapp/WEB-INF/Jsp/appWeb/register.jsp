@@ -138,7 +138,7 @@
 //定义验证
 	$.validator.addMethod("nameLength",function(value,element,param){
 		var len = value.length;
-		if(len < 6 || len > 16){
+		if(len > 16 || len < 6){
 			return false;
 		}else{
 			return true;
@@ -146,7 +146,7 @@
 	});
 	$.validator.addMethod("passwordValidate",function(value,element,param){
 		var len = value.length;
-		if(len<6||len>16){
+		if(len>16 || len<6){
 			return false;
 		}else{
 			return true;
@@ -154,7 +154,7 @@
 	})
 	$.validator.addMethod("confirmPasswordValidate",function(value,element,param){
 		var len = value.length;
-		if(len < 6 || len > 16 || $("#password").val() != $("#comfirm_password").val() ){
+		if(len > 16 || len < 6 || $("#password").val() != $("#comfirm_password").val() ){
 			return false;
 		}else{
 			return true;

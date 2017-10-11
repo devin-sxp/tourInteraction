@@ -441,7 +441,6 @@
 		src="<%=contextPath%>/resource/js/common/convertTime.js"></script>
 	<script type="text/javascript"
 	src="<%=contextPath%>/resource/js/common/fileUpload.js"></script>
-	<div class="pop" onclick="closepop()"></div>
 	<script type="text/javascript"
 		src="<%=contextPath%>/resource/js/wangEditor/wangEditor.js"></script>
 	<script type="text/javascript">

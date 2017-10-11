@@ -28,4 +28,35 @@
 	   </if>
 	</select>
 	
+	<!-- 查询全部 -->
+	<select id="getSubjectsByUserId" resultType="ArticleSubject">
+	   select asu.id as id,
+	   asu.subject_title as subjectTitle,
+	   asu.subject_description as subjectDescription,
+	   f.file_path as subjectIconPath,
+	   ast.type_name as subjectTypeName,
+	   asu.create_time as createTime, 
+	   asu.create_user as createUser, 
+	   u.user_name as createUserName,
+	   asu.update_time as updateTime, 
+	   asu.update_user as updateUser,
+	   asu.status as status 
+	   from article_subject as asu
+	   left join user as u
+	   on asu.create_user = u.id
+	   left join files as f
+	   on asu.subject_icon_id = f.id
+	   left join article_subject_type as ast
+	   on ast.id = asu.subject_type
+	   where asu.status="1" and asu.create_user = #{userId}
+	   order by asu.create_time desc
+	</select>
+	
+		<!-- 插入操作 -->
+ 	<insert id="addSubject" parameterType="int">
+	   insert into article_subject(subject_title,subject_description,subject_icon_id,subject_type,
+	   create_time,create_user,status) 
+	   values(#{subjectTitle},#{subjectDescription},#{subjectIconId},#{subjectType},
+	   #{createTime},#{createUser},#{status})
+	</insert> 
 </mapper>

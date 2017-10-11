@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tourInteraction.dao.PrivilegeManageDao">
+
+	
+	<select id="getPrivileges" resultType="Privilege">
+	   select 
+		*
+	   from privileges
+	</select>
+
+		
+	<update id="updatePrivilege" parameterType="Privilege">
+	  update privileges 
+	  set 
+	  <if test="null != parentId  and '' != parentId">
+	  		parent_id=#{parentId},
+	  </if>
+	  <if test="null != privilegeName  and '' != privilegeName">
+	  		privilege_name=#{privilegeName},
+	  </if>
+	  	  <if test="null != privilegeValue  and '' != privilegeValue">
+	  		privilege_value=#{privilegeValue},
+	  </if>
+	  
+	  update_time=#{updateTime},
+	  update_user=#{updateUser}
+	  where id=#{id}
+	</update>
+	
+
+	<insert id="addPrivilege" useGeneratedKeys="true" parameterType="Map">
+		insert into privileges(parent_id,privilege_name,privilege_value,create_time,create_user,status) 
+	   values(#{parentId},#{privilegeName},#{privilegeValue},#{roleName},#{createTime},#{createUser},#{status})
+	</insert>
+	
+	<!-- 删除操作 -->
+	<delete id="delPrivilegeById" parameterType="int">
+	  delete from privileges where id=#{privilegeId}
+	</delete>
+ 
+	
+</mapper>

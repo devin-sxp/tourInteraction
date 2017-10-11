@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tourInteraction.dao.RoleManageDao">
+
+	
+	<select id="getRoles" resultType="Role">
+	   select 
+	   id as id,
+	   role_name as roleName
+	   from role
+	</select>
+
+		
+	<update id="updateRole" parameterType="Role">
+	  update role 
+	  set 
+	  <if test="null != roleName  and '' != roleName">
+	  		role_name=#{roleName},
+	  </if>
+	  update_time=#{updateTime},
+	  update_user=#{updateUser}
+	  where id=#{id}
+	</update>
+	
+
+	<insert id="addRole" useGeneratedKeys="true" parameterType="Map">
+		insert into role(role_name,create_time,create_user,status) 
+	   values(#{roleName},#{createTime},#{createUser},#{status})
+	</insert>
+	
+	<!-- 删除操作 -->
+	<delete id="delRoleById" parameterType="int">
+	  delete from role where id=#{roleId}
+	</delete>
+ 
+	
+</mapper>

@@ -64,7 +64,7 @@
 //定义验证
 	$.validator.addMethod("nameLength",function(value,element,param){
 		var len = value.length;
-		if(len < 3 || len > 12 ){
+		if(len > 16 || len < 3 ){
 			return false;
 		}else{
 			return true;
@@ -72,7 +72,7 @@
 	});
 	$.validator.addMethod("passwordValidate",function(value,element,param){
 		var len = value.length;
-		if(len<3||len>16){
+		if(len > 16 || len <3){
 			return false;
 		}else{
 			return true;

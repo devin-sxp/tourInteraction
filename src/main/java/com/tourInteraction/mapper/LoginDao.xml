@@ -24,7 +24,8 @@
 	   u.phone_number as phoneNumber,
 	   u.role_id as roleId,
 	   u.integration as integration,
-	   f.file_path as userIconPath
+	   f.file_path as userIconPath,
+	   u.user_description as userDescription 
 	   from user as u
 	   left join files as f
 	   on u.user_icon_id = f.id

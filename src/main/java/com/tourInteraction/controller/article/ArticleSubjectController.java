@@ -49,6 +49,18 @@ public class ArticleSubjectController {
 		return result;
 	}
 	
+	@RequestMapping("/getSubjectsByUserId.do")
+	public @ResponseBody String getSubjectsByUserId(HttpServletRequest req,@RequestParam(value="userId")int userId){
+		logger.debug("articleSubject/getSubjectByUserId.do被调用");
+		if(userId == 0){
+			userId = (int)SignInAndUpController.getSignInUser(req).getId();
+		}
+		List<ArticleSubject> list = new ArrayList<ArticleSubject>();
+		list = articleSubjectService.getSubjectsByUserId(userId);
+		String result = JSONUtil.list2json(list);
+		return result;
+	}
+	
 	@RequestMapping("getSubjectById.do")
 	public @ResponseBody String getSubjectById( @RequestParam("id") int id){
 		ArticleSubject articleSubject = new ArticleSubject();
@@ -101,27 +113,26 @@ public class ArticleSubjectController {
 	
 	@RequestMapping("/addSubject.do")
 	public @ResponseBody String addSubject(HttpServletRequest req, 
-			@RequestParam("SubjectName") String SubjectName, 
-			@RequestParam("SubjectDiscription") String SubjectDiscription,
-			@RequestParam("SubjectLabel") String SubjectLabel,
-			@RequestParam("SubjectIcon") String SubjectIcon){
+			@RequestParam("subjectTitle") String subjectTitle, 
+			@RequestParam("subjectDescription") String subjectDescription,
+			@RequestParam("subjectIconId") String subjectIconId,
+			@RequestParam("subjectType") String subjectType){
 		logger.debug("articleSubject/addSubject.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
-		mapParam.put("SubjectName", SubjectName);
-		mapParam.put("SubjectDiscription", SubjectDiscription);
-		mapParam.put("SubjectLabel", SubjectLabel);
-		mapParam.put("SubjectIcon", SubjectIcon);
+		mapParam.put("subjectTitle", subjectTitle);
+		mapParam.put("subjectDescription", subjectDescription);
+		mapParam.put("subjectType", subjectType);
+		mapParam.put("subjectIconId", subjectIconId);
 	
 		mapParam.put("createTime", new Date());
 		mapParam.put("createUser", user.getId());
 		mapParam.put("status", "1");
 		
 		int num = articleSubjectService.addSubject(mapParam);
-		String result = "增加失败";
+		String result = "创建栏目失败";
 		if(num>0){
-			result = "增加成功";
-			return result;
+			result = "创建栏目成功";
 		}
 		return result;
 	}

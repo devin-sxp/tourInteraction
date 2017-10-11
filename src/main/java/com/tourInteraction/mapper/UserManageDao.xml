@@ -96,6 +96,9 @@
 	  <if test="null != integration  and '' != integration">
 	  	  integration=#{integration},
 	  </if>
+	  <if test="null != userDescription  and '' != userDescription">
+	  	  user_description=#{userDescription},
+	  </if>
 	  update_time=#{updateTime},
 	  update_user=#{updateUser}
 	  where id=#{id}
