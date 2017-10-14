@@ -30,11 +30,12 @@ public class PrivilegeManageController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping("getPrivileges.do")
-	public @ResponseBody String getPrivileges(HttpServletRequest request){
+	public @ResponseBody String getPrivileges(HttpServletRequest request,
+			@RequestParam("roleId") int roleId){
 		
 		logger.debug("privilegeManage/getPrivileges.do被调用");
 		List<Privilege> list = new ArrayList<Privilege>();
-		list = privilegeManageService.getPrivileges();
+		list = privilegeManageService.getPrivileges(roleId);
 		String result = JSONUtil.list2json(list);
 		return result;
 	}
@@ -96,6 +97,22 @@ public class PrivilegeManageController {
 		String result = "修改角色失败";
 		if(num>0){
 			result = "修改角色成功";
+			return result;
+		}
+		return result;
+	}
+	
+	@RequestMapping("/saveRolePrivilege.do")
+	public @ResponseBody String saveRolePrivilege(HttpServletRequest req,
+			@RequestParam("roleId") int roleId,
+			@RequestParam(value = "privilegeIds[]",required=false) int[] privilegeIds){
+		logger.debug("privilegeManage/saveRolePrivilege.do被调用");
+		User user = SignInAndUpController.getSignInUser(req);
+
+		int num = privilegeManageService.saveRolePrivilege(roleId,privilegeIds,user.getId());
+		String result = "保存角色权限失败";
+		if(num>0){
+			result = "保存角色权限成功";
 			return result;
 		}
 		return result;

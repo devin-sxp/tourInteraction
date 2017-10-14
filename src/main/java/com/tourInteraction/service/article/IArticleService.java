@@ -1,8 +1,9 @@
 package com.tourInteraction.service.article;
 
 import java.util.List;
+import java.util.Map;
+
 import com.tourInteraction.entity.article.Article;
-import com.tourInteraction.entity.article.ArticleSubject;
 
 public interface IArticleService {
 
@@ -19,5 +20,7 @@ public interface IArticleService {
 	List<Article> getArticles(String limit, String offset);
 
 	int getArticleCount();
+
+	Map<String, Object> getArticlesBySubjectId(int subjectId, int limit, int offset);
 
 }

@@ -10,6 +10,7 @@ $(function(){
 	$(".note-list").empty();
 	getArticleCount();
 	getArticles(page*getCount,getCount);
+	getRecommendSubjects();
 });
 let getArticleCount = ()=> {
 	$.post(getRootPath()+"/article/getArticleCount.do", function(data, textStatus, req) {
@@ -102,4 +103,17 @@ $(".load-more").on('click',function(){
 	}
 	getArticles(page*getCount,getCount);
 })
+
+let getRecommendSubjects = function(){
+	$.post(getRootPath()+"/articleSubject/getSubject.do", {offset:7,limit:0}, function(data, textStatus, req) {
+		data = eval("("+data+")");
+		$(".more-hot-collection").html(data.count+"个热门专题<i class=\"iconfont ic-link\"></i>");
+		$.each(data.list, function(i, subject) {
+			var html = "<a class=\"collection\""+
+			"href=\""+getRootPath()+"/page/subject?sid="+subject.id+"\"><img src=\""+getRootPath()+subject.subjectIconPath+"\"alt=\"64\">" +
+			"<div class=\"name\">"+subject.subjectTitle+"</div>";
+			$(".recommend-collection").append(html);
+		})
+	},'json');
+}
 

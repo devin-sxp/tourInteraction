@@ -1,9 +1,15 @@
 package com.tourInteraction.serviceImpl.article;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.tourInteraction.dao.article.ArticleDao;
 import com.tourInteraction.entity.article.Article;
 import com.tourInteraction.service.article.IArticleService;
@@ -53,6 +59,17 @@ public class ArticleServiceImpl implements IArticleService {
 	@Override
 	public int getArticleCount() {
 		return articleDao.getArticleCount();
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Map<String, Object> getArticlesBySubjectId(int subjectId,int limit,int offset) {
+		ArrayList<Article> list = new ArrayList<Article>(articleDao.getArticlesBySubjectId(subjectId,limit,offset));
+		int count = articleDao.getArticleCountBySubjectId(subjectId);
+		Map<String,Object> map = new HashMap<String , Object>();
+		map.put("count", count);
+		map.put("list", list);
+		return map;
 	}
 
 

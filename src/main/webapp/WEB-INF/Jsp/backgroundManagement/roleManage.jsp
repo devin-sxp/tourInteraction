@@ -25,13 +25,11 @@
 	vertical-align: middle;
 }
 .ztree {
-
     float: left;
     border: dashed;
     border-radius: 10px;
     width: 50%;
     overflow: auto;
-
 } 
 </style>
 </head>
@@ -101,7 +99,9 @@
 		</div>
 		<div class="panel-head hidden">
 			<strong id="strong_set_privilege"><span class="icon-pencil-square-o"></span>
-				设置权限</strong>
+				设置权限
+				<span class="icon-arrow-right" style="margin-left:10px"></span>
+				<b id="b_control_role" style="color:#00b0ff"></b></strong>
 		</div>
 		<div class="panel-head hidden">
 			<strong id="strong_edit"><span class="icon-pencil-square-o"></span>

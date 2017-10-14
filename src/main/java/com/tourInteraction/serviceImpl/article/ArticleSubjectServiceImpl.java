@@ -53,6 +53,12 @@ public class ArticleSubjectServiceImpl implements IArticleSubjectService {
 		return articleSubjectDao.getSubjectsByUserId(userId);
 	}
 
+	@Override
+	public int getSubjectCount() {
+		// TODO Auto-generated method stub
+		return articleSubjectDao.getSubjectCount();
+	}
+
 	
 
 }

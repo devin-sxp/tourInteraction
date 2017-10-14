@@ -1,5 +1,6 @@
 package com.tourInteraction.dao.article;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -21,4 +22,8 @@ public interface ArticleDao{
 	List<Article> getArticles(@Param("limit") String limit,@Param("offset") String offset);
 
 	int getArticleCount();
+
+	Collection<? extends Article> getArticlesBySubjectId(@Param("subjectId") int subjectId, @Param("limit")int limit,@Param("offset") int offset);
+
+	int getArticleCountBySubjectId(@Param("subjectId")int subjectId);
 }

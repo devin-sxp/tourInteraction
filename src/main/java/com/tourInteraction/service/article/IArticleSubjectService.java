@@ -20,4 +20,6 @@ public interface IArticleSubjectService {
 
 	List<ArticleSubject> getSubjectsByUserId(int userId);
 
+	int getSubjectCount();
+
 }

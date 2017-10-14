@@ -69,6 +69,35 @@
 		where a.status = "1" and a.id = #{id}
 	</select>
 	
+	<select id="getArticlesBySubjectId" resultType="Article">
+		select
+		a.id as id,
+		a.subject_id as subjectId,
+		a.article_name as articleName,
+		a.article_content as articleContent,
+		f.file_path as filePath,
+		a.article_look_count as articleLookCount,
+		a.article_love_count as articleLoveCount,
+		a.article_support_count as articleSupportCount,
+		a.article_comment_count as articleCommentCount,
+		a.create_time as createTime,
+		a.create_user as createUser,
+		u.user_name as createUserName,
+		fu.file_path as userIconPath
+		from article as a
+		left join user as u
+		on a.create_user = u.id
+		left join files as f
+		on a.article_icon_id = f.id
+		left join files as fu
+		on u.user_icon_id = fu.id
+		where a.status = "1" and a.subject_id = #{subjectId}
+		order by a.create_time desc
+		<if test="null != limit and '' != limit and null != offset and '' != offset">
+	   	   limit ${limit},${offset} 
+	   </if>
+	</select>
+	
 	<select id="getNowUserArticleCount" resultType="int">
 		select count(*) from article 
 		where status = "1" and create_user = #{userId}
@@ -77,6 +106,11 @@
 	<select id="getArticleCount" resultType="int">
 		select count(*) from article 
 		where status = "1"
+	</select>
+	
+	<select id="getArticleCountBySubjectId" resultType="int">
+		select count(*) from article 
+		where status = "1" and subject_id = #{subjectId}
 	</select>
 	
 	<!-- 插入操作 -->

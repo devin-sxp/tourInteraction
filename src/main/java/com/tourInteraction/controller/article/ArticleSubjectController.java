@@ -42,9 +42,10 @@ public class ArticleSubjectController {
 
 		List<ArticleSubject> list = new ArrayList<ArticleSubject>();
 		list = articleSubjectService.getSubject(limit,offset);
+		int count = articleSubjectService.getSubjectCount();
 		Map<String, Object> map = new HashMap<String , Object>();
 		map.put("list", list);
-		map.put("count", 10);
+		map.put("count", count);
 		String result = JSONUtil.map2json(map);
 		return result;
 	}

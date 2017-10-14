@@ -9,8 +9,26 @@
 	   select 
 		*
 	   from privileges
+	   where status = "1"
 	</select>
 
+	
+	<select id="getRolePossessPrivileges" resultType="Privilege">
+	   select 
+		p.id as id,
+		p.parent_id as parentId,
+		p.privilege_name as privilegeName,
+		p.privilege_value as privilegeValue,
+		p.create_time as createTime,
+		p.create_user as createUser,
+		p.update_time as updateTime,
+		p.update_user as updateUser,
+		p.status as status
+	   from privileges as p
+	   inner join role_privileges as rp
+	   on p.id = rp.privilege_id
+	   where p.status = "1" and rp.role_id = #{roleId}
+	</select>
 		
 	<update id="updatePrivilege" parameterType="Privilege">
 	  update privileges 
@@ -41,5 +59,13 @@
 	  delete from privileges where id=#{privilegeId}
 	</delete>
  
+ 	<delete id="delRolePossessedPrivilegeByRoleId" parameterType="int">
+	  delete from role_privileges where role_id=#{roleId}
+	</delete>
+	
+	<insert id="saveRolePrivilege" useGeneratedKeys="true" parameterType="Map">
+		insert into role_privileges(role_id,privilege_id,create_time,create_user,status) 
+	   values(#{roleId},#{privilegeId},#{createTime},#{createUser},#{status})
+	</insert>
 	
 </mapper>

@@ -54,6 +54,17 @@ public class PageController {
 		return "article";
 		
 	}
+	@RequestMapping(value="articleSubjects")
+	public String articleSubjects(HttpServletRequest req) {
+		return "articleSubjects";
+		
+	}
+	
+	@RequestMapping(value="subject")
+	public String subject(HttpServletRequest req) {
+		return "subject";
+		
+	}
 	
 	@RequestMapping(value="articleNews")
 	public String articleNews(HttpServletRequest req) {

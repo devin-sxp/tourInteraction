@@ -1,6 +1,7 @@
 var role_manage ={
 		data:{
-			
+			roleId:0,
+			roleName:''
 		},
 		operate:{
 			getRoles:function(){
@@ -16,7 +17,8 @@ var role_manage ={
 						"<a class=\"button border-main\" href=\"#control\" " +
 						"onclick=\"return role_manage.operate.transferRole("+role.id+",'"+role.roleName+"')\">"+
 						"<span class=\"icon-edit\"></span> 修改</a>"+ 
-						"<a class=\"button border-yellow\" href=\"#control\" onclick=\"role_manage.operate.showPrivilege()\">"+
+						"<a class=\"button border-yellow\" href=\"#control\" onclick=\"role_manage.operate.showPrivilege("+
+						role.id+",'"+role.roleName+"')\">"+
 						"<span	class=\"icon-lock\"></span> 设置权限</a>"+
 						"<a class=\"button border-red\"	href=\"javascript:void(0)\" onclick=\"return role_manage.operate.delRole("+role.id+")\">"+
 						"<span class=\"icon-trash-o\"></span> 删除</a></div></td></tr>";
@@ -72,8 +74,11 @@ var role_manage ={
 					}
 				})
 			},
-			showPrivilege:function(){
+			showPrivilege:function(roleId,roleName){
+				role_manage.data.roleId = roleId
+				role_manage.data.roleName = roleName
 				role_manage.operate.ztree.loadPrivilegeTree();
+				$("#b_control_role").text(roleName);
 				$("#strong_edit").parent().addClass("hidden");
 				$("#add_or_edit_panel").addClass("hidden");
 				$("#btn_save").addClass("hidden");
@@ -81,9 +86,10 @@ var role_manage ={
 				$("#strong_add").parent().addClass("hidden");
 				$("#btn_add").addClass("hidden");
 				$("#strong_set_privilege").parent().removeClass("hidden");
+				
 			},
 			ztree:{
-				zTreePlugin:'',
+				treeObj:'',
 				settings:{
 					data:{
 						simpleData: {
@@ -113,11 +119,22 @@ var role_manage ={
 					}
 				},
 				loadPrivilegeTree:function(){
-					$.post(getRootPath()+"/privilegeManage/getPrivileges.do", {}, function(data, textStatus, req) {
-						role_manage.operate.ztree.zTreePlugin = $.fn.zTree.init($("#privilege_tree"),role_manage.operate.ztree.settings,eval(data));
+					$.post(getRootPath()+"/privilegeManage/getPrivileges.do", {roleId:role_manage.data.roleId}, function(data, textStatus, req) {
+						role_manage.operate.ztree.treeObj = $.fn.zTree.init($("#privilege_tree"),role_manage.operate.ztree.settings,eval(data));
 						$('#img_loading').addClass('hidden')
+						role_manage.operate.ztree.treeObj.expandAll(true);
+
 					},'json')
 				}
+			},
+			saveRolePrivilege:function(data){
+				$.post(getRootPath()+"/privilegeManage/saveRolePrivilege.do", data, function(data, textStatus, req) {
+					if(textStatus == "success"){
+						toastr.success(data);
+					}else{
+						toastr.error("保存角色权限失败");
+					}
+				},'json')
 			}
 		},
 		init:function(){
@@ -135,6 +152,19 @@ var role_manage ={
 				var roleName = $("#input_role_name").val();
 				role_manage.operate.addRole(roleName);
 			});
+			$("#sure_save_privilege").on('click',function(){
+				var nodes = role_manage.operate.ztree.treeObj.getCheckedNodes(true);
+				var privilegeIds = new Array();
+				$.each(nodes, function(i, node) {
+					privilegeIds.push(node.id);
+				})
+				var data = {
+					roleId:role_manage.data.roleId,
+					privilegeIds:privilegeIds
+				}
+				
+				role_manage.operate.saveRolePrivilege(data);
+			})
 		}
 };
 $().ready(function() {

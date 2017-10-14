@@ -12,6 +12,11 @@
     margin-bottom: -1px
 }
 
+.btn-hollow {
+    border: 1px solid rgba(59,194,29,.7);
+    color: #42c02e!important;
+}
+
 .trigger-menu li:after {
     content: "";
     position: absolute;

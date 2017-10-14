@@ -21,4 +21,6 @@ public interface ArticleSubjectDao{
 
 	List<ArticleSubject> getSubjectsByUserId(int userId);
 
+	int getSubjectCount();
+
 }

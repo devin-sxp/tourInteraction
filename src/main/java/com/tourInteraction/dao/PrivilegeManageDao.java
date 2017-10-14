@@ -17,4 +17,10 @@ public interface PrivilegeManageDao {
 
 	int addPrivilege(Map<String, Object> mapParam);
 
+	List<Privilege> getRolePossessPrivileges(@Param("roleId") int roleId);
+
+	int saveRolePrivilege(Map<String, Object> mapParam);
+
+	int delRolePossessedPrivilegeByRoleId(@Param("roleId") int roleId);
+
 }

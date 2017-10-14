@@ -9,6 +9,8 @@ public class Privilege extends Base {
 	private int parentId;
 	private String privilegeName;
 	private String privilegeValue;
+	private boolean checked;
+
 	public int getParentId() {
 		return parentId;
 	}
@@ -27,5 +29,12 @@ public class Privilege extends Base {
 	public void setPrivilegeValue(String privilegeValue) {
 		this.privilegeValue = privilegeValue;
 	}
+	public boolean isChecked() {
+		return checked;
+	}
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+	
 	
 }
