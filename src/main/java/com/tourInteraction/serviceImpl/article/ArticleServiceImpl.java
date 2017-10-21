@@ -72,6 +72,16 @@ public class ArticleServiceImpl implements IArticleService {
 		return map;
 	}
 
+	@Override
+	public Map<String, Object> getArticleAuthorBySubjectId(int subjectId, int limit, int offset) {
+		ArrayList<Article> list = new ArrayList<Article>(articleDao.getArticleAuthorBySubjectId(subjectId,limit,offset));
+		int count = articleDao.getArticleAuthorCountBySubjectId(subjectId);
+		Map<String,Object> map = new HashMap<String , Object>();
+		map.put("count", count);
+		map.put("list", list);
+		return map;
+	}
+
 
 
 	

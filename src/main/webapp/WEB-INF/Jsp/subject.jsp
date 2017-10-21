@@ -137,16 +137,17 @@
 
 					<div>
 						<div>
-							<p class="title">管理员</p>
+							<p class="title" id="p_author_name">管理员</p>
 							<ul class="list collection-editor">
-								<li><a href=""
+								<!-- <li><a href=""
 									target="_blank" class="avatar"><img
 										src=""></a> <a
 									href="" target="_blank"
-									class="name">大豆</a> <span class="tag">创建者</span></li>
+									class="name">大豆</a> <span class="tag">创建者</span></li> -->
 								
-								<li><a class="check-more">展开更多 <i
-										class="iconfont ic-show"></i></a> <!----></li>
+								<li><a class="check-more" id="load-more-author" data-next-page="2">展开更多 <i
+										class="iconfont ic-show"></i></a>
+								</li>
 							</ul>
 						</div>
 					</div>

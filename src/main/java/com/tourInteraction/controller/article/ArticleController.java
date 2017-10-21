@@ -92,6 +92,17 @@ public class ArticleController {
 		return result;
 	}
 	
+	@RequestMapping("getArticleAuthorBySubjectId.do")
+	public @ResponseBody String getArticleAuthorBySubjectId( @RequestParam("subjectId") int subjectId,
+			@RequestParam("limit")int limit,
+			@RequestParam("offset")int offset){
+		logger.debug("article/getArticleAuthorBySubjectId.do被调用");
+		Map<String,Object> map = new HashMap<String , Object>();
+		map = articleService.getArticleAuthorBySubjectId(subjectId,limit,offset);
+		String result = JSONUtil.map2json(map);
+		return result;
+	}
+	
 	@RequestMapping("addArticle.do")
 	@ResponseBody
 	public String writeArticle(HttpServletRequest request, @RequestParam("articleName") String articleName,

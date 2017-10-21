@@ -98,6 +98,21 @@
 	   </if>
 	</select>
 	
+	<select id="getArticleAuthorBySubjectId" resultType="Article">
+		select
+		a.create_user as createUser,
+		u.user_name as createUserName,
+		fu.file_path as userIconPath
+		from article as a
+		left join user as u
+		on a.create_user = u.id
+		left join files as fu
+		on u.user_icon_id = fu.id
+		where a.status = "1" and a.subject_id = #{subjectId}
+		group by a.create_user
+		limit ${limit},${offset} 
+	</select>
+	
 	<select id="getNowUserArticleCount" resultType="int">
 		select count(*) from article 
 		where status = "1" and create_user = #{userId}
@@ -111,6 +126,12 @@
 	<select id="getArticleCountBySubjectId" resultType="int">
 		select count(*) from article 
 		where status = "1" and subject_id = #{subjectId}
+	</select>
+	
+	<select id="getArticleAuthorCountBySubjectId" resultType="int">
+		SELECT count(*) from (select * from article 
+		where status = "1" and subject_id = #{subjectId}
+		group by create_user) as a
 	</select>
 	
 	<!-- 插入操作 -->
@@ -128,4 +149,11 @@
 	   	   limit ${limit},${offset} 
 	   </if>
 	</select>
+	
+	<update id="passSubmitArticle" parameterType="Article">
+		update article 
+		set
+		subject_id = #{subjectId}
+		where id = #{articleId}
+	</update>
 </mapper>

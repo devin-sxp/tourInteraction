@@ -23,4 +23,6 @@ public interface IArticleService {
 
 	Map<String, Object> getArticlesBySubjectId(int subjectId, int limit, int offset);
 
+	Map<String, Object> getArticleAuthorBySubjectId(int subjectId, int limit, int offset);
+
 }

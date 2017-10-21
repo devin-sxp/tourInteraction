@@ -26,4 +26,8 @@ public interface ArticleDao{
 	Collection<? extends Article> getArticlesBySubjectId(@Param("subjectId") int subjectId, @Param("limit")int limit,@Param("offset") int offset);
 
 	int getArticleCountBySubjectId(@Param("subjectId")int subjectId);
+
+	Collection<? extends Article> getArticleAuthorBySubjectId(@Param("subjectId") int subjectId, @Param("limit")int limit,@Param("offset") int offset);
+
+	int getArticleAuthorCountBySubjectId(@Param("subjectId")int subjectId);
 }

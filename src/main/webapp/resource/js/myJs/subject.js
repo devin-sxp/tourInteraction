@@ -3,6 +3,8 @@ var subject = {
 		subjectId:getUrlParam("sid"),
 		currentPage:1,
 		pagesize:15,
+		authorCurrentPage:1,
+		authorPagesize:10,
 		isFlag:true
 	},
 	option:{
@@ -42,19 +44,56 @@ var subject = {
 					$(".note-list").append(html);
 				})
 			},'json');
+		},
+		getArticleAuthorBySubjectId:function(data){
+			$.post(getRootPath()+"/article/getArticleAuthorBySubjectId.do", data, function(data, textStatus, req) {
+				data = eval("("+data+")");
+//				console.log(data)
+				$("#p_author_name").text("共"+data.count+"位作者")
+				if(data.list.length == 0){
+					return toastr.info("没有更多了");
+				}
+				$.each(data.list, function(i, articleAuthor) {
+					var html = "<li><a href=\""+articleAuthor.createUser+"\"" +
+					"class=\"avatar\"><img src=\""+getRootPath()+articleAuthor.userIconPath+"\"></a> " +
+							"<a href=\"\" target=\"_blank\""+
+					"class=\"name\">"+articleAuthor.createUserName+"</a> " +
+					"<span class=\"tag\">作者</span></li>";	
+					$(".collection-editor").append(html);
+				})
+			},'json');
 		}
 	},
 	init:function(){
 		let pagesize = subject.data.pagesize;
 		let currentPage = subject.data.currentPage;
+		let authorCurrentPage = subject.data.authorCurrentPage;
+		let authorPagesize = subject.data.authorPagesize;
 		subject.option.getSubjectById(subject.data.subjectId);
 		subject.option.getArticlesBySubjectId(subject.data.subjectId,(currentPage-1)*pagesize,pagesize);
-		
+		var data = {
+			subjectId:subject.data.subjectId,
+			limit:(authorCurrentPage-1)*authorCurrentPage,
+			offset:authorPagesize
+		}
+		subject.option.getArticleAuthorBySubjectId(data);
 		$(".load-more-btn").bind('click', function() {
-			let nextPage = $(this).attr("data-next-page")
+			let nextPage = parseInt($(this).attr("data-next-page"))
 			subject.option.getArticlesBySubjectId(subject.data.subjectId,(nextPage-1)*pagesize,pagesize);
 			subject.data.currentPage = nextPage;
-			$(this).attr("data-next-page",parseInt(nextPage)+1);
+			$(this).attr("data-next-page",nextPage+1);
+		})
+		
+		$("#load-more-author").bind('click', function() {
+			let nextPage = parseInt($(this).attr("data-next-page"))
+			var data = {
+				subjectId:subject.data.subjectId,
+				limit:(nextPage-1)*authorPagesize,
+				offset:authorPagesize
+			}
+			subject.option.getArticleAuthorBySubjectId(data);
+			subject.data.authorCurrentPage = nextPage;
+			$(this).attr("data-next-page",nextPage+1);
 		})
 	}
 }
