@@ -5,9 +5,9 @@
 <mapper namespace="com.tourInteraction.dao.LoginDao">
     <!-- 插入操作 -->
  	<insert id="setUserDao" parameterType="int">
-	   insert into user(user_name,password,email,phone_number,role_id
+	   insert into user(user_name,password,email,phone_number,role_id,user_icon_id
 	   ,integration,create_time,update_time,status) 
-	   values(#{userName},#{passWord},#{email},#{phoneNumber},#{roleId}
+	   values(#{userName},#{passWord},#{email},#{phoneNumber},#{roleId},#{userIconId}
 	   ,#{integration},#{createTime},#{updateTime},#{status})
 	</insert> 
 	

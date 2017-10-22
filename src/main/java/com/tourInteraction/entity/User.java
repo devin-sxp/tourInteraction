@@ -11,6 +11,7 @@ public class User extends Base{
 	private String phoneNumber;
 	private int roleId;
 	private String roleName;
+	private int userIconId;
 	private String userIconPath;
 	private String userDescription;
 	private long integration;
@@ -52,13 +53,20 @@ public class User extends Base{
 		this.roleName = roleName;
 	}
 	
+	
+	public int getUserIconId() {
+		return userIconId;
+	}
+	public void setUserIconId(int userIconId) {
+		this.userIconId = userIconId;
+	}
+	
 	public String getUserIconPath() {
 		return userIconPath;
 	}
 	public void setUserIconPath(String userIconPath) {
 		this.userIconPath = userIconPath;
 	}
-	
 	public String getUserDescription() {
 		return userDescription;
 	}

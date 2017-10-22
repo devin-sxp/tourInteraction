@@ -77,6 +77,7 @@ $("#btn_save_user_description").on('click', function() {
 	$.post(getRootPath()+"/userManage/updateUserDescription.do", {userDescription:description}, function(data, textStatus, req) {
 		if(textStatus =='success'){
 			toastr.info(eval(data))
+			$(".js-intro").text(description)
 		}
 	})
 	$(this).parent().css({'display':'none'});

@@ -7,7 +7,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Home</title>
+<title>注册</title>
 <!-- Custom Theme files -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -31,7 +31,7 @@ rel="stylesheet" media="all">
 	margin:2em 0 1em 0;
 	}
 
-	.book-left-form input[type="text"],.book-left-form input[type="password"] {
+	.book-left-form input[type="text"],.book-left-form input[type="reg_password"] {
 	    margin-bottom: 0em; 
 	}
 	
@@ -45,8 +45,6 @@ rel="stylesheet" media="all">
 	rel='stylesheet' type='text/css'>
 <!-- //fonts -->
 <!-- js -->
-<script src="<%=contextPath%>/resource/js/jquery.min.js"></script>
-
 <script type="application/x-javascript">
 	
 	 addEventListener("load", function() {
@@ -61,66 +59,6 @@ rel="stylesheet" media="all">
 <script src="<%=contextPath%>/resource/js/modernizr.custom.js"></script>
 <script src="<%=contextPath%>/resource/js/jquery.validate.js"></script>
 <!-- //js -->
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#li_index").addClass("active");
-
-		$('#horizontalTab').easyResponsiveTabs({
-			type : 'default', //Types: default, vertical, accordion           
-			width : 'auto', //auto or any width like 600px
-			fit : true
-		// 100% fit in a container
-		});
-		
-		
-		$("#register_from").validate({
-			rules:{
-				name:{
-					required:true,
-					minlength:6,
-					maxlength:12
-				},
-				phone:{
-					required:true,
-					number:true,
-					minlength:11,
-					maxlength:11
-				},
-				email:{
-					required:true,
-					email:true
-				},
-				password:{
-					required:true,
-					minlength:6,
-					maxlength:16
-				},
-				comfirm_password:{
-					required:true,
-					minlength:6,
-					maxlength:16,
-					equalTo:"#password"
-				}
-			},
-			messages:{
-				name:"请输入6-12位账户名",
-				phone:"请输入正确的11位手机号",
-				email:{
-					required:"请输入邮箱地址！",
-					email:"请输入正确的邮箱格式"
-				},
-				password:"请输入6-16位密码",
-				comfirm_password:"两次密码输入不一致"
-			},
-			errorClass:"error_label",
-			errorElement:"b"
-		});
-		
-	});
-	
-	
-</script>
 
 </head>
 <body>
@@ -145,9 +83,9 @@ rel="stylesheet" media="all">
 								<p>电子邮箱</p>
 								<input type="text" value="" name="email" id="email" placeholder="请输入邮箱地址"/>
 								<p>密码</p>
-								<input type="password" name="password" id="password" maxlength="16" placeholder="请输入密码"/>
+								<input type="password" name="reg_password" id="reg_password" maxlength="16" placeholder="请输入密码"/>
 								<p>确认密码</p>
-								<input type="password" name="comfirm_password" maxlength="16" placeholder="请再次输入密码"/>
+								<input type="password" name="comfirm_reg_password" id="comfirm_reg_password" maxlength="16" placeholder="请再次输入密码"/>
 								<label for="checkbox" style="width: auto;"><input type="checkbox" 
 									id="checkbox"> <i>记住</i></label> <input type="submit"
 									id="regiseter" value="注册"/>
@@ -193,10 +131,70 @@ rel="stylesheet" media="all">
 	src="<%=contextPath%>/resource/js/common/autoMail.1.0.js"></script>
 	<script type="text/javascript">
 		$(function(){
-				$('#email').autoMail({
+			$('#email').autoMail({
 				emails:['qq.com','163.com','126.com','sina.com','sohu.com','yahoo.cn','gmail.com','hotmail.com','live.cn']
-		});
+			});
 		});
 	</script>
+	
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#li_index").addClass("active");
+
+		$('#horizontalTab').easyResponsiveTabs({
+			type : 'default', //Types: default, vertical, accordion           
+			width : 'auto', //auto or any width like 600px
+			fit : true
+		// 100% fit in a container
+		});
+		
+	});
+	
+
+	$("#register_from").validate({
+		rules:{
+			name:{
+				required:true,
+				minlength:6,
+				maxlength:12
+			},
+			phone:{
+				required:true,
+				number:true,
+				minlength:11,
+				maxlength:11
+			},
+			email:{
+				required:true,
+				email:true
+			},
+			reg_password:{
+				required:true,
+				minlength:6,
+				maxlength:16
+			},
+			comfirm_reg_password:{
+				required:true,
+				minlength:6,
+				maxlength:16,
+				equalTo:"#reg_password"
+			}
+		},
+		messages:{
+			name:"请输入6-12位账户名",
+			phone:"请输入正确的11位手机号",
+			email:{
+				required:"请输入邮箱地址！",
+				email:"请输入正确的邮箱格式"
+			},
+			reg_password:"请输入6-16位密码",
+			comfirm_reg_password:"两次密码输入不一致"
+		},
+		errorClass:"error_label",
+		errorElement:"b"
+	});
+		
+</script>
+	
 </body>
 </html>

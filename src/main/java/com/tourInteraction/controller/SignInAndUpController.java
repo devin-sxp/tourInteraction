@@ -30,13 +30,13 @@ public class SignInAndUpController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping("register.do")
-	private String register(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+	private String register(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		boolean isSuccess = false;
 //		request.setCharacterEncoding("utf-8");
 		User user = new User();
 		String name = request.getParameter("name");
-		String password = request.getParameter("password");
-		String comfirmPassword = request.getParameter("comfirm_password");
+		String password = request.getParameter("reg_password");
+		String comfirmPassword = request.getParameter("comfirm_reg_password");
 		if(password.equals(comfirmPassword)){
 			String phone = request.getParameter("phone");
 			String email = request.getParameter("email");
@@ -57,6 +57,7 @@ public class SignInAndUpController {
 			
 			if(isSuccess){
 				request.setAttribute("msg", "注册成功");
+				user = loginservice.getUser(user);
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
 				return "index";
