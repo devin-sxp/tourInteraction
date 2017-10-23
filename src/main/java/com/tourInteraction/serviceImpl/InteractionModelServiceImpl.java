@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.tourInteraction.dao.InteractionModelDao;
@@ -18,6 +20,7 @@ public class InteractionModelServiceImpl implements IInteractionModelService {
 	private InteractionModelDao interactionModelDao;
 
 	@Override
+	@Cacheable("moduleListCache")
 	public List<InteractionModel> getModel(String limit, String offset) {
 		return interactionModelDao.getModel(limit,offset);
 	}
@@ -28,16 +31,19 @@ public class InteractionModelServiceImpl implements IInteractionModelService {
 	}
 
 	@Override
+	@CacheEvict(value="moduleListCache",allEntries=true)
 	public int delModuleById(int id) {
 		return interactionModelDao.delModuleById(id);
 	}
 
 	@Override
+	@CacheEvict(value="moduleListCache",allEntries=true)
 	public int updateModule(Map<String, Object> mapParam) {
 		return interactionModelDao.updateModule(mapParam);
 	}
 
 	@Override
+	@CacheEvict(value="moduleListCache",allEntries=true)
 	public int addModule(Map<String, Object> mapParam) {
 		return interactionModelDao.addModule(mapParam);
 	}

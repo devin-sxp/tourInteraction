@@ -1,14 +1,15 @@
 package com.tourInteraction.controller;
 
-import java.io.IOException;
 import java.util.Date;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -117,19 +118,41 @@ public class SignInAndUpController {
 		User user = new User();
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
-		String savePassword = request.getParameter("checkbox_save_password");
-		user.setUserName(name);
-		user.setPassWord(MD5Util.md5(password));
-		try {
-			user = loginservice.getUser(user);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		/**
+		 * 方式一:
+		 */
+//		String savePassword = request.getParameter("checkbox_save_password");
+//		user.setUserName(name);
+//		user.setPassWord(MD5Util.md5(password));
+//		try {
+//			user = loginservice.getUser(user);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		if(user!=null){
+//			HttpSession session = request.getSession();
+//			session.setAttribute("user", user);
+//		request.getSession().setAttribute("loginMsg","该用户名不存在或密码错误");
+
+//		}else{
+//			return "backgroundManagement/login";
+//		}
+//		return "backgroundManagement/main";
 		
-		if(user!=null){
-			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
-		}else{
+		/**
+		 * 方式二
+		 * 使用shiro登录认证
+		 */
+		Subject subject = SecurityUtils.getSubject();
+		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(name, MD5Util.md5(password));
+		try{
+			subject.login(usernamePasswordToken);
+			user = loginservice.getUserByUserNameDao(name);
+			request.getSession().setAttribute("user", user);
+			request.getSession().setAttribute("loginMsg","");
+		}catch(Exception e){
+			request.getSession().setAttribute("loginMsg","该用户名不存在或密码错误");
 			return "backgroundManagement/login";
 		}
 		return "backgroundManagement/main";

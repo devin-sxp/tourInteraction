@@ -220,7 +220,33 @@
             <groupId>com.lmax</groupId>  
             <artifactId>disruptor</artifactId>  
             <version>3.3.6</version>  
-        </dependency>    
+        </dependency>
+        
+        <!-- shiro包 -->
+        <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-core -->
+		<dependency>
+		    <groupId>org.apache.shiro</groupId>
+		    <artifactId>shiro-core</artifactId>
+		    <version>1.4.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.shiro</groupId>
+		    <artifactId>shiro-web</artifactId>
+		    <version>1.4.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.shiro</groupId>
+		    <artifactId>shiro-spring</artifactId>
+		    <version>1.4.0</version>
+		</dependency>
+        <!-- ehcache 缓存包 -->
+        <!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache -->
+		<dependency>
+		    <groupId>net.sf.ehcache</groupId>
+		    <artifactId>ehcache</artifactId>
+		    <version>2.10.4</version>
+		</dependency>
+            
   </dependencies>
   <build>
     <plugins>

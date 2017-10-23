@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                     http://www.springframework.org/schema/context
+                     http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                     http://www.springframework.org/schema/aop
+                     http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+                     http://www.springframework.org/schema/mvc
+                     http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                     http://www.springframework.org/schema/tx
+                     http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+	
+	<bean id="shiroSecurityFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!--
+			在没有登录直接访问一个url时跳转到登录界面
+			在用户名为null，或者用户名密码错误的时候，跳转到登录页面
+		-->
+		<property name="loginUrl" value="Jsp/backgroundManagement/login.jsp"></property>
+		<property name="successUrl" value="Jsp/backgroundManagement/main.jsp"></property>
+		<!--
+			当访问一个没有获得授权的资源的时候，跳转到该页面
+		-->
+		<property name="unauthorizedUrl" value="/unauthorized.jsp"></property>
+		<property name="securityManager" ref="securityManager"></property>
+		<property name="filterChainDefinitions">
+			<value>
+				/login.jsp* = anon
+				/loginAction_login.action* = anon
+				/departmentAction_*.action* = perms["admin","aaa"]
+				/*.action* = authc
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm">
+			<ref bean="shrioRealm"/>
+		</property>
+	</bean>
+	<bean id="shrioRealm" class="com.tourInteraction.interceptor.ShiroRealm"></bean>
+</beans>

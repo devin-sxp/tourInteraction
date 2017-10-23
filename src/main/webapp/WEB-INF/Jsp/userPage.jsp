@@ -129,7 +129,7 @@
 
                 <div id="list-container">
                     <!-- 文章列表模块 -->
-                    <ul class="note-list" infinite-scroll-url="/u/2d0700f3a80a?order_by=shared_at">
+                    <ul class="note-list">
 
 
                     </ul>

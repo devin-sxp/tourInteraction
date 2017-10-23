@@ -32,6 +32,22 @@
     <filter-name>Spring character encoding filter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  
+  <!-- shiro拦截器 -->
+  <filter>
+	        <!--
+			该值必须和spring容器中的
+			<bean id="shiroSecurityFilter" 	class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+			中的id匹配
+			-->
+		<filter-name>shiroSecurityFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>shiroSecurityFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
   <servlet-mapping>
     <servlet-name>default</servlet-name>
     <url-pattern>*.css</url-pattern>

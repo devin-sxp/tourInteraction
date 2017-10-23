@@ -49,7 +49,6 @@
 	       	</array>
 	       </property>
     </bean>
-    
 
 	<!-- mybatis的Mapper的扫描器 MapperScannerConfigure 会自动扫描 dao包下的所有接口自动生成代理对象: 
 		对象名字为Mapper接口类名(首字母小写) -->
@@ -65,4 +64,5 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	<tx:annotation-driven transaction-manager="txManager"/>
+	
 </beans>

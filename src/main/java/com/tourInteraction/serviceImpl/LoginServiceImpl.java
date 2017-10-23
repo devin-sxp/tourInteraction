@@ -95,6 +95,12 @@ public class LoginServiceImpl implements ILoginService {
 		}
 	}
 
+	@Override
+	public User getUserByUserNameDao(String username) {
+		// TODO Auto-generated method stub
+		return loginDao.getUserByUserNameDao(username);
+	}
+
 
 
 }

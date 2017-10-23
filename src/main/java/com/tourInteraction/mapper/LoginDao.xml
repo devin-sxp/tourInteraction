@@ -34,6 +34,22 @@
 	   and u.password = #{passWord} 
 	</select>
 	
+	<select id="getUserByUserNameDao" resultType="User">
+	   select u.id as id,
+	   u.user_name as userName,
+	   u.password as passWord,
+	   u.email as email,
+	   u.phone_number as phoneNumber,
+	   u.role_id as roleId,
+	   u.integration as integration,
+	   f.file_path as userIconPath,
+	   u.user_description as userDescription 
+	   from user as u
+	   left join files as f
+	   on u.user_icon_id = f.id
+	   where u.status ="1"
+	   and u.user_name = #{username}
+	</select>
 	
 	<!-- 删除操作 -->
  <!-- 	<delete id="delete" parameterType="int">

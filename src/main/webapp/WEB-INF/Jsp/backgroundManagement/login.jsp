@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %> 
 <%
 	String contextPath = request.getContextPath();
 %>
@@ -51,6 +52,9 @@
                                                    
                         </div>
                     </div> --%>
+                    <div class="form-group">
+                    	<label>${loginMsg}</label>
+                    </div>
                 </div>
                 <div style="padding:30px;"><input type="submit" class="button button-block bg-main text-big input-big" value="登录"></div>
             </div>
