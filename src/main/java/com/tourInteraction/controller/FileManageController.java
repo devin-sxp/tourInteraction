@@ -41,7 +41,7 @@ public class FileManageController {
     		) throws Exception{
         response.setHeader("X-Frame-Options","SAMEORIGIN");
         
-        logger.debug("invoke----------/fileManage/uploadFile.do");
+        logger.info("invoke----------/fileManage/uploadFile.do");
         /**构建文件保存的目录**/
 //        String logoPathDir = "/files";
         String logoPathDir = "/files/"+fileUse;

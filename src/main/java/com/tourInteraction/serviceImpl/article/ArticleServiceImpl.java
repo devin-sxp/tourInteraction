@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tourInteraction.dao.article.ArticleDao;
 import com.tourInteraction.entity.article.Article;
+import com.tourInteraction.entity.article.ArticleRequestSubmit;
 import com.tourInteraction.service.article.IArticleService;
 
 @Service("articleServiceImpl")
@@ -36,12 +37,6 @@ public class ArticleServiceImpl implements IArticleService {
 	public int writeArticle(Article article) {
 		// TODO Auto-generated method stub
 		return articleDao.writeArticle(article);
-	}
-
-	@Override
-	public Article getRequestSubmitNewsBySubjectId(int subjectId) {
-		// TODO Auto-generated method stub
-		return articleDao.getRequestSubmitNewsBySubjectId(subjectId);
 	}
 
 	@Override
@@ -73,6 +68,7 @@ public class ArticleServiceImpl implements IArticleService {
 	}
 
 	@Override
+	@Transactional
 	public Map<String, Object> getArticleAuthorBySubjectId(int subjectId, int limit, int offset) {
 		ArrayList<Article> list = new ArrayList<Article>(articleDao.getArticleAuthorBySubjectId(subjectId,limit,offset));
 		int count = articleDao.getArticleAuthorCountBySubjectId(subjectId);
@@ -80,6 +76,23 @@ public class ArticleServiceImpl implements IArticleService {
 		map.put("count", count);
 		map.put("list", list);
 		return map;
+	}
+
+	@Override
+	public List<ArticleRequestSubmit> getArticleRequestSubmitNews(int userId) {
+		
+		return articleDao.getArticleRequestSubmitNews(userId);
+	}
+
+	@Override
+	@Transactional
+	public int dealArticleRequestSubmitNews(Map<String, Object> map) {
+		int num = articleDao.updateArticleRequestSubmit(map);
+		Integer isPass = (Integer) map.get("isPass");
+		if(isPass == 1){
+			num = articleDao.passSubmitArticle(map); //设置文章的专栏
+		}
+		return num;
 	}
 
 

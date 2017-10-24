@@ -2,10 +2,12 @@ package com.tourInteraction.dao.article;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.tourInteraction.entity.article.Article;
+import com.tourInteraction.entity.article.ArticleRequestSubmit;
 
 public interface ArticleDao{
 
@@ -14,8 +16,6 @@ public interface ArticleDao{
 	Article getArticleById(int id);
 
 	int writeArticle(Article article);
-
-	Article getRequestSubmitNewsBySubjectId(int subjectId);
 
 	int getNowUserArticleCount(int userId);
 
@@ -30,4 +30,10 @@ public interface ArticleDao{
 	Collection<? extends Article> getArticleAuthorBySubjectId(@Param("subjectId") int subjectId, @Param("limit")int limit,@Param("offset") int offset);
 
 	int getArticleAuthorCountBySubjectId(@Param("subjectId")int subjectId);
+
+	List<ArticleRequestSubmit> getArticleRequestSubmitNews(@Param("userId")int userId);
+
+	int updateArticleRequestSubmit(Map<String, Object> map);
+
+	int passSubmitArticle(Map<String, Object> map);
 }

@@ -31,6 +31,8 @@
 	href="<%=contextPath%>/resource/css/article/web.css">
 <link rel="stylesheet" media="all"
 	href="<%=contextPath%>/resource/css/article/entry-subject-single.css">
+<link href="<%=contextPath%>/resource/css/pop/pop.css" type="text/css"
+	rel="stylesheet" media="all">
 <script src="<%=contextPath%>/resource/js/jquery.min.js"></script>
 
 <script type="text/javascript">
@@ -45,6 +47,18 @@
 		});
 	});
 </script>
+
+<style type="text/css">
+	.checkbox-article input{
+		width:auto;
+		height:auto;
+		box-shadow:inset 1px 1px 11px rgba(0,0,0,0);
+	}
+	.div-article-list {
+		overflow-y: auto;
+		max-height: 250px;
+	}
+</style>
 </head>
 
 <body class="reader-black-font">
@@ -164,6 +178,60 @@
 	<!-- footer -->
 	<jsp:include page="common/footer.jsp"></jsp:include>
 	<!-- footer -->
+	
+	<!--投稿弹窗  start-->
+
+	<div class="popinto" id="submit_article">
+		<h3 class="" style="margin-top: 5px">
+			<span class="pull-left ">选择文章</span> <i
+				class="fa fa-times pull-right font18" onclick="closepop()"></i>
+		</h3>
+		<br>
+		<hr>
+		<div class="popcon div-article-list">
+			<ul id="ul_my_article" class="list-group">
+				<!-- <li class="list-group-item">
+					<label  class="checkbox-article">
+	            		<input  type="checkbox"> <span>Option  1</span>
+	       			 </label>
+       
+				</li>
+				<li class="list-group-item">
+					<label  class="checkbox-article">
+	            		<input  type="checkbox"> <span>Option  1</span>
+	       			 </label>
+				</li>
+				<li class="list-group-item">
+					<label  class="checkbox-article">
+	            		<input  type="checkbox"> <span>Option  1</span>
+	       			 </label>
+				</li>
+				<li class="list-group-item">
+					<label  class="checkbox-article">
+	            		<input  type="checkbox"> <span>Option  1</span>
+	       			 </label>
+				</li>
+				<li class="list-group-item">
+					<label  class="checkbox-article">
+	            		<input  type="checkbox"> <span>Option  1</span>
+	       			 </label>
+				</li> -->
+
+			</ul>
+			
+		</div>
+			<p class="pop_p">
+				<button type="button" class="btn btn-primary pop_btn"
+					style="padding: 10px" id="btn_submit_article_sure">确定</button>
+				<button type="button" class="btn btn-defalut pop_btn"
+					style="padding: 10px" onclick="closepop()">取消</button>
+			</p>
+		</div>
+	</div>
+	<!--投稿弹窗 end-->
+	<div class="pop" onclick="closepop()"></div>
+
+	<script defer src="<%=contextPath%>/resource/js/pop/pop.js"></script>
 	<script src="<%=contextPath%>/resource/js/common/getUrlParam.js"></script>
 	<script src="<%=contextPath%>/resource/js/common/convertTime.js"></script>
 	<script	src="<%=contextPath%>/resource/js/myJs/subject.js"></script>

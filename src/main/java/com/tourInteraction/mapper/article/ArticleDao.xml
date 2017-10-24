@@ -143,17 +143,44 @@
 	</insert> 
 	
 	
-	<select id="getRequestSubmitNewsBySubjectId" resultType="ArticleRequestSubmit">
-
-	   <if test="null != limit and '' != limit and null != offset and '' != offset">
-	   	   limit ${limit},${offset} 
-	   </if>
+	<select id="getArticleRequestSubmitNews" resultType="ArticleRequestSubmit">
+		select
+		ars.id as id,
+		a.article_name as articleName,
+		a.article_content as articleContent,
+		f.file_path as filePath,
+		ars.create_time as createTime,
+		ars.create_user as createUser,
+		u.user_name as createUserName,
+		fu.file_path as userIconPath,
+		ars.request_subject_id as requestSubjectId,
+		ars.request_article_id as requestArticleId,
+		ast.subject_title as requestSubjectTitle
+		from article_request_submit as ars
+		left join article as a
+		on ars.request_article_id = a.id
+		left join user as u
+		on a.create_user = u.id
+		left join files as f
+		on a.article_icon_id = f.id
+		left join files as fu
+		on u.user_icon_id = fu.id
+		left join article_subject as ast
+		on ars.request_subject_id = ast.id
+		where ars.status = "1" and ars.request_subject_create_user_id = #{userId}
 	</select>
 	
-	<update id="passSubmitArticle" parameterType="Article">
+	<update id="updateArticleRequestSubmit" parameterType="Map">
+		update article_request_submit 
+		set
+		is_pass = #{isPass},update_user = #{updateUser},update_time=#{updateTime},status=#{status}
+		where id = #{requestId}
+	</update>
+	
+	<update id="passSubmitArticle" parameterType="Map">
 		update article 
 		set
-		subject_id = #{subjectId}
-		where id = #{articleId}
+		subject_id = #{requestSubjectId},update_user = #{updateUser},update_time=#{updateTime}
+		where id = #{requestArticleId}
 	</update>
 </mapper>

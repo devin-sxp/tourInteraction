@@ -28,7 +28,7 @@ public class ArticleCommentAndReplyController {
 	@RequestMapping("/getArticleComment.do")
 	public @ResponseBody String getArticleComment(String limit,String offset,
 			@RequestParam("articleId") int articleId){
-		logger.debug("articleCommentAndReply/getArticleComment.do被调用");
+		logger.info("articleCommentAndReply/getArticleComment.do被调用");
 
 		List<ArticleComment> list = new ArrayList<ArticleComment>();
 		list = articleCommentAndReplyService.getArticleComment(limit, offset, articleId);
@@ -42,7 +42,7 @@ public class ArticleCommentAndReplyController {
 	@RequestMapping("/getArticleReply.do")
 	public @ResponseBody String getArticleReply(String limit,String offset,
 			@RequestParam("commentId") int commentId){
-		logger.debug("articleCommentAndReply/getArticleReply.do被调用");
+		logger.info("articleCommentAndReply/getArticleReply.do被调用");
 
 		List<ArticleReply> list = new ArrayList<ArticleReply>();
 		list = articleCommentAndReplyService.getArticleReply(limit, offset, commentId);

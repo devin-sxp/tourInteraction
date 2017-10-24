@@ -117,3 +117,22 @@ var create_subject = function(){
 
     $("#create_subject").css("overflow", "visible");//用于解决wangeditor全屏花屏问题
 }
+
+var submitArticle = function(){
+    popshow();
+    if(!isPhone()){
+        $("#submit_article").css({
+            'marginTop':-$("#submit_article").height()/2,
+        })
+    }else{
+    	$("#submit_article").css({
+    		'left':'0px',
+    		'top':'0px',
+    		'width':'100%',
+    		'height':'100%'
+    		
+    	});
+
+    }
+    $("#submit_article").show("fast");  
+}

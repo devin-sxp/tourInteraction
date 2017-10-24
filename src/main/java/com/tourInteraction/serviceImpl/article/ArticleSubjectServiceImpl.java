@@ -1,11 +1,15 @@
 package com.tourInteraction.serviceImpl.article;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tourInteraction.dao.article.ArticleSubjectDao;
 import com.tourInteraction.entity.article.ArticleSubject;
@@ -57,6 +61,23 @@ public class ArticleSubjectServiceImpl implements IArticleSubjectService {
 	public int getSubjectCount() {
 		// TODO Auto-generated method stub
 		return articleSubjectDao.getSubjectCount();
+	}
+
+	@Override
+	@Transactional
+	public int requestSubmitArticle(int userId, int subjectId,int subjectCreateUserId, int[] submitArticleIds) {
+		int num = 0;
+		for (int articleId : submitArticleIds) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("createUser", userId);
+			map.put("subjectId", subjectId);
+			map.put("articleId", articleId);
+			map.put("subjectCreateUserId", subjectCreateUserId);
+			map.put("status", "1");
+			map.put("createTime", new Date());
+			num = articleSubjectDao.requestSubmitArticle(map);
+		}
+		return num;
 	}
 
 	

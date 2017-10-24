@@ -78,7 +78,7 @@ public class SignInAndUpController {
 			@RequestParam("name") String name,
 			@RequestParam("password") String password,
 			@RequestParam("checkbox_save_password") String checkbox_save_password){
-		logger.debug("loginIn.do");
+		logger.info("loginIn.do");
 		User user = new User();
 		System.out.println(checkbox_save_password);
 		user.setUserName(name);
@@ -103,7 +103,7 @@ public class SignInAndUpController {
 	@RequestMapping("signup.do")
 	private String signup(HttpServletRequest request,HttpSession sin){
 		try {
-			logger.debug("signup.do被调用");
+			logger.info("signup.do被调用");
 			HttpSession session = request.getSession();
 			session.removeAttribute("user");
 		} catch (Exception e) {
@@ -114,7 +114,7 @@ public class SignInAndUpController {
 	}
 	@RequestMapping("backSignIn.do")
 	private String backSignIn(HttpServletRequest request,HttpSession sin){
-		logger.debug("backSignIn.do被调用");
+		logger.info("backSignIn.do被调用");
 		User user = new User();
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
@@ -231,7 +231,7 @@ public class SignInAndUpController {
 	}
 	@RequestMapping("getNowSignInUser.do")
 	public @ResponseBody String getNowSignInUser(HttpServletRequest request){
-		logger.debug("getNowSignInUser被调用");
+		logger.info("getNowSignInUser被调用");
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		String result = JSONUtil.object2json(user);

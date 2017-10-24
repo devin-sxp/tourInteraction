@@ -45,7 +45,7 @@ public class IntegrationController {
 	public @ResponseBody String addIntegration(HttpServletRequest req, 
 			@RequestParam("integration") long integration){
 		
-		logger.debug("addIntegration.do被调用");
+		logger.info("addIntegration.do被调用");
 		int num = 0;
 		User user = SignInAndUpController.getSignInUser(req);
 		integration = user.getIntegration()+integration;

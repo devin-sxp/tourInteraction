@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tourInteraction.controller.SignInAndUpController;
 import com.tourInteraction.entity.User;
 import com.tourInteraction.entity.article.Article;
+import com.tourInteraction.entity.article.ArticleRequestSubmit;
 import com.tourInteraction.service.article.IArticleService;
 import com.tourInteraction.utils.JSONUtil;
 
@@ -34,7 +35,7 @@ public class ArticleController {
 	public @ResponseBody String getArticles(HttpServletRequest request,
 			@RequestParam("limit")String limit,
 			@RequestParam("offset")String offset){
-		logger.debug("article/getArticles.do被调用");
+		logger.info("article/getArticles.do被调用");
 		List<Article> list = new ArrayList<Article>();
 		list = articleService.getArticles(limit,offset);
 		Map<String,Object> map = new HashMap<String , Object>();
@@ -45,7 +46,7 @@ public class ArticleController {
 	
 	@RequestMapping("/getArticleCount.do")
 	public @ResponseBody int getArticleCount(HttpServletRequest request){
-		logger.debug("article/getArticleCount.do被调用");
+		logger.info("article/getArticleCount.do被调用");
 		int count = articleService.getArticleCount();
 		return count;
 	}
@@ -54,7 +55,7 @@ public class ArticleController {
 	public @ResponseBody String getNowUserArticle(HttpServletRequest request,
 			@RequestParam("limit")String limit,
 			@RequestParam("offset")String offset){
-		logger.debug("article/getNowUserArticle.do被调用");
+		logger.info("article/getNowUserArticle.do被调用");
 		User user = SignInAndUpController.getSignInUser(request);
 		List<Article> list = new ArrayList<Article>();
 		list = articleService.getNowUserArticle(user.getId(),limit,offset);
@@ -66,7 +67,7 @@ public class ArticleController {
 	
 	@RequestMapping("/getNowUserArticleCount.do")
 	public @ResponseBody int getNowUserArticleCount(HttpServletRequest request){
-		logger.debug("article/getNowUserArticleCount.do被调用");
+		logger.info("article/getNowUserArticleCount.do被调用");
 		User user = SignInAndUpController.getSignInUser(request);
 		int count = articleService.getNowUserArticleCount(user.getId());
 		return count;
@@ -75,7 +76,7 @@ public class ArticleController {
 	@RequestMapping("getArticleById.do")
 	public @ResponseBody String getArticleById( @RequestParam("articleId") int articleId){
 		Article article = new Article();
-		logger.debug("article/getArticleById.do被调用");
+		logger.info("article/getArticleById.do被调用");
 		article = articleService.getArticleById(articleId);
 		String result = JSONUtil.object2json(article);
 		return result;
@@ -85,7 +86,7 @@ public class ArticleController {
 	public @ResponseBody String getArticlesBySubjectId( @RequestParam("subjectId") int subjectId,
 			@RequestParam("limit")int limit,
 			@RequestParam("offset")int offset){
-		logger.debug("article/getArticlesBySubjectId.do被调用");
+		logger.info("article/getArticlesBySubjectId.do被调用");
 		Map<String,Object> map = new HashMap<String , Object>();
 		map = articleService.getArticlesBySubjectId(subjectId,limit,offset);
 		String result = JSONUtil.map2json(map);
@@ -96,7 +97,7 @@ public class ArticleController {
 	public @ResponseBody String getArticleAuthorBySubjectId( @RequestParam("subjectId") int subjectId,
 			@RequestParam("limit")int limit,
 			@RequestParam("offset")int offset){
-		logger.debug("article/getArticleAuthorBySubjectId.do被调用");
+		logger.info("article/getArticleAuthorBySubjectId.do被调用");
 		Map<String,Object> map = new HashMap<String , Object>();
 		map = articleService.getArticleAuthorBySubjectId(subjectId,limit,offset);
 		String result = JSONUtil.map2json(map);
@@ -108,7 +109,7 @@ public class ArticleController {
 	public String writeArticle(HttpServletRequest request, @RequestParam("articleName") String articleName,
 			@RequestParam("articleContent") String articleContent,
 			@RequestParam("articleIconId") int articleIconId){
-		logger.debug("article/addArticle.do ..........");
+		logger.info("article/addArticle.do ..........");
 		User user = SignInAndUpController.getSignInUser(request);
 		Article article = new Article();
 		article.setArticleContent(articleContent);
@@ -131,15 +132,37 @@ public class ArticleController {
 	}
 	
 	//根据专题获取投稿申请信息
-	@RequestMapping("getRequestSubmitNewsBySubjectId.do")
-	public @ResponseBody String getRequestSubmitNewsBySubjectId( @RequestParam("subjectId") int subjectId){
-		Article article = new Article();
-		logger.debug("article/getRequestSubmitNewsBySubjectId.do被调用");
-		article = articleService.getRequestSubmitNewsBySubjectId(subjectId);
-		String result = JSONUtil.object2json(article);
+	@RequestMapping("getArticleRequestSubmitNews.do")
+	public @ResponseBody String getArticleRequestSubmitNews(HttpServletRequest request){
+		logger.info("article/getArticleRequestSubmitNews.do被调用");
+		User user =SignInAndUpController.getSignInUser(request);
+		List<ArticleRequestSubmit> list = articleService.getArticleRequestSubmitNews(user.getId());
+		String result = JSONUtil.list2json(list);
 		return result;
 	}
 	
-	
+	@RequestMapping("dealArticleRequestSubmitNews.do")
+	@ResponseBody
+	public String dealArticleRequestSubmitNews(HttpServletRequest request, @RequestParam("requestId") int requestId,
+			@RequestParam("requestArticleId") int requestArticleId,
+			@RequestParam("requestSubjectId") int requestSubjectId,@RequestParam("isPass") int isPass){
+		logger.info("article/dealArticleRequestSubmitNews.do ..........");
+		User user = SignInAndUpController.getSignInUser(request);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("requestId", requestId);
+		map.put("requestArticleId", requestArticleId);
+		map.put("requestSubjectId", requestSubjectId);
+		map.put("isPass", isPass);
+		map.put("updateUser", user.getId());
+		map.put("updateTime", new Date());
+		map.put("status", "0");
+		int num = articleService.dealArticleRequestSubmitNews(map);
+		String result = "操作失败！";
+		if(num > 0 ){
+			result = "操作成功！";
+		}
+		return result;
+		
+	}
 
 }

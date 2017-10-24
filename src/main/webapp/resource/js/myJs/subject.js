@@ -5,7 +5,8 @@ var subject = {
 		pagesize:15,
 		authorCurrentPage:1,
 		authorPagesize:10,
-		isFlag:true
+		isFlag:true,
+		subjectCreateUserId:0
 	},
 	option:{
 		getSubjectById:function(subjectId){
@@ -16,6 +17,7 @@ var subject = {
 				$("#a_subject_title").text(data.subjectTitle);
 				$("#div_create_info").html("被<a style=\"color:#3444ee\">"+data.createUserName+"</a>创建于"+stampToStandard(data.createTime.time));
 				$(".js-description").html(data.subjectDescription);
+				subject.data.subjectCreateUserId = data.createUser;
 			},'json');
 		},
 		getArticlesBySubjectId:function(subjectId,limit,offset){
@@ -62,6 +64,40 @@ var subject = {
 					$(".collection-editor").append(html);
 				})
 			},'json');
+		},
+		getNowUserArticle:function (limit,offset){
+
+			$.post(getRootPath()+"/article/getNowUserArticle.do",{limit:limit,offset:offset}, function(data, textStatus, req) {
+				if(textStatus == "success"){
+					data = eval("("+data+")");
+					console.log(data)
+					$.each(data.list, function(objIndex, article) {
+						if(article.subjectId == 0 || article.subjectId =='' || article.subjectId ==null){
+							var html = "<li class=\"list-group-item\">"+
+							"<label  class=\"checkbox-article\">"+
+		            		"<input  type=\"checkbox\" value=\""+article.id+"\"> <span>"+article.articleName+"</span>"+
+		       			 	"</label></li>"
+							$("#ul_my_article").append(html);
+						}
+						
+					})
+					
+				}else{
+					toastr.error("获取文章失败！");
+				}
+			},'json')
+		},
+		requestSubmitArticle:function(submitArticleIds,subjectId,subjectCreateUserId){
+			$.post(getRootPath()+"/articleSubject/requestSubmitArticle.do", {submitArticleIds:submitArticleIds,subjectId:subjectId,
+				subjectCreateUserId:subjectCreateUserId}, function(data, textStatus, req) {
+				if(textStatus == "success"){
+					toastr.success(eval(data));
+
+				}else{
+					toastr.error(eval(data));
+
+				}
+			})
 		}
 	},
 	init:function(){
@@ -70,6 +106,7 @@ var subject = {
 		let authorCurrentPage = subject.data.authorCurrentPage;
 		let authorPagesize = subject.data.authorPagesize;
 		subject.option.getSubjectById(subject.data.subjectId);
+		subject.option.getNowUserArticle('','');
 		subject.option.getArticlesBySubjectId(subject.data.subjectId,(currentPage-1)*pagesize,pagesize);
 		var data = {
 			subjectId:subject.data.subjectId,
@@ -94,7 +131,25 @@ var subject = {
 			subject.option.getArticleAuthorBySubjectId(data);
 			subject.data.authorCurrentPage = nextPage;
 			$(this).attr("data-next-page",nextPage+1);
-		})
+		});
+		
+		$(".js-contribute-button").bind('click',function(){
+			submitArticle();
+		});
+		
+		$("#btn_submit_article_sure").on('click',function(){
+			var submitArticleIds = new Array();
+			$.each($("input[type=checkbox]:checked"), function(i, elt) {
+				submitArticleIds.push($(this).val());
+			});
+			if(submitArticleIds.length <= 0){
+				toastr.info("请选择投稿文章!");
+				return
+			}
+			subject.option.requestSubmitArticle(submitArticleIds,subject.data.subjectId,subject.data.subjectCreateUserId);
+			submitArticleIds = [];
+			closepop();
+		});
 	}
 }
 $(function(){

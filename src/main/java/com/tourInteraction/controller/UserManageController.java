@@ -34,7 +34,7 @@ public class UserManageController {
 	@RequestMapping("getUser.do")
 	public @ResponseBody String getUser( @RequestParam("limit") int limit,@RequestParam("offset") int offset){
 		
-		logger.debug("userManage/getUser.do被调用");
+		logger.info("userManage/getUser.do被调用");
 		List<User> list = new ArrayList<User>();
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		
@@ -52,7 +52,7 @@ public class UserManageController {
 	@RequestMapping("getUserByInteraction.do")
 	public @ResponseBody String getUserByInteraction( @RequestParam("limit") int limit,@RequestParam("offset") int offset){
 		
-		logger.debug("userManage/getUser.do被调用");
+		logger.info("userManage/getUser.do被调用");
 		List<User> list = new ArrayList<User>();
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		
@@ -70,7 +70,7 @@ public class UserManageController {
 	@RequestMapping("getUserById.do")
 	public @ResponseBody String getUserById( @RequestParam("userId") int userId){
 		User user = new User();
-		logger.debug("userManage/getUser.do被调用");
+		logger.info("userManage/getUser.do被调用");
 		user = userManageService.getUserById(userId);
 	
 		String result = JSONUtil.object2json(user);
@@ -79,7 +79,7 @@ public class UserManageController {
 	
 	@RequestMapping("delUserById.do")
 	public @ResponseBody String delUserById( @RequestParam("userId") int userId){
-		logger.debug("userManage/delUserById.do被调用");
+		logger.info("userManage/delUserById.do被调用");
 		
 		int num = userManageService.delUserById(userId);
 		String result = "删除失败!";
@@ -91,7 +91,7 @@ public class UserManageController {
 	
 	@RequestMapping("lockUserById.do")
 	public @ResponseBody String lockUserById( @RequestParam("userId") int userId,@RequestParam("status") String status){
-		logger.debug("userManage/lockUserById.do被调用");
+		logger.info("userManage/lockUserById.do被调用");
 		
 		int num = userManageService.lockUserById(userId,status);
 		String result = "操作失败!";
@@ -104,7 +104,7 @@ public class UserManageController {
 	@RequestMapping("getUserRole.do")
 	public @ResponseBody String getUserRole(){
 		List<Role> list = new ArrayList<Role>();
-		logger.debug("userManage/getUserRole.do被调用");
+		logger.info("userManage/getUserRole.do被调用");
 		list = userManageService.getUserRole();
 		String result = JSONUtil.list2json(list);
 		return result;
@@ -114,7 +114,7 @@ public class UserManageController {
 	public @ResponseBody String updateUser(HttpServletRequest req, 
 		int id,String userName, String passWord,String email,
 		 String phoneNumber,String integration,String roleId){
-		logger.debug("userManage/updateUser.do被调用");
+		logger.info("userManage/updateUser.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		mapParam.put("id", id);
@@ -141,7 +141,7 @@ public class UserManageController {
 	
 	@RequestMapping("/updateUserDescription.do")
 	public @ResponseBody String updateUserDescription(HttpServletRequest req,String userDescription){
-		logger.debug("userManage/updateUserDescription.do被调用");
+		logger.info("userManage/updateUserDescription.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		mapParam.put("id", user.getId());
@@ -169,7 +169,7 @@ public class UserManageController {
 	@RequestMapping("/updateUserIcon.do")
 	public @ResponseBody String updateUserIcon(HttpServletRequest req, 
 		int userIconId){
-		logger.debug("userManage/updateUserIcon.do被调用");
+		logger.info("userManage/updateUserIcon.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		mapParam.put("userIconId", userIconId);
@@ -192,7 +192,7 @@ public class UserManageController {
 			@RequestParam("phoneNumber") String phoneNumber,
 			@RequestParam("integration") String integration,
 			@RequestParam("roleId") String roleId){
-		logger.debug("userManage/addUser.do被调用");
+		logger.info("userManage/addUser.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		mapParam.put("passWord", MD5Util.md5("000000"));

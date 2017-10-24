@@ -31,7 +31,7 @@ public class ConfigureController {
 	@RequestMapping("/getConfigure.do")
 	public @ResponseBody String getConfigure(HttpServletRequest req){
 		
-		logger.debug("getConfigure.do被调用");
+		logger.info("getConfigure.do被调用");
 		List<Configure> list = new ArrayList<Configure>();
 		list = configureService.getConfigure();
 		String result = JSONUtil.list2json(list);
@@ -41,7 +41,7 @@ public class ConfigureController {
 	@RequestMapping("/getConfigureById.do")
 	public @ResponseBody String getConfigureById(HttpServletRequest req,
 			@RequestParam("id") long id){
-		logger.debug("getConfigure.do被调用");
+		logger.info("getConfigure.do被调用");
 		String result="";
 
 		Configure configure = configureService.getConfigureById(id);
@@ -58,7 +58,7 @@ public class ConfigureController {
 			@RequestParam("title") String title,
 			@RequestParam("description") String description,
 			@RequestParam("file") String file){
-		logger.debug("addConfigure.do被调用");
+		logger.info("addConfigure.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Configure configure = new Configure();
 		configure.setStaticCodeConfigure("configure_pic");
@@ -86,7 +86,7 @@ public class ConfigureController {
 			@RequestParam("title") String title,
 			@RequestParam("description") String description,
 			@RequestParam("file") String file) throws Throwable{
-		logger.debug("updateConfigure.do被调用");
+		logger.info("updateConfigure.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Configure configure = new Configure();
 		configure.setId(id);
@@ -110,7 +110,7 @@ public class ConfigureController {
 	@RequestMapping("/delConfigureById.do")
 	public @ResponseBody String delConfigureById(@RequestParam("id") int id){
 		
-		logger.debug("configure/delConfigureById.do被调用");
+		logger.info("configure/delConfigureById.do被调用");
 		
 		int num = configureService.delConfigureById(id);
 		String result = "删除失败";

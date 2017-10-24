@@ -33,7 +33,7 @@ public class InteractionCommentController {
 	@RequestMapping("/getCommentByNewsId.do")
 	public @ResponseBody String getCommentByNewsId(@RequestParam("newsId") int newsId){
 		
-		logger.debug("getCommentByNewsId.do被调用");
+		logger.info("getCommentByNewsId.do被调用");
 		List<InteractionComment> list = new ArrayList<InteractionComment>();
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		
@@ -50,7 +50,7 @@ public class InteractionCommentController {
 	@RequestMapping("/getReplyByCommentId.do")
 	public @ResponseBody String getReplyByCommentId(@RequestParam("commentId") int commentId){
 		
-		logger.debug("getReplyByCommentId.do被调用");
+		logger.info("getReplyByCommentId.do被调用");
 		List<InteractionReply> list = new ArrayList<InteractionReply>();
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		
@@ -72,7 +72,7 @@ public class InteractionCommentController {
 			@RequestParam(value="targetUser",defaultValue="0") int targetUser,
 			@RequestParam("commentContent") String commentContent){
 		
-		logger.debug("addCommentAndReply.do被调用");
+		logger.info("addCommentAndReply.do被调用");
 		int num = 0;
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();

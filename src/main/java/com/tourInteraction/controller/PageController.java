@@ -35,6 +35,11 @@ public class PageController {
 		return "userPage";
 	}
 	
+	@RequestMapping("/newsCenter")
+	public String newsCenter(HttpServletRequest req){
+		return "newsCenter";
+	}
+	
 	@RequestMapping("/interactionModel")
 	public String modelDisplay(HttpServletRequest req){
 		return "interactionModel";

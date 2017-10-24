@@ -30,7 +30,7 @@ public class StaticController {
 	public @ResponseBody String getStatic(HttpServletRequest req,
 			@RequestParam("staticType") String staticType){
 		
-		logger.debug("getStatic.do被调用");
+		logger.info("getStatic.do被调用");
 		List<Static> list = new ArrayList<Static>();
 		list = staticService.getStatic(staticType);
 		String result = JSONUtil.list2json(list);

@@ -8,7 +8,10 @@ public class ArticleRequestSubmit extends Base{
 	private int requestSubjectId;
 	private int requestArticleId;
 	private int isPass;
-
+	private String articleName;
+	private String articleContent;
+	private String filePath;
+	private String userIconPath;
 
 	public int getRequestSubjectId() {
 		return requestSubjectId;
@@ -27,6 +30,30 @@ public class ArticleRequestSubmit extends Base{
 	}
 	public void setIsPass(int isPass) {
 		this.isPass = isPass;
+	}
+	public String getArticleName() {
+		return articleName;
+	}
+	public void setArticleName(String articleName) {
+		this.articleName = articleName;
+	}
+	public String getArticleContent() {
+		return articleContent;
+	}
+	public void setArticleContent(String articleContent) {
+		this.articleContent = articleContent;
+	}
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	public String getUserIconPath() {
+		return userIconPath;
+	}
+	public void setUserIconPath(String userIconPath) {
+		this.userIconPath = userIconPath;
 	}
 	
 }

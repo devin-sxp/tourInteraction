@@ -38,7 +38,7 @@ public class ArticleSubjectController {
 
 	@RequestMapping("/getSubject.do")
 	public @ResponseBody String getSubject(String limit,String offset){
-		logger.debug("articleSubject/getSubject.do被调用");
+		logger.info("articleSubject/getSubject.do被调用");
 
 		List<ArticleSubject> list = new ArrayList<ArticleSubject>();
 		list = articleSubjectService.getSubject(limit,offset);
@@ -52,7 +52,7 @@ public class ArticleSubjectController {
 	
 	@RequestMapping("/getSubjectsByUserId.do")
 	public @ResponseBody String getSubjectsByUserId(HttpServletRequest req,@RequestParam(value="userId")int userId){
-		logger.debug("articleSubject/getSubjectByUserId.do被调用");
+		logger.info("articleSubject/getSubjectByUserId.do被调用");
 		if(userId == 0){
 			userId = (int)SignInAndUpController.getSignInUser(req).getId();
 		}
@@ -65,7 +65,7 @@ public class ArticleSubjectController {
 	@RequestMapping("getSubjectById.do")
 	public @ResponseBody String getSubjectById( @RequestParam("id") int id){
 		ArticleSubject articleSubject = new ArticleSubject();
-		logger.debug("articleSubject/getSubjectById.do被调用");
+		logger.info("articleSubject/getSubjectById.do被调用");
 		articleSubject = articleSubjectService.getSubjectById(id);
 	
 		String result = JSONUtil.object2json(articleSubject);
@@ -74,7 +74,7 @@ public class ArticleSubjectController {
 	
 	@RequestMapping("delSubjectById.do")
 	public @ResponseBody String delSubjectById( @RequestParam("id") int id){
-		logger.debug("articleSubject/delSubjectById.do被调用");
+		logger.info("articleSubject/delSubjectById.do被调用");
 		
 		int num = articleSubjectService.delSubjectById(id);
 		String result = "删除失败!";
@@ -91,7 +91,7 @@ public class ArticleSubjectController {
 			@RequestParam("SubjectDiscription") String SubjectDiscription,
 			@RequestParam("SubjectLabel") String SubjectLabel,
 			@RequestParam("SubjectIcon") String SubjectIcon){
-		logger.debug("articleSubject/updateSubject.do被调用");
+		logger.info("articleSubject/updateSubject.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		mapParam.put("id", id);
@@ -118,7 +118,7 @@ public class ArticleSubjectController {
 			@RequestParam("subjectDescription") String subjectDescription,
 			@RequestParam("subjectIconId") String subjectIconId,
 			@RequestParam("subjectType") String subjectType){
-		logger.debug("articleSubject/addSubject.do被调用");
+		logger.info("articleSubject/addSubject.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		mapParam.put("subjectTitle", subjectTitle);
@@ -138,62 +138,74 @@ public class ArticleSubjectController {
 		return result;
 	}
 	
-	 /**
-     * 上传
-     * @param 
-     * @return
-     */
-    @RequestMapping(value = "/uploadFile.do")
-    public @ResponseBody String uploadFile(HttpServletRequest request,HttpServletResponse response) throws Exception{
-        response.setHeader("X-Frame-Options","SAMEORIGIN");
-        logger.debug("invoke----------/articleSubject/uploadFile.do");
-        List<String> result = new ArrayList<String>();
-        /**构建文件保存的目录**/
-        String logoPathDir = "/files";
-        /**得到文件保存目录的真实路径**/
-        String logoRealPathDir = request.getServletContext().getRealPath(logoPathDir);
-            try{
-                /**根据真实路径创建目录**/
-                File logoSaveFile = new File(logoRealPathDir);
-                if (!logoSaveFile.exists())
-                    logoSaveFile.mkdirs();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-    
-        /**页面控件的文件流**/
-        MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-        MultipartFile multipartFile = multiRequest.getFile("file");
-        if (multiRequest.getMultiFileMap().size() == 0) {
-            return "未选择文件或未指定文件参数名";
-        }
-        String retPath = "";
-        String retrunPath="";
-        if (multipartFile != null) {
-            /**获取文件的后缀**/
-            String suffix = multipartFile.getOriginalFilename().substring
-                    (multipartFile.getOriginalFilename().lastIndexOf("."));
-            /**使用UUID生成文件名称**/
-            String logImageName = UUIDUitl.generateLowerString(32) + suffix;//构建文件名称
-            /**拼成完整的文件保存路径加文件**/
-            String fileName = logoPathDir + File.separator + logImageName;
-            //返回给客户端的路径
-            retPath = logoRealPathDir + File.separator + logImageName;
-            File file = new File(retPath);
-            try {
-                multipartFile.transferTo(file);
-                fileName= fileName.replaceAll("\\\\", "/");
-                retrunPath=fileName;
-                result.add(fileName);
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        // }
-        System.out.println(retrunPath);
-        return retrunPath;
-    }
+	@RequestMapping("/requestSubmitArticle.do")
+	public @ResponseBody String requestSubmitArticle(HttpServletRequest request,
+			@RequestParam("subjectId") int subjectId,
+			@RequestParam("subjectCreateUserId") int subjectCreateUserId,
+			@RequestParam(value = "submitArticleIds[]",required=false) int[] submitArticleIds){
+			User user = SignInAndUpController.getSignInUser(request);
+			int num = articleSubjectService.requestSubmitArticle(user.getId(),subjectId,subjectCreateUserId,submitArticleIds);
+			if(num>0){
+				return "投稿成功等待审核通过";
+			}
+		return "投稿失败！";
+	}
+//	 /**
+//     * 上传
+//     * @param 
+//     * @return
+//     */
+//    @RequestMapping(value = "/uploadFile.do")
+//    public @ResponseBody String uploadFile(HttpServletRequest request,HttpServletResponse response) throws Exception{
+//        response.setHeader("X-Frame-Options","SAMEORIGIN");
+//        logger.info("invoke----------/articleSubject/uploadFile.do");
+//        List<String> result = new ArrayList<String>();
+//        /**构建文件保存的目录**/
+//        String logoPathDir = "/files";
+//        /**得到文件保存目录的真实路径**/
+//        String logoRealPathDir = request.getServletContext().getRealPath(logoPathDir);
+//            try{
+//                /**根据真实路径创建目录**/
+//                File logoSaveFile = new File(logoRealPathDir);
+//                if (!logoSaveFile.exists())
+//                    logoSaveFile.mkdirs();
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
+//    
+//        /**页面控件的文件流**/
+//        MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+//        MultipartFile multipartFile = multiRequest.getFile("file");
+//        if (multiRequest.getMultiFileMap().size() == 0) {
+//            return "未选择文件或未指定文件参数名";
+//        }
+//        String retPath = "";
+//        String retrunPath="";
+//        if (multipartFile != null) {
+//            /**获取文件的后缀**/
+//            String suffix = multipartFile.getOriginalFilename().substring
+//                    (multipartFile.getOriginalFilename().lastIndexOf("."));
+//            /**使用UUID生成文件名称**/
+//            String logImageName = UUIDUitl.generateLowerString(32) + suffix;//构建文件名称
+//            /**拼成完整的文件保存路径加文件**/
+//            String fileName = logoPathDir + File.separator + logImageName;
+//            //返回给客户端的路径
+//            retPath = logoRealPathDir + File.separator + logImageName;
+//            File file = new File(retPath);
+//            try {
+//                multipartFile.transferTo(file);
+//                fileName= fileName.replaceAll("\\\\", "/");
+//                retrunPath=fileName;
+//                result.add(fileName);
+//            } catch (IllegalStateException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        // }
+//        System.out.println(retrunPath);
+//        return retrunPath;
+//    }
 
 }

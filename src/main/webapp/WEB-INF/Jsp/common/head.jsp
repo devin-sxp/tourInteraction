@@ -117,10 +117,10 @@
 							<li><a href="<%=contextPath %>/page/userCenter"> <i
 									class="iconfont ic-navigation-settings"></i><span>设置</span>
 							</a></li>
-							<li><a href="/faqs"> <i
-									class="iconfont ic-navigation-feedback"></i><span>帮助与反馈</span>
+							<li><a href="<%=contextPath %>/page/newsCenter"> <i
+									class="iconfont ic-navigation-feedback"></i><span>消息</span>
 							</a></li>
-							<li><a id="btn_loginup" rel="nofollow" data-method="delete">
+							<li><a id="btn_loginup" rel="nofollow">
 									<i class="iconfont ic-navigation-signout"></i><span>退出</span>
 							</a></li>
 						</ul>

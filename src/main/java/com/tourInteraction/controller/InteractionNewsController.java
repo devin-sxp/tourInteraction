@@ -33,7 +33,7 @@ public class InteractionNewsController {
 	public @ResponseBody String getNews(@RequestParam(value = "moduleId",defaultValue="0") int moduleId, @RequestParam("limit") int limit,
 								@RequestParam("offset") int offset, String newsTitle, String newsLabel, String createUserName){
 		
-		logger.debug("getNews.do被调用");
+		logger.info("getNews.do被调用");
 		List<InteractionNews> list = new ArrayList<InteractionNews>();
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		
@@ -90,7 +90,7 @@ public class InteractionNewsController {
 	@RequestMapping("/getNewsById.do")
 	public @ResponseBody String getNewsById(@RequestParam("newsId") int newsId){
 		
-		logger.debug("getNewsById.do被调用");
+		logger.info("getNewsById.do被调用");
 		
 		InteractionNews interactionNews = interactionNewsService.getNewsById(newsId);
 
@@ -101,7 +101,7 @@ public class InteractionNewsController {
 	@RequestMapping("/delNewsById.do")
 	public @ResponseBody String delNewsById(@RequestParam("id") int id){
 		
-		logger.debug("interactionNews/delNewsById.do被调用");
+		logger.info("interactionNews/delNewsById.do被调用");
 		
 		int num = interactionNewsService.delNewsById(id);
 		String result = "删除失败";

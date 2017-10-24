@@ -3,7 +3,6 @@ package com.tourInteraction.service.article;
 import java.util.List;
 import java.util.Map;
 
-import com.tourInteraction.entity.InteractionModel;
 import com.tourInteraction.entity.article.ArticleSubject;
 
 public interface IArticleSubjectService {
@@ -21,5 +20,7 @@ public interface IArticleSubjectService {
 	List<ArticleSubject> getSubjectsByUserId(int userId);
 
 	int getSubjectCount();
+
+	int requestSubmitArticle(int userId, int subjectId, int subjectCreateUserId, int[] submitArticleIds);
 
 }

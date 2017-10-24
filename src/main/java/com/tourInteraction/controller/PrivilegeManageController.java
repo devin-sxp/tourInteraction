@@ -33,7 +33,7 @@ public class PrivilegeManageController {
 	public @ResponseBody String getPrivileges(HttpServletRequest request,
 			@RequestParam("roleId") int roleId){
 		
-		logger.debug("privilegeManage/getPrivileges.do被调用");
+		logger.info("privilegeManage/getPrivileges.do被调用");
 		List<Privilege> list = new ArrayList<Privilege>();
 		list = privilegeManageService.getPrivileges(roleId);
 		String result = JSONUtil.list2json(list);
@@ -43,7 +43,7 @@ public class PrivilegeManageController {
 	
 	@RequestMapping("delPrivilegeById.do")
 	public @ResponseBody String delPrivilegeById( @RequestParam("roleId") int privilegeId){
-		logger.debug("privilegeManage/delPrivilegeById.do被调用");
+		logger.info("privilegeManage/delPrivilegeById.do被调用");
 		
 		int num = privilegeManageService.delPrivilegeById(privilegeId);
 		String result = "删除失败!";
@@ -58,7 +58,7 @@ public class PrivilegeManageController {
 			@RequestParam("parentId") int parentId,
 			@RequestParam("privilegeName") String privilegeName,
 			@RequestParam("privilegeValue") String privilegeValue){
-		logger.debug("privilegeManage/addPrivilege.do被调用");
+		logger.info("privilegeManage/addPrivilege.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		mapParam.put("parentId", parentId);
@@ -83,7 +83,7 @@ public class PrivilegeManageController {
 			@RequestParam("parentId") int parentId,
 			@RequestParam("privilegeName") String privilegeName,
 			@RequestParam("privilegeValue") String privilegeValue){
-		logger.debug("privilegeManage/updatePrivilege.do被调用");
+		logger.info("privilegeManage/updatePrivilege.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Privilege privilege = new Privilege();
 		privilege.setId(privilegeId);
@@ -106,7 +106,7 @@ public class PrivilegeManageController {
 	public @ResponseBody String saveRolePrivilege(HttpServletRequest req,
 			@RequestParam("roleId") int roleId,
 			@RequestParam(value = "privilegeIds[]",required=false) int[] privilegeIds){
-		logger.debug("privilegeManage/saveRolePrivilege.do被调用");
+		logger.info("privilegeManage/saveRolePrivilege.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 
 		int num = privilegeManageService.saveRolePrivilege(roleId,privilegeIds,user.getId());

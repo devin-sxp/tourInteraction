@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.tourInteraction.entity.article.Article;
+import com.tourInteraction.entity.article.ArticleRequestSubmit;
 
 public interface IArticleService {
 
@@ -12,8 +13,6 @@ public interface IArticleService {
 	Article getArticleById(int id);
 
 	int writeArticle(Article article);
-
-	Article getRequestSubmitNewsBySubjectId(int subjectId);
 
 	int getNowUserArticleCount(int userId);
 
@@ -24,5 +23,9 @@ public interface IArticleService {
 	Map<String, Object> getArticlesBySubjectId(int subjectId, int limit, int offset);
 
 	Map<String, Object> getArticleAuthorBySubjectId(int subjectId, int limit, int offset);
+
+	List<ArticleRequestSubmit> getArticleRequestSubmitNews(int userId);
+
+	int dealArticleRequestSubmitNews(Map<String, Object> map);
 
 }

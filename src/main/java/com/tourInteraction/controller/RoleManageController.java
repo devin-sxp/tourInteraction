@@ -32,7 +32,7 @@ public class RoleManageController {
 	@RequestMapping("getRoles.do")
 	public @ResponseBody String getRoles(HttpServletRequest request){
 		
-		logger.debug("roleManage/getRoles.do被调用");
+		logger.info("roleManage/getRoles.do被调用");
 		List<Role> list = new ArrayList<Role>();
 		list = roleManageService.getRoles();
 		String result = JSONUtil.list2json(list);
@@ -42,7 +42,7 @@ public class RoleManageController {
 	
 	@RequestMapping("delRoleById.do")
 	public @ResponseBody String delRoleById( @RequestParam("roleId") int roleId){
-		logger.debug("roleManage/delRoleById.do被调用");
+		logger.info("roleManage/delRoleById.do被调用");
 		
 		int num = roleManageService.delRoleById(roleId);
 		String result = "删除失败!";
@@ -55,7 +55,7 @@ public class RoleManageController {
 	@RequestMapping("/addRole.do")
 	public @ResponseBody String addRole(HttpServletRequest req, 
 			@RequestParam("roleName") String roleName){
-		logger.debug("roleManage/addRole.do被调用");
+		logger.info("roleManage/addRole.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
 		mapParam.put("roleName", roleName);
@@ -76,7 +76,7 @@ public class RoleManageController {
 	public @ResponseBody String updateRole(HttpServletRequest req, 
 			@RequestParam("roleId") int roleId,
 			@RequestParam("roleName") String roleName){
-		logger.debug("roleManage/updateRole.do被调用");
+		logger.info("roleManage/updateRole.do被调用");
 		User user = SignInAndUpController.getSignInUser(req);
 		Role role = new Role();
 		role.setId(roleId);

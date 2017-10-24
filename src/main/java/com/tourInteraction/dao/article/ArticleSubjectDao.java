@@ -23,4 +23,6 @@ public interface ArticleSubjectDao{
 
 	int getSubjectCount();
 
+	int requestSubmitArticle(Map<String, Object> map);
+
 }
