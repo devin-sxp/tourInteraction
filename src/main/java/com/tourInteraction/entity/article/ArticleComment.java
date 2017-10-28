@@ -8,6 +8,9 @@ public class ArticleComment extends Base{
 	private int articleId;
 	private String commentContent;
 	private int commentPraiseCount;
+	private String userIconPath;
+	private int commentReplyCount;
+;
 
 
 	public int getArticleId() {
@@ -27,6 +30,18 @@ public class ArticleComment extends Base{
 	}
 	public void setCommentPraiseCount(int commentPraiseCount) {
 		this.commentPraiseCount = commentPraiseCount;
+	}
+	public String getUserIconPath() {
+		return userIconPath;
+	}
+	public void setUserIconPath(String userIconPath) {
+		this.userIconPath = userIconPath;
+	}
+	public int getCommentReplyCount() {
+		return commentReplyCount;
+	}
+	public void setCommentReplyCount(int commentReplyCount) {
+		this.commentReplyCount = commentReplyCount;
 	}
 	
 }

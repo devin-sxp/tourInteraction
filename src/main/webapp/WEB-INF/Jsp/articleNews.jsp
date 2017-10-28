@@ -1,3 +1,4 @@
+<%@page import="com.tourInteraction.entity.User"%>
 <%@page import="java.net.CookiePolicy"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -7,7 +8,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Home</title>
+<title>文章</title>
 <!-- Custom Theme files -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -20,12 +21,11 @@
 	href="<%=contextPath%>/resource/css/article/web.css">
 <link rel="stylesheet" media="all"
 	href="<%=contextPath%>/resource/css/article/entry.css">
-<link href="<%=contextPath%>/resource/css/pop/pop.css" type="text/css"
-	rel="stylesheet" media="all">
-<link href="<%=contextPath%>/resource/css/wangEditor/wangEditor.css"
-	type="text/css" rel="stylesheet" media="all">
-<link href="<%=contextPath%>/resource/css/fileInput/fileinput.css"
-	type="text/css" rel="stylesheet" media="all">
+<link rel="stylesheet" media="all"
+	href="<%=contextPath%>/resource/css/jquery-emoji/jquery.emoji.css">
+<link rel="stylesheet" media="all"
+	href="<%=contextPath%>/resource/css/jquery-emoji/jquery.mCustomScrollbar.min.css">
+
 <script src="<%=contextPath%>/resource/js/jquery.min.js"></script>
 
 <script type="text/javascript">
@@ -34,9 +34,8 @@
 
 		$('#horizontalTab').easyResponsiveTabs({
 			type : 'default', //Types: default, vertical, accordion           
-			width : 'auto', //auto or any width like 600px
+			width : 'auto',
 			fit : true
-		// 100% fit in a container
 		});
 	});
 </script>
@@ -61,12 +60,14 @@
 					<h1 id="h_article_title" class="title" style="margin: 30px 0 40px;">《耕堂读书记》</h1>
 
 					<!-- 文章内容 -->
-					<div id="div_article_content" data-note-content="" class="show-content">
+					<div id="div_article_content" data-note-content=""
+						class="show-content">
 						<div class="image-package">
-							<img id="img_article_icon" src="" style="cursor: zoom-in;width:50%"><br>
+							<img id="img_article_icon" src=""
+								style="cursor: zoom-in;width:50%"><br>
 							<div class="image-caption">图片来自tourInteraction</div>
 						</div>
-												
+
 					</div>
 					<!--  -->
 
@@ -86,14 +87,15 @@
 				<div class="follow-detail">
 					<div class="info">
 						<a class="avatar" href="http://www.jianshu.com/u/74307f7c1d61">
-							<img id="i_user_icon" src="" alt="96"></a> 
-						<a class="btn btn-success follow"><i class="iconfont ic-follow"></i><span>关注</span></a> 
-						<a id="a_create_user_name" class="title" href=""></a> <span	class="tag">签约作者</span>
+							<img id="i_user_icon" src="" alt="96">
+						</a> <a class="btn btn-success follow"><i
+							class="iconfont ic-follow"></i><span>关注</span></a> <a
+							id="a_create_user_name" class="title" href=""></a> <span
+							class="tag">签约作者</span>
 						<p>写了 207145 字，被 15203 人关注，获得了 4162 个喜欢</p>
 					</div>
 					<div class="signature">
-					文字爱好者。喜欢简单的生活，随心所欲的写作。我已委托“维权骑士”进行维权行动。
-					</div>
+						文字爱好者。喜欢简单的生活，随心所欲的写作。我已委托“维权骑士”进行维权行动。</div>
 				</div>
 
 				<div class="support-author">
@@ -138,41 +140,46 @@
 						</a> <a class="share-circle" data-action="weibo-share"
 							data-toggle="tooltip" href="" data-original-title="分享到微博"> <i
 							class="iconfont ic-weibo"></i>
-						</a> <a class="share-circle" data-toggle="tooltip"
-							href="http://cwb.assets.jianshu.io/notes/images/15623683/weibo/image_3b16bf067e9a.jpg"
-							target="_blank" data-original-title="下载长微博图片"> <i
+						</a> <a class="share-circle" data-toggle="tooltip"> <i
 							class="iconfont ic-picture"></i>
 						</a> <a class="share-circle more-share" tabindex="0"
-							data-toggle="popover" data-placement="top" data-html="true"
-							data-trigger="focus" href="javascript:void(0);" data-content=""
-							data-original-title="" title="">更多分享</a>
+							>更多分享</a>
 					</div>
 				</div>
 				<div>
 					<div id="comment-list" class="comment-list">
 						<div>
 							<form class="new-comment">
-								<a class="avatar"><img src="./9.png"></a>
-								<div class="sign-container">
-									<a
-										href="http://www.jianshu.com/sign_in?utm_source=desktop&amp;utm_medium=not-signed-in-comment-form"
-										class="btn btn-sign">登录</a> <span>后发表评论</span>
+								<a class="avatar"><img id="img-comment-user-icon"
+									src=""></a>
+								<textarea id="textarea_content" name="textarea_content" placeholder="写下你的评论..."></textarea>
+								<div class="write-function-block hidden">
+									<div class="emoji-modal-wrap">
+										<a class="emoji"> <i id="a-emoji"
+											class="iconfont ic-comment-emotions"></i>
+										</a>
+									</div>
+									<!-- <div class="hint">Ctrl+Return 发表</div> -->
+									<a class="btn btn-send" id="a_comment_send">发送</a> <a class="cancel">取消</a>
 								</div>
 							</form>
 						</div>
 						<div id="normal-comment-list" class="normal-comment-list">
 							<div>
-								<div>
-									<div class="top">
-										<span id="s_article_comment_count">未知评论</span> <a class="author-only">只看作者</a> <a
-											class="close-btn" style="display: none;">关闭评论</a>
-										<div class="pull-right">
-											<a class="active">按喜欢排序</a><a class="">按时间正序</a><a class="">按时间倒序</a>
-										</div>
+								<div class="top">
+									<span id="s_article_comment_count">未知评论</span> <a
+										class="author-only">只看作者</a> <a class="close-btn"
+										style="display: none;">关闭评论</a>
+									<div class="pull-right">
+										<a class="active sort-method" param-method="praiseCount">按被赞排序</a>
+										<a class="sort-method" param-method="timeAsc">按时间正序</a>
+										<a class="sort-method" param-method="timeDesc">按时间倒序</a>
 									</div>
 								</div>
-								<!---->
-								<!---->
+							</div>
+							<!---->
+							<!---->
+							<div id="comment-lists">
 								<div class="comments-placeholder" style="display: none;">
 									<div class="author">
 										<div class="avatar"></div>
@@ -190,14 +197,12 @@
 										<div class="zan"></div>
 									</div>
 								</div>
-								<div id="comment-14511484" class="comment">
+								<div class="comment">
 									<div>
 										<div class="author">
-											<a href="http://www.jianshu.com/u/74307f7c1d61"
-												target="_blank" class="avatar"><img src="./7.jpeg"></a>
+											<a href=""	target="_blank" class="avatar"><img src=""></a>
 											<div class="info">
-												<a href="http://www.jianshu.com/u/74307f7c1d61"
-													target="_blank" class="name">雪花如糖</a> <span
+												<a href="" target="_blank" class="name">雪花如糖</a> <span
 													class="author-tag">作者</span>
 												<div class="meta">
 													<span>2楼 · 2017.08.27 12:35</span>
@@ -209,8 +214,6 @@
 											<div class="tool-group">
 												<a class=""><i class="iconfont ic-zan"></i> <span>4人赞</span></a>
 												<a class=""><i class="iconfont ic-comment"></i> <span>回复</span></a>
-												<!---->
-												<!---->
 											</div>
 										</div>
 									</div>
@@ -254,7 +257,7 @@
 													target="_blank">能辽</a>： <span> <a
 													href="http://www.jianshu.com/users/74307f7c1d61"
 													class="maleskine-author" target="_blank"
-													data-user-slug="74307f7c1d61">@雪花如糖</a> 可以考虑写成系列
+													>@雪花如糖</a> 可以考虑写成系列
 												</span>
 											</p>
 											<div class="sub-tool-group">
@@ -274,7 +277,7 @@
 										<!---->
 									</div>
 								</div>
-								<div id="comment-14512844" class="comment">
+								<div class="comment">
 									<div>
 										<div class="author">
 											<a href="http://www.jianshu.com/u/cd9be1d83139"
@@ -319,11 +322,10 @@
 										</div>
 									</div>
 								</div>
-
 							</div>
 						</div>
-						</div>
 					</div>
+				</div>
 			</div>
 		</div>
 		<!-- //container -->
@@ -338,69 +340,33 @@
 	<jsp:include page="common/footer.jsp"></jsp:include>
 	<!-- footer -->
 
-	<!--发布弹窗  start-->
-
-	<div class="popinto" id="write_article">
-		<h3 class="" style="margin-top: 5px">
-			<span class="pull-left ">写文章</span> <i
-				class="fa fa-times pull-right font18" onclick="closepop()"></i>
-		</h3>
-		<br>
-		<hr>
-		<div class="popcon">
-			<ul class="list-group">
-				<li class="list-group-item"><input type="text"
-					id="input_article_title" placeholder="请输入标题" class="form-control"
-					maxlength="50"></li>
-				<li class="list-group-item"><label>请选择文章封面：</label> <input
-					type="file" id="input_file" name="input_file" class="form-control"
-					multiple="multiple" data-show-caption="true"></li>
-
-
-			</ul>
-			<div class="">
-				<textarea id="textarea_article_content"
-					style="height: 200px; width: 96%; margin-left: 2%">
-            </textarea>
-			</div>
-			<p class="pop_p">
-				<button type="button" class="btn btn-primary pop_btn"
-					style="padding: 10px" id="btn_news_write_article_sure">保存</button>
-				<button type="button" class="btn btn-defalut pop_btn"
-					style="padding: 10px" onclick="closepop()">取消</button>
-			</p>
-		</div>
-	</div>
-	<!--发布弹窗 end-->
-	<div class="pop" onclick="closepop()"></div>
-
-	<script src="<%=contextPath%>/resource/js/pop/pop.js"></script>
-	<script src="<%=contextPath%>/resource/js/fileInput/fileinput.js"></script>
-	<script src="<%=contextPath%>/resource/js/fileInput/fileinput_locale_zh.js"></script>
+	<script src="<%=contextPath%>/resource/js/jquery-emoji/jquery.emoji.js"></script>
+	<script src="<%=contextPath%>/resource/js/jquery-emoji/jquery.mCustomScrollbar.min.js"></script>
+	<script src="<%=contextPath%>/resource/js/jquery-emoji/jquery.mousewheel-3.0.6.min.js"></script>
 	<script src="<%=contextPath%>/resource/js/common/getUrlParam.js"></script>
+	<script src="<%=contextPath%>/resource/js/common/emoji.js"></script>
 
 	<script src="<%=contextPath%>/resource/js/myJs/articleNews.js"></script>
 	<script type="text/javascript"
 		src="<%=contextPath%>/resource/js/common/convertTime.js"></script>
-	<script type="text/javascript"
-		src="<%=contextPath%>/resource/js/common/fileUpload.js"></script>
-	<div class="pop" onclick="closepop()"></div>
-	<script type="text/javascript"
-		src="<%=contextPath%>/resource/js/wangEditor/wangEditor.js"></script>
-	<script type="text/javascript">
-		var editor = new wangEditor('textarea_article_content');
-		editor.config.menus = $.map(wangEditor.config.menus, function(item, key) {
-			return item;
-		});
-		/* 	editor.config.zindex = 2000; */
-		editor.create();
-	</script>
+		
 	<script type="text/javascript">
 		if (isPhone()) {
-			$(".aside .board a img").css({
-				'width' : "100%"
+			$(".note .post").css({
+				'width' : "96%"
 			})
 		}
+		
+		<%User user = new User();
+			user = (User) session.getAttribute("user");%>
+	
+	if("<%if (user != null)
+				out.print(user.getUserName());%>".trim() != "" && "<%if (user != null)
+				out.print(user.getUserName());%>".trim() != null) {
+
+ 		$("#img-comment-user-icon").attr('src','<%if (user != null) out.print(contextPath+user.getUserIconPath());%>'.trim());
+ 		
+	} 
 	</script>
 </body>
 </html>

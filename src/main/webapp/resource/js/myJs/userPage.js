@@ -54,9 +54,9 @@ var getSubjectsByUserId = function(){
 		data = eval(data);
 		$.each(data, function(objIndex, subject) {
 			var html = "<li>"+
-					"<a href=\""+subject.id+"\" target=\"_blank\" class=\"avatar-collection\">"+
+					"<a href=\""+getRootPath()+"/page/subject?sid="+subject.id+"\" target=\"_blank\" class=\"avatar-collection\">"+
 					"<img style=\"width:32px;height:32px;\" src=\""+getRootPath()+subject.subjectIconPath+"\">"+
-					"</a><a href=\""+subject.id+"\" target=\"_blank\" class=\"name\">"+subject.subjectTitle+"</a></li>";
+					"</a><a href=\""+getRootPath()+"/page/subject?sid="+subject.id+"\" target=\"_blank\" class=\"name\">"+subject.subjectTitle+"</a></li>";
 			$(".my_subject_list").append(html);
 		})
 	},'json');

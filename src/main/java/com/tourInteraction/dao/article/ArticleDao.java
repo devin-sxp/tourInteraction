@@ -36,4 +36,6 @@ public interface ArticleDao{
 	int updateArticleRequestSubmit(Map<String, Object> map);
 
 	int passSubmitArticle(Map<String, Object> map);
+
+	int updateArticleCommentCount(@Param("articleId")int articleId, @Param("addValue")int addValue);
 }

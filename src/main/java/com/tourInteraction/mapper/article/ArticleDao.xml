@@ -183,4 +183,11 @@
 		subject_id = #{requestSubjectId},update_user = #{updateUser},update_time=#{updateTime}
 		where id = #{requestArticleId}
 	</update>
+	
+	<update id="updateArticleCommentCount" parameterType="int">
+		update article 
+		set
+		article_comment_count = article_comment_count + #{addValue}
+		where id = #{articleId}
+	</update>
 </mapper>

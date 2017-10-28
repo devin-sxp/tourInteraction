@@ -185,6 +185,8 @@
 	src="<%=contextPath%>/resource/js/common/getPath.js"></script>
 
 <script src="<%=contextPath%>/resource/js/jquery-ui.js"></script>
+<script src="<%=contextPath%>/resource/js/jquery.form.js"></script>
+
 <script type="text/javascript"
 	src="<%=contextPath%>/resource/js/script.js"></script>
 <script type="text/javascript"
@@ -192,9 +194,6 @@
 <script src="<%=contextPath%>/resource/js/easyResponsiveTabs.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
-	$("#header_hide").css({
-		'height' : $('.header').height()
-	});
 
 	if (!isPhone()) {
 		$(".header-dropdown").removeClass("hidden");
@@ -225,6 +224,10 @@
 		$("li .wrap").addClass("hidden");
 		
 	}
+	
+	$("#header_hide").css({
+		'height' : $('.header').height()
+	});
 </script>
 <script type="text/javascript">
 	$(function() {

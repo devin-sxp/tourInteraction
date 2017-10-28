@@ -3,10 +3,41 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tourInteraction.dao.article.ArticleCommentAndReplyDao">
 	<select id="getArticleComment" resultType="ArticleComment">
-
+		select 
+		ac.id as id,
+		ac.article_id as articleId,
+		ac.comment_content as commentContent,
+		ac.comment_praise_count as commentPraiseCount,
+		ac.comment_reply_count as commentReplyCount,
+		ac.create_user as createUser,
+		u.user_name as createUserName,
+		f.file_path as userIconPath,
+		ac.create_time as createTime
+		from article_comment as ac
+		left join user as u
+		on u.id = ac.create_user
+		left join files as f
+		on f.id = u.user_icon_id
+		where ac.status="1" and article_id=#{articleId}
+		<if test="'praiseCount' == getMethod">
+	   	   order by comment_praise_count desc
+	   </if>
+	   <if test="'timeDesc' == getMethod">
+	   	   order by ac.create_time desc
+	   </if>
+	   <if test="'timeAsc' == getMethod">
+	   	   order by ac.create_time asc
+	   </if>
 	   <if test="null != limit and '' != limit and null != offset and '' != offset">
 	   	   limit ${limit},${offset} 
 	   </if>
+	</select>
+	
+	<select id="getArticleCommentCount" resultType="int">
+		select 
+		count(*)
+		from article_comment
+		where status="1" and article_id=#{articleId}
 	</select>
 	
 	<select id="getArticleReply" resultType="ArticleReply">
@@ -15,4 +46,29 @@
 	   	   limit ${limit},${offset} 
 	   </if>
 	</select>
+	
+	<!-- 插入操作 -->
+ 	<insert id="addArticleComment" parameterType="Map" useGeneratedKeys="true">
+	   insert into article_comment(article_id,comment_content,comment_reply_count,comment_praise_count,
+	   create_time,create_user,status) 
+	   values(#{articleId},#{commentContent},#{commentReplyCount},#{commentPraiseCount},#{createTime},#{createUser},#{status})
+	</insert> 
+	
+ 	<insert id="addCommentReply" parameterType="Map" useGeneratedKeys="true">
+	   insert into article_reply(comment_id,reply_content,target_user,
+	   create_time,create_user,status) 
+	   values(#{commentId},#{replyContent},#{targetUserId},#{createTime},#{createUser},#{status})
+	</insert> 
+	
+	<update id="updateArticleComment" parameterType="Map">
+		update article_comment 
+		set
+		<if test="null != praiseCountAddValue and '' != praiseCountAddValue">
+			comment_praise_count = comment_praise_count + #{praiseCountAddValue}
+	   </if> 
+		<if test="null != replyCountAddValue and '' != replyCountAddValue">
+			comment_reply_count = comment_reply_count + #{replyCountAddValue}
+	   </if> 
+		where id = #{commentId};
+	</update>
 </mapper>

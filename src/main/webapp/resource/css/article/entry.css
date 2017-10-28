@@ -7,7 +7,7 @@
     margin: 0 auto;
     padding-top: 20px;
     padding-bottom: 40px;
-    width: 90%
+    width: 80%
 }
 
 .note .post .article .title {
@@ -742,7 +742,7 @@
 }
 
 .note .post .comment-list {
-    padding-top: 100px
+    padding-top: 50px
 }
 
 .note .post .comment-list .new-comment {
