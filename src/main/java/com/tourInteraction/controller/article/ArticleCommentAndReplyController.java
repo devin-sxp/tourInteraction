@@ -1,29 +1,23 @@
 package com.tourInteraction.controller.article;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
+import com.tourInteraction.controller.SignInAndUpController;
+import com.tourInteraction.service.article.IArticleCommentAndReplyService;
+import com.tourInteraction.utils.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tourInteraction.controller.SignInAndUpController;
-import com.tourInteraction.entity.article.ArticleReply;
-import com.tourInteraction.service.article.IArticleCommentAndReplyService;
-import com.tourInteraction.utils.JSONUtil;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/articleCommentAndReply")
-@Transactional
 public class ArticleCommentAndReplyController {
 	
 	@Resource(name="articleCommentAndReplyServiceImpl")
@@ -43,12 +37,14 @@ public class ArticleCommentAndReplyController {
 	public @ResponseBody String getArticleReply(String limit,String offset,
 			@RequestParam("commentId") int commentId){
 		logger.info("articleCommentAndReply/getArticleReply.do被调用");
+		Map<String, Object> mapCondition = new HashMap<String , Object>();
+		if (limit != null && offset != null){
+			mapCondition.put("limit", limit);
+			mapCondition.put("offset", offset);
+		}
+		mapCondition.put("commentId",commentId);
+		Map<String, Object> map = articleCommentAndReplyService.getArticleReply(mapCondition);
 
-		List<ArticleReply> list = new ArrayList<ArticleReply>();
-		list = articleCommentAndReplyService.getArticleReply(limit, offset, commentId);
-		Map<String, Object> map = new HashMap<String , Object>();
-		map.put("list", list);
-		map.put("count", 10);
 		String result = JSONUtil.map2json(map);
 		return result;
 	}

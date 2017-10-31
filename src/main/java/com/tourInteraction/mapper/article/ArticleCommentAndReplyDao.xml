@@ -41,10 +41,32 @@
 	</select>
 	
 	<select id="getArticleReply" resultType="ArticleReply">
-
+		select
+		ar.id as id,
+		ar.comment_id as commentId,
+		ar.reply_content as replyContent,
+		ar.target_user as targetUser,
+		u1.user_name as targetUserName,
+		ar.create_user as createUser,
+		u.user_name as createUserName,
+		ar.create_time as createTime
+		from article_reply as ar
+		left join user as u
+		on ar.create_user = u.id
+		left join user as u1
+		on ar.target_user = u1.id
+		WHERE ar.status = '1' and ar.comment_id = #{commentId}
+		order by ar.create_time desc
 	   <if test="null != limit and '' != limit and null != offset and '' != offset">
-	   	   limit ${limit},${offset} 
+	   	   limit ${limit},${offset}
 	   </if>
+	</select>
+
+	<select id="getArticleReplyCount" resultType="int">
+		select
+		count(*)
+		from article_reply
+		WHERE status = '1' and comment_id = #{commentId}
 	</select>
 	
 	<!-- 插入操作 -->

@@ -26,5 +26,11 @@
 			timeToIdleSeconds="600"
 			timeToLiveSeconds="600">
 	</cache>
-	
+
+	<cache name="articleCommentAndReplyCache"
+		   maxElementsInMemory="10000"
+		   eternal="false"
+		   timeToIdleSeconds="600"
+		   timeToLiveSeconds="600">
+	</cache>
 </ehcache>

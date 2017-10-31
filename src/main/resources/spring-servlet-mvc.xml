@@ -10,7 +10,7 @@
 					    http://www.springframework.org/schema/context
 					    http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	<context:component-scan base-package="com.tourInteraction.controller"></context:component-scan>
-     
+
 	 <!-- 对控制器返回的逻辑路径指定对应的视图 -->
 	 <bean id="irViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	   <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>

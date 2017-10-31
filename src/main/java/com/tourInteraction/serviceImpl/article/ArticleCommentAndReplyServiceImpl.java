@@ -8,6 +8,8 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +28,10 @@ public class ArticleCommentAndReplyServiceImpl implements IArticleCommentAndRepl
 	@Autowired
 	@Qualifier("articleDao")
 	private ArticleDao articleDao;
+
 	@Override
 	@Transactional(readOnly=true)
+	@Cacheable("articleCommentAndReplyCache")
 	public Map<String, Object> getArticleComment(String limit, String offset, int articleId,String getMethod) {
 		// TODO Auto-generated method stub
 		int commentCount = articleCommentAndReplyDao.getArticleCommentCount(articleId);
@@ -39,13 +43,21 @@ public class ArticleCommentAndReplyServiceImpl implements IArticleCommentAndRepl
 	}
 
 	@Override
-	public List<ArticleReply> getArticleReply(String limit, String offset, int commentId) {
+	@Transactional(readOnly=true)
+	@Cacheable("articleCommentAndReplyCache")
+	public Map<String, Object> getArticleReply(Map<String,Object> mapCondition) {
 		// TODO Auto-generated method stub
-		return articleCommentAndReplyDao.getArticleReply(limit, offset, commentId);
+		int replyCount = articleCommentAndReplyDao.getArticleReplyCount((Integer) mapCondition.get("commentId"));
+		List<ArticleReply> list = articleCommentAndReplyDao.getArticleReply(mapCondition);
+		Map<String, Object> map = new HashMap<String , Object>();
+		map.put("list", list);
+		map.put("count", replyCount);
+		return map;
 	}
 
 	@Override
 	@Transactional
+	@CacheEvict(value = "articleCommentAndReplyCache",allEntries = true)
 	public int addArticleComment(Map<String, Object> map) {
 		int num = articleCommentAndReplyDao.addArticleComment(map);
 		num = articleDao.updateArticleCommentCount((Integer)map.get("articleId"),1);
@@ -53,6 +65,7 @@ public class ArticleCommentAndReplyServiceImpl implements IArticleCommentAndRepl
 	}
 
 	@Override
+	@CacheEvict(value = "articleCommentAndReplyCache",allEntries = true)
 	public int updateArticleComment(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return articleCommentAndReplyDao.updateArticleComment(map);
@@ -60,6 +73,7 @@ public class ArticleCommentAndReplyServiceImpl implements IArticleCommentAndRepl
 
 	@Override
 	@Transactional
+	@CacheEvict(value = "articleCommentAndReplyCache",allEntries = true)
 	public int addCommentReply(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		int num = articleCommentAndReplyDao.addCommentReply(map);

@@ -12,5 +12,7 @@ function getRootPath(){
     var localhostPaht=curWwwPath.substring(0,pos);  
     //获取带"/"的项目名，如：/uimcardprj  
     var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
-    return(localhostPaht+projectName);  
-}  
+    // return(localhostPaht+projectName);
+    //idea访问路径没有项目名
+    return(localhostPaht);
+}
