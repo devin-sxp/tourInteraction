@@ -1,14 +1,12 @@
 package com.tourInteraction.controller.article;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
+import com.tourInteraction.config.GlobalConstantKey;
+import com.tourInteraction.controller.SignInAndUpController;
+import com.tourInteraction.entity.User;
+import com.tourInteraction.entity.article.Article;
+import com.tourInteraction.entity.article.ArticleRequestSubmit;
+import com.tourInteraction.service.article.IArticleService;
+import com.tourInteraction.utils.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,12 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tourInteraction.controller.SignInAndUpController;
-import com.tourInteraction.entity.User;
-import com.tourInteraction.entity.article.Article;
-import com.tourInteraction.entity.article.ArticleRequestSubmit;
-import com.tourInteraction.service.article.IArticleService;
-import com.tourInteraction.utils.JSONUtil;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 @Controller
 @RequestMapping("/article")
@@ -116,12 +111,12 @@ public class ArticleController {
 		article.setArticleName(articleName);
 		article.setCreateTime(new Date());
 		article.setArticleIconId(articleIconId);
-		article.setArticleLookCount(0);
-		article.setArticleLoveCount(0);
-		article.setArticleSupportCount(0);
-		article.setArticleCommentCount(0);
+		article.setArticleLookCount(GlobalConstantKey.ARTICLE_LOOK_COUNT);
+		article.setArticleLoveCount(GlobalConstantKey.ARTICLE_LOVE_COUNT);
+		article.setArticleSupportCount(GlobalConstantKey.ARTICLE_SUPPORT_COUNT);
+		article.setArticleCommentCount(GlobalConstantKey.ARTICLE_COMMENT_COUNT);
 		article.setCreateUser(user.getId());
-		article.setStatus("1");
+		article.setStatus(GlobalConstantKey.STATUS_OPEN);
 		int num = articleService.writeArticle(article);
 		String result = "保存失败，请稍后重试！";
 		if(num > 0 ){
@@ -155,7 +150,7 @@ public class ArticleController {
 		map.put("isPass", isPass);
 		map.put("updateUser", user.getId());
 		map.put("updateTime", new Date());
-		map.put("status", "0");
+		map.put("status", GlobalConstantKey.STATUS_CLOSE);
 		int num = articleService.dealArticleRequestSubmitNews(map);
 		String result = "操作失败！";
 		if(num > 0 ){

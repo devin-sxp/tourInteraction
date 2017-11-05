@@ -1,12 +1,10 @@
 package com.tourInteraction.controller;
 
-import java.util.Date;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import com.tourInteraction.config.GlobalConstantKey;
+import com.tourInteraction.entity.User;
+import com.tourInteraction.service.ILoginService;
+import com.tourInteraction.utils.JSONUtil;
+import com.tourInteraction.utils.MD5Util;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -17,10 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tourInteraction.entity.User;
-import com.tourInteraction.service.ILoginService;
-import com.tourInteraction.utils.JSONUtil;
-import com.tourInteraction.utils.MD5Util;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 @Controller
 @RequestMapping("signTour")
@@ -48,8 +47,8 @@ public class SignInAndUpController {
 			user.setCreateTime(new Date());
 			user.setUpdateTime(new Date());
 			user.setIntegration(0);
-			user.setRoleId(1);
-			user.setStatus("1");
+			user.setRoleId(GlobalConstantKey.ROLE_CUSTOM);
+			user.setStatus(GlobalConstantKey.STATUS_OPEN);
 			try {
 				isSuccess = loginservice.setUser(user);
 			} catch (Exception e) {
@@ -194,13 +193,13 @@ public class SignInAndUpController {
 		if(password.equals(comfirmPassword)){
 			user.setUserName(name);
 			user.setPassWord(MD5Util.md5(password));
-			user.setPhoneNumber("0");	
-			user.setEmail("0");
+			user.setPhoneNumber(GlobalConstantKey.PHONE_NUMBER);
+			user.setEmail(GlobalConstantKey.EMAIL);
 			user.setCreateTime(new Date());
 			user.setUpdateTime(new Date());
-			user.setIntegration(0);
-			user.setRoleId(1);
-			user.setStatus("1");
+			user.setIntegration(GlobalConstantKey.INTEGRATION);
+			user.setRoleId(GlobalConstantKey.ROLE_CUSTOM);
+			user.setStatus(GlobalConstantKey.STATUS_OPEN);
 			try {
 				isSuccess = loginservice.setUser(user);
 			} catch (Exception e) {

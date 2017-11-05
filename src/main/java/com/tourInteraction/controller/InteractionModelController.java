@@ -1,18 +1,11 @@
 package com.tourInteraction.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.tourInteraction.config.GlobalConstantKey;
+import com.tourInteraction.entity.InteractionModel;
+import com.tourInteraction.entity.User;
+import com.tourInteraction.service.IInteractionModelService;
+import com.tourInteraction.utils.JSONUtil;
+import com.tourInteraction.utils.UUIDUitl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -22,11 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.tourInteraction.entity.InteractionModel;
-import com.tourInteraction.entity.User;
-import com.tourInteraction.service.IInteractionModelService;
-import com.tourInteraction.utils.JSONUtil;
-import com.tourInteraction.utils.UUIDUitl;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/interactionModel")
@@ -86,7 +81,7 @@ public class InteractionModelController {
 		mapParam.put("moduleIcon", moduleIcon);
 		mapParam.put("updateTime", new Date());
 		mapParam.put("updateUser", user.getId());
-		mapParam.put("status", "1");
+		mapParam.put("status", GlobalConstantKey.STATUS_OPEN);
 
 		int num = interactionModelService.updateModule(mapParam);
 		String result = "修改失败";
@@ -113,7 +108,7 @@ public class InteractionModelController {
 	
 		mapParam.put("createTime", new Date());
 		mapParam.put("createUser", user.getId());
-		mapParam.put("status", "1");
+		mapParam.put("status", GlobalConstantKey.STATUS_OPEN);
 		
 		int num = interactionModelService.addModule(mapParam);
 		String result = "增加失败";

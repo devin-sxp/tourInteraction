@@ -1,14 +1,10 @@
 package com.tourInteraction.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
+import com.tourInteraction.config.GlobalConstantKey;
+import com.tourInteraction.entity.InteractionNews;
+import com.tourInteraction.entity.User;
+import com.tourInteraction.service.IInteractionNewsService;
+import com.tourInteraction.utils.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tourInteraction.entity.InteractionNews;
-import com.tourInteraction.entity.User;
-import com.tourInteraction.service.IInteractionNewsService;
-import com.tourInteraction.utils.JSONUtil;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 @Controller
 @RequestMapping("/interactionNews")
@@ -76,7 +71,7 @@ public class InteractionNewsController {
 		mapParam.put("newsAddress", "地点");
 		mapParam.put("createTime", new Date());
 		mapParam.put("createUser", user.getId());
-		mapParam.put("status", "1");
+		mapParam.put("status", GlobalConstantKey.STATUS_OPEN);
 
 		int num = interactionNewsService.addNews(mapParam);
 		String result = "发布失败";

@@ -1,15 +1,11 @@
 package com.tourInteraction.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import com.tourInteraction.config.GlobalConstantKey;
+import com.tourInteraction.entity.Role;
+import com.tourInteraction.entity.User;
+import com.tourInteraction.service.IUserManageService;
+import com.tourInteraction.utils.JSONUtil;
+import com.tourInteraction.utils.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,11 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tourInteraction.entity.Role;
-import com.tourInteraction.entity.User;
-import com.tourInteraction.service.IUserManageService;
-import com.tourInteraction.utils.JSONUtil;
-import com.tourInteraction.utils.MD5Util;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
 @Controller
 @RequestMapping("userManage")
@@ -128,7 +123,7 @@ public class UserManageController {
 		mapParam.put("roleId", roleId);
 		mapParam.put("updateTime", new Date());
 		mapParam.put("updateUser", user.getId());
-		mapParam.put("status", "1");
+		mapParam.put("status", GlobalConstantKey.STATUS_OPEN);
 
 		int num = userManageService.updateUser(mapParam);
 		String result = "修改用户失败";
@@ -149,7 +144,7 @@ public class UserManageController {
 		mapParam.put("userDescription", userDescription);
 		mapParam.put("updateTime", new Date());
 		mapParam.put("updateUser", user.getId());
-		mapParam.put("status", "1");
+		mapParam.put("status", GlobalConstantKey.STATUS_OPEN);
 
 		int num = userManageService.updateUser(mapParam);
 		
@@ -203,7 +198,7 @@ public class UserManageController {
 		mapParam.put("roleId", roleId);
 		mapParam.put("createTime", new Date());
 		mapParam.put("createUser", user.getId());
-		mapParam.put("status", "1");
+		mapParam.put("status", GlobalConstantKey.STATUS_OPEN);
 		
 		int num = userManageService.addUser(mapParam);
 		String result = "增加用户失败";

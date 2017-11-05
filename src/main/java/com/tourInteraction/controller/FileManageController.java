@@ -1,11 +1,10 @@
 package com.tourInteraction.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.tourInteraction.config.GlobalConstantKey;
+import com.tourInteraction.entity.Files;
+import com.tourInteraction.entity.User;
+import com.tourInteraction.service.IFileManageService;
+import com.tourInteraction.utils.UUIDUitl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.tourInteraction.entity.Files;
-import com.tourInteraction.entity.User;
-import com.tourInteraction.service.IFileManageService;
-import com.tourInteraction.utils.UUIDUitl;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/fileManage")
@@ -100,7 +99,7 @@ public class FileManageController {
 		file.setFileUse(fileUse);
 		file.setCreateTime(new Date());
 		file.setCreateUser(user.getId());
-		file.setStatus("1");
+		file.setStatus(GlobalConstantKey.STATUS_OPEN);
 		int fileId = fileManageService.addFile(file);
 		if(fileId>0){
 			return fileId+"";

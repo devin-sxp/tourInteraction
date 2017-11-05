@@ -137,9 +137,9 @@
 	<!-- 插入操作 -->
  	<insert id="writeArticle" parameterType="int">
 	   insert into article(article_name,article_content,article_icon_id,article_look_count,article_love_count
-	   ,article_support_count,create_time,create_user,status) 
+	   ,article_support_count,article_comment_count,create_time,create_user,status)
 	   values(#{articleName},#{articleContent},#{articleIconId},#{articleLookCount},#{articleLoveCount}
-	   ,#{articleSupportCount},#{createTime},#{createUser},#{status})
+	   ,#{articleSupportCount},#{articleCommentCount},#{createTime},#{createUser},#{status})
 	</insert> 
 	
 	

@@ -1,5 +1,6 @@
 package com.tourInteraction.controller.article;
 
+import com.tourInteraction.config.GlobalConstantKey;
 import com.tourInteraction.controller.SignInAndUpController;
 import com.tourInteraction.service.article.IArticleCommentAndReplyService;
 import com.tourInteraction.utils.JSONUtil;
@@ -58,8 +59,8 @@ public class ArticleCommentAndReplyController {
 		String result = "评论失败！";
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("articleId", articleId);
-		map.put("commentPraiseCount", 0);
-		map.put("commentReplyCount", 0);
+		map.put("commentPraiseCount", GlobalConstantKey.COMMENT_PRAISE_COUNT);
+		map.put("commentReplyCount", GlobalConstantKey.COMMENT_REPLY_COUNT);
 		map.put("commentContent", commentContent);
 		map.put("createUser", SignInAndUpController.getSignInUser(request).getId());
 		map.put("createTime", new Date());
@@ -79,7 +80,7 @@ public class ArticleCommentAndReplyController {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("commentId", commentId);
-		map.put("praiseCountAddValue", 1);
+		map.put("praiseCountAddValue", GlobalConstantKey.PRAISE_COUNT_ADD_VALUE);
 		int num = articleCommentAndReplyService.updateArticleComment(map);
 		String result = "赞失败了!";
 		if(num>0){
@@ -101,7 +102,7 @@ public class ArticleCommentAndReplyController {
 		map.put("commentId", commentId);
 		map.put("replyContent", replyContent);
 		map.put("targetUserId", targetUserId);
-		map.put("replyCountAddValue", 1);
+		map.put("replyCountAddValue", GlobalConstantKey.REPLY_COUNT_ADD_VALUE);
 		map.put("createUser", SignInAndUpController.getSignInUser(request).getId());
 		map.put("createTime", new Date());
 		map.put("status", "1");

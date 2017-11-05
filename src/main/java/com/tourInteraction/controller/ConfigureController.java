@@ -1,11 +1,10 @@
 package com.tourInteraction.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.tourInteraction.config.GlobalConstantKey;
+import com.tourInteraction.entity.Configure;
+import com.tourInteraction.entity.User;
+import com.tourInteraction.service.IConfigureService;
+import com.tourInteraction.utils.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tourInteraction.entity.Configure;
-import com.tourInteraction.entity.User;
-import com.tourInteraction.service.IConfigureService;
-import com.tourInteraction.utils.JSONUtil;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "configure")
@@ -68,7 +67,7 @@ public class ConfigureController {
 		configure.setFile(file);
 		configure.setCreateUser(user.getId());
 		configure.setCreateTime(new Date());
-		configure.setStatus("1");
+		configure.setStatus(GlobalConstantKey.STATUS_OPEN);
 		int num = configureService.addConfigure(configure);
 		String result = "添加配置失败";
 		if(num>0){
