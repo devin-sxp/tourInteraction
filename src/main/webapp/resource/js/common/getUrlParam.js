@@ -15,6 +15,6 @@ function getUrlParam(paras) {
     } else {
         //t=new String(returnValue.getBytes("ISO8859_1"),"UTF-8");
         //return t;
-        return returnValue;
+        return decodeURI(returnValue);
     }
 }

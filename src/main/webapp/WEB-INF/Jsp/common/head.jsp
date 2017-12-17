@@ -75,8 +75,8 @@
 							class="top_menu">文章区</a></li>
 						<li style="width: 40%; margin-left: 0% ">
 							<div class="wrap">
-								<input type="text" placeholder="开始输入吧"> <a
-									style="border:none;"><i class="iconfont ic-search"></i></a>
+								<input id="input_search" type="text" placeholder="开始输入吧">
+								<a id="a_to_search" style="border:none;"><i class="iconfont ic-search"></i></a>
 							</div>
 
 						</li>
@@ -194,132 +194,161 @@
 <script src="<%=contextPath%>/resource/js/easyResponsiveTabs.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
+var head = {
+    data:{
+		search_url:getRootPath()+"/page/search"
+	},
+	init:function () {
+		head.method.otherSetting();
+		head.method.isLogined();
+        head.method.device_distinguish();
+        head.method.loadClickEvent();
+    },
+	method:{
+        otherSetting:function () {
+            // reset header's height
+            $("#header_hide").css({
+                'height' : $('.header').height()
+            });
+        },
+        isLogined:function () {
+            // whether have logining is true or false for set others
+            <%User user = new User();
+            user = (User) session.getAttribute("user");%>
 
-	if (!isPhone()) {
-		$(".header-dropdown").removeClass("hidden");
-		$(".avatar").css({'width': '49px','height':'46px','right':'10px'});
-	} else {
-		$(".header").css({
-			'position' : 'fixed',
-			'z-index' : '1',
-			'background-color' : 'cadetblue',
-			'width' : '100%',
-			'min-height' : '0px'
-		});
-		$(".header-grids").hide();
-		$(".nav-top").css({
-			'margin-top' : '-15px',
-			'margin-bottom' : '5px'
-		});
-		$(".container").css({
-			'padding-left' : '0px',
-			'padding-right' : '0px'
-		});
-
-		$("#loginContainer").css({
-			'top' : '6px'
-		});
-		
-		$("ul.nav1").css({'position':'fixed'});
-		$("li .wrap").addClass("hidden");
-		
-	}
-	
-	$("#header_hide").css({
-		'height' : $('.header').height()
-	});
-</script>
-<script type="text/javascript">
-	$(function() {
-		if($("#userId").val() != null && $("#userId").val() !="" ){
-			$("#div_user_center").removeClass("hidden");
-
-		}
-	})
-	<%User user = new User();
-			user = (User) session.getAttribute("user");%>
-	
-	if("<%if (user != null)
+            if("<%if (user != null)
 				out.print(user.getUserName());%>".trim() != "" && "<%if (user != null)
 				out.print(user.getUserName());%>".trim() != null) {
-		
-		$('#loginContainer').hide();
-		$('#div_loginup').show();
- 		$("#nav_user_icon").attr('src','<%if (user != null) out.print(contextPath+user.getUserIconPath());%>'.trim());
- 		
-	} else {
-	
-		$('#loginContainer').show();
-		$('#div_loginup').hide();
-		$('.dropdown-grids').css({'top': 'auto','position': 'fixed'}); 
-		
 
+                $('#loginContainer').hide();
+                $('#div_loginup').show();
+                $("#nav_user_icon").attr('src','<%if (user != null) out.print(contextPath+user.getUserIconPath());%>'.trim());
+
+            } else {
+
+                $('#loginContainer').show();
+                $('#div_loginup').hide();
+                $('.dropdown-grids').css({'top': 'auto','position': 'fixed'});
+
+            }
+        },
+        device_distinguish:function () {
+            if (!isPhone()) {
+                $(".header-dropdown").removeClass("hidden");
+                $(".avatar").css({'width': '49px','height':'46px','right':'10px'});
+            } else {
+                $(".header").css({
+                    'position' : 'fixed',
+                    'z-index' : '1',
+                    'background-color' : 'cadetblue',
+                    'width' : '100%',
+                    'min-height' : '0px'
+                });
+                $(".header-grids").hide();
+                $(".nav-top").css({
+                    'margin-top' : '-15px',
+                    'margin-bottom' : '5px'
+                });
+                $(".container").css({
+                    'padding-left' : '0px',
+                    'padding-right' : '0px'
+                });
+
+                $("#loginContainer").css({
+                    'top' : '6px'
+                });
+
+                $("ul.nav1").css({'position':'fixed'});
+                $("li .wrap").addClass("hidden");
+
+            }
+        },
+		loadClickEvent:function () {
+            //登录
+            $("#login").click(function(){
+                $.post("<%=contextPath%>/signTour/loginIn.do",
+                    {
+                        name:$("#name").val(),
+                        password:$("#password").val(),
+                        checkbox_save_password:$("#checkbox_save_password").val()
+                    },
+                    function(result){
+                        result = eval(result);
+                        if(result == "success"){
+                            window.location.reload()
+
+                        }else{
+                            toastr.error("用户名或密码错误！请重新登录！");
+                        }
+                    });
+                <%-- 	$.ajax({
+                            url:"<%=contextPath%>/signTour/loginIn.do",
+                            type: 'post',
+                            data:{name:$("#name").val(),
+                                  password:$("#password").val(),
+                                  checkbox_save_password:$("#checkbox_save_password").val()
+                                   },
+                            dataType: 'json',
+                            error: function (obj, msg) {
+
+                            },
+                            complete: function () {
+
+                            },
+                            success: function (result) {
+                                window.location.reload()
+                            }
+
+                        }); --%>
+            });
+
+            //注销
+            $("#btn_loginup").click(function() {
+                $.ajax({
+                    url:"<%=contextPath%>/signTour/signup.do",
+                    type: 'post',
+                    data:{sin:"<%out.print(session);%>"},
+                    dataType: 'text',
+                    error: function (obj, msg) {
+
+                    },
+                    complete: function () {
+
+                    },
+                    success: function (result) {
+
+                    }
+
+                });
+                window.location.reload()
+            });
+
+            //According user's device,locating a proper url;
+            $("#loginButton").click(function(){
+                if(isPhone()){
+                    window.location.href = "<%=contextPath%>/page/appWebLogin"
+                }
+            });
+
+            //Click searching button for query
+            $("#a_to_search").on('click',function () {
+                var search_value = "?search_value=" + $("#input_search").val();
+                window.location.href = head.data.search_url+search_value;
+            });
+
+            //Enter's event for query
+            $("#input_search").keyup(function (event) {
+				if (event.keyCode == 13){
+                    var search_value = "?search_value=" + $(this).val();
+                    window.location.href = head.data.search_url+search_value;
+				}
+            })
+        }
 	}
-	
-	//登录
-	$("#login").click(function(){
-		$.post("<%=contextPath%>/signTour/loginIn.do",
-				  {
-					  name:$("#name").val(),
-		        	  password:$("#password").val(),
-		        	  checkbox_save_password:$("#checkbox_save_password").val()
-	        	   },
-	        	   function(result){
-	        	       result = eval(result);
-		        	   if(result == "success"){
-		        	   	    window.location.reload()
-		        	   
-		        	   }else{
-		        	   		toastr.error("用户名或密码错误！请重新登录！");
-		        	   }
-	        	   });
-<%-- 	$.ajax({
-	        url:"<%=contextPath%>/signTour/loginIn.do",
-	        type: 'post',
-	        data:{name:$("#name").val(),
-	        	  password:$("#password").val(),
-	        	  checkbox_save_password:$("#checkbox_save_password").val()
-	        	   },
-	        dataType: 'json',
-	        error: function (obj, msg) {
-	       
-	        },
-	        complete: function () {
+};
 
-	        },
-	        success: function (result) {
-        		window.location.reload()
-	        }
-	          
-	    }); --%>
-	});
-	
-	//注销
-	$("#btn_loginup").click(function() {
-	  $.ajax({
-	        url:"<%=contextPath%>/signTour/signup.do",
-	        type: 'post',
-	        data:{sin:"<%out.print(session);%>"},
-	        dataType: 'text',
-	        error: function (obj, msg) {
-	       
-	        },
-	        complete: function () {
+	head.init();
 
-	        },
-	        success: function (result) {
-        	
-	        }
-	          
-	    });
-	 	window.location.reload()
-	});
-	
-	$("#loginButton").click(function(){
-		if(isPhone()){
-			window.location.href = "<%=contextPath%>/page/appWebLogin"
-	    }
-	});
-	
 </script>
+
 </html>

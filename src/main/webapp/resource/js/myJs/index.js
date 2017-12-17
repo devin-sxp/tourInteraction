@@ -22,7 +22,6 @@ $(function(){
 		
 });
 
-
 var getLatestNews = function(condition) {
     $.ajax({
         url:getRootPath()+"/interactionNews/getNews.do",

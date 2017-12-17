@@ -7,7 +7,6 @@
 	<select id="getSubject" resultType="ArticleSubject">
 	   select asu.id as id,
 	   asu.subject_title as subjectTitle,
-	   asu.subject_description as moduleName,
 	   asu.subject_description as subjectDescription,
 	   f.file_path as subjectIconPath,
 	   asu.create_time as createTime, 

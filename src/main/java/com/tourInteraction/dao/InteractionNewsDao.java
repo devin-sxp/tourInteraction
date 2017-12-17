@@ -1,14 +1,12 @@
 package com.tourInteraction.dao;
 
+import com.tourInteraction.entity.InteractionNews;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
-import com.tourInteraction.entity.InteractionNews;
-
-public interface InteractionNewsDao {
-
+public interface InteractionNewsDao{
 	List<InteractionNews> getNews(Map<String, Object> mapParam);
 
 	int getNewsCount(Map<String, Object> mapParam);

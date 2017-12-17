@@ -40,5 +40,12 @@ public class GlobalConstantKey {
     public static final int PRAISE_COUNT_ADD_VALUE = 1;
     public static final int REPLY_COUNT_ADD_VALUE = 1;
 
+    /**
+     * solr
+     */
+    public static final String QUERY_TYPE_NEWS ="interaction_news";
+    public static final String QUERY_TYPE_ARTICLE ="article";
+    public static final String QUERY_TYPE_ARTICLE_SUBJECT="article_subject";
+    public static final String QUERY_TYPE_USER="USER";
 
 }

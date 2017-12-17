@@ -1,9 +1,9 @@
 package com.tourInteraction.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("page")
@@ -74,6 +74,11 @@ public class PageController {
 	@RequestMapping(value="articleNews")
 	public String articleNews(HttpServletRequest req) {
 		return "articleNews";
+	}
+
+	@RequestMapping(value="search")
+	public String search(HttpServletRequest req) {
+		return "search";
 	}
 	
 	/**

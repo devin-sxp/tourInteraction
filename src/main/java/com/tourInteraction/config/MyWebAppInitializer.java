@@ -17,8 +17,11 @@ public class MyWebAppInitializer implements WebApplicationInitializer {
       XmlWebApplicationContext appContext = new XmlWebApplicationContext();
       appContext.setConfigLocation("classpath:spring-servlet-mvc.xml");
 
-      ServletRegistration.Dynamic dispatcher =
-      container.addServlet("dispatcher", new DispatcherServlet(appContext));
+//      AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
+//      ctx.register(SolrClientConfiguration.class);
+//      ctx.setServletContext(container);
+
+      ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(appContext));
       dispatcher.setLoadOnStartup(1);
       dispatcher.addMapping("/");
     }

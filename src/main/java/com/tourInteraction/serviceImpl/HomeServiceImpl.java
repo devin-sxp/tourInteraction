@@ -1,14 +1,12 @@
 package com.tourInteraction.serviceImpl;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.tourInteraction.dao.HomeDao;
 import com.tourInteraction.entity.Home;
 import com.tourInteraction.service.IHomeService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Service("homeServiceImpl")
 public class HomeServiceImpl implements IHomeService {
@@ -18,7 +16,7 @@ public class HomeServiceImpl implements IHomeService {
 	@Override
 	public List<Home> getTopNews(int limit, int offset) {
 		List<Home> list = homeDao.getTopNews(limit,offset);
-		return null;
+		return list;
 	}
 	@Override
 	public int insertNews(int i, int j) {
