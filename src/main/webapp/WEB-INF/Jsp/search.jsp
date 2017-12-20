@@ -133,46 +133,24 @@
 					<div class="col-xs-16 col-xs-offset-8 main">
 						<div class="search-content">
 							<div class="sort-type">
-								<a class="active">
+								<a class="active" param="desc_time">
 								综合
 								·
 								</a>
-								<a class="">
+								<a class="" param="desc_commentCount">
 								热门
 								·
 								</a>
-								<a class="">
+								<a class="" param="asc_time">
+								最早
+								·
+								</a>
+								<a class="" param="desc_time">
 								最新
 								</a>
 							</div>
 							<div class="result" id="result_count">0 个结果</div>
 							<ul class="note-list">
-								<li>
-									<div class="content">
-										<div class="author">
-											<a href="" target="_blank" class="avatar"><img src=""></a>
-											<div class="info">
-												<a href="" class="nickname">陈文伍</a>
-												<span class="time">1 天前</span>
-											</div>
-										</div>
-											<a href="" target="_blank" class="title">
-												<em class="search-result-highlight">红</em><em class="search-result-highlight">黄</em><em class="search-result-highlight">蓝</em>幼儿园、朝花幼儿园等幼儿园系列案： 揭秘<em class="search-result-highlight">红</em><em class="search-result-highlight">黄</em><em class="search-result-highlight">蓝</em>新天地幼儿园 ， <em class="search-result-highlight">红</em><em class="search-result-highlight">黄</em><em class="search-result-highlight">蓝</em>新天地幼儿园的神秘面纱终于开始揭开 ，让我们一起揭开<em class="search-result-highlight">红</em><em class="search-result-highlight">黄</em><em class="search-result-highlight">蓝</em>新天地幼儿园的神秘面纱
-											</a>
-										<p class="abstract">
-											……揭秘<em class="search-result-highlight">红</em><em class="search-result-highlight">黄</em><em class="search-result-highlight">蓝</em>新天地幼儿园 ，神秘面纱终于揭开了一个口子 【<em class="search-result-highlight">红</em><em class="search-result-highlight">黄</em><em class="search-result-highlight">蓝</em>幼儿园、朝花幼儿园等幼儿园系列案： 揭秘<em class="search-result-highlight">红</em><em class="search-result-highlight">黄</em><em class="search-result-highlight">蓝</em>新天地幼儿园 ， <em class="search-result-highlight">红</em><em class="search-result-highlight">黄</em><em class="search-result-highlight">蓝</em>新天地幼儿园的神秘面纱终于开始揭开 ，让我们一起揭开<em class="search-result-highlight">红</em><em class="search-result-highlight">黄</em><em class="search-result-highlight">蓝</em>新天……地幼儿园的神秘面纱】 【陈文伍（陈平）评谈北京朝阳“<em class="search-result-highlight">红</em><em class="search-result-highlight">黄</em><em class="search-result-highlight">蓝</em>幼儿园、朝花幼儿园等幼儿园系列虐童事件”之十】 文@陈文伍（陈平）。 声明原创，版权所有。 一、【正义也许会迟到，但是我相信我等得到】 某记者拨打……了幼儿园园长江岚岚电话，但其拒绝回应此问题，并表示“请直接联系朝阳教委统宣科”。【《<em class="search-result-highlight">红</em><em class="search-result-highlight">黄</em><em class="search-result-highlight">蓝</em>幼儿园事件朝阳区教委三人被立案调查》通报：29日，北京市朝阳区<em class="search-result-highlight">红</em><em class="search-result-highlight">黄</em><em class="search-result-highlight">蓝</em>新天地幼儿园事件调查情况公布。经查，朝阳区……
-										</p>
-										<div class="meta">
-											<a href="http://www.jianshu.com/p/63f544dfd60a" target="_blank">
-												<i class="iconfont ic-list-read"></i> 249
-											</a>
-											<a href="http://www.jianshu.com/p/63f544dfd60a#comments" target="_blank">
-												<i class="iconfont ic-list-comments"></i> 2
-											</a>
-											<span><i class="iconfont ic-list-like"></i> 6</span>
-										</div>
-									</div>
-								</li>
 							</ul>
 							<ul class="user-list"></ul>
 							<div>
@@ -187,7 +165,6 @@
 				</div>
 			</div>
 		</div>
-
 		<!-- //container -->
 	</div>
 	<!-- //banner-bottom -->

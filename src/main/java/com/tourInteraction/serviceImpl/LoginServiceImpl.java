@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
@@ -101,6 +102,20 @@ public class LoginServiceImpl implements ILoginService {
 		return loginDao.getUserByUserNameDao(username);
 	}
 
+	@Override
+	public int addAutoLogin(Map<String, Object> mapParam) {
+		return loginDao.addAutoLogin(mapParam);
+	}
+
+	@Override
+	public String getAutoLogin(Map<String, Object> mapParam) {
+		return loginDao.getAutoLogin(mapParam);
+	}
+
+	@Override
+	public void clearOutOfDateAutoLoginData() {
+		loginDao.clearOutOfDateAutoLoginData();
+	}
 
 
 }

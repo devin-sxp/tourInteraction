@@ -48,7 +48,6 @@ var appendModuleNode = function(module) {
       "<td><div class=\"button-group\">"+
       "<a class=\"button border-main\" href=\"#add\" onclick=\"getModuleById("+module.id+")\"><span class=\"icon-edit\"></span>修改</a>"+
       "<a class=\"button border-red\" href=\"javascript:void(0)\" onclick=\"delModuleById("+module.id+")\"><span class=\"icon-trash-o\"></span> 删除</a>"+
-      "<input name=\"user_id\" type=\"hidden\" value=\""+module.id+"\"/>"+
       "</div></td></tr>";
 	return html_tr;
 }

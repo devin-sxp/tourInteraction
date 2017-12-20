@@ -57,7 +57,6 @@ var appendNewsNode = function(news) {
       "<td><div class=\"button-group\">"+
       "<a class=\"button border-main\" href=\"#add\" onclick=\"getNewsById("+news.id+")\"><span class=\"icon-edit\"></span>查看</a>"+
       "<a class=\"button border-red\" href=\"javascript:void(0)\" onclick=\"del("+news.id+")\"><span class=\"icon-trash-o\"></span> 删除</a>"+
-      "<input name=\"user_id\" type=\"hidden\" value=\""+news.id+"\"/>"+
       "</div></td></tr>";
 	return html_tr;
 }

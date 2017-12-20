@@ -3,7 +3,7 @@ var search = {
         condition:{
             queryString:getUrlParam("search_value")?getUrlParam("search_value"):'',
             queryType:getUrlParam("search_type")?getUrlParam("search_type"):'article',
-            sort:"asc",
+            sort:"desc_time",
             page:getUrlParam("page")?getUrlParam("page"):1,
             pageSize:5
         },
@@ -61,6 +61,17 @@ var search = {
                 window.history.pushState({},"","?search_value="+search.data.condition.queryString+"&search_type="+
                 search.data.condition.queryType+"&page=1");
             });
+
+            //排序点击事件
+            $(".sort-type a").on("click",function () {
+                $(".sort-type a").each(function () {
+                   $(this).removeClass("active") ;
+                });
+                $(this).addClass("active");
+                search.data.condition.sort = $(this).attr("param");
+                search.method.getData(search.data.condition);
+
+            })
 
         },
         otherDeal:function () {

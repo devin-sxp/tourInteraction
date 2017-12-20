@@ -48,4 +48,19 @@ public class GlobalConstantKey {
     public static final String QUERY_TYPE_ARTICLE_SUBJECT="article_subject";
     public static final String QUERY_TYPE_USER="USER";
 
+    /**
+     * 日期变化
+     */
+    public static final String CHANGE_YEAR="year";
+    public static final String CHANGE_MONTH="month";
+    public static final String CHANGE_DAY="day";
+    public static final int CHANGE_VALUE=7;
+
+    /**
+     * cookie存储cookie
+     * 设置cookie保存7天
+     */
+    public static final String COOKIR_TOUR_AUTO_LOGIN="cookie_tour_auto_login";
+    public static final int COOKIR_AUTO_LOGIN_MAX_AGE=60 * 60 * 24 * 7;
+
 }

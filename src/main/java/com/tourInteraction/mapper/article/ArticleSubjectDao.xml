@@ -9,6 +9,7 @@
 	   asu.subject_title as subjectTitle,
 	   asu.subject_description as subjectDescription,
 	   f.file_path as subjectIconPath,
+	   ast.type_name as subjectTypeName,
 	   asu.create_time as createTime, 
 	   asu.create_user as createUser, 
 	   u.user_name as createUserName,
@@ -20,6 +21,8 @@
 	   on asu.create_user = u.id
 	   left join files as f
 	   on asu.subject_icon_id = f.id
+	   left join article_subject_type as ast
+	   on asu.subject_type = ast.id
 	   where asu.status="1"  
 	   order by asu.create_time desc
 	   <if test="null != limit and '' != limit and null != offset and '' != offset">
@@ -33,6 +36,7 @@
 	   asu.subject_description as moduleName,
 	   asu.subject_description as subjectDescription,
 	   f.file_path as subjectIconPath,
+	   ast.type_name as subjectTypeName,
 	   asu.create_time as createTime, 
 	   asu.create_user as createUser, 
 	   u.user_name as createUserName,
@@ -44,6 +48,8 @@
 	   on asu.create_user = u.id
 	   left join files as f
 	   on asu.subject_icon_id = f.id
+	   left join article_subject_type as ast
+	   on asu.subject_type = ast.id
 	   where asu.status="1" and asu.id = #{id}
 	   order by asu.create_time desc
 	</select>
@@ -52,6 +58,61 @@
 	   select count(*)
 	   from article_subject
 	   where status="1"  
+	</select>
+
+	<!-- 查询全部 -->
+	<select id="getSubjectB" resultType="ArticleSubject">
+		select asu.id as id,
+		asu.subject_title as subjectTitle,
+		asu.subject_description as subjectDescription,
+		f.file_path as subjectIconPath,
+		ast.type_name as subjectTypeName,
+		asu.create_time as createTime,
+		asu.create_user as createUser,
+		u.user_name as createUserName,
+		asu.update_time as updateTime,
+		asu.update_user as updateUser,
+		asu.status as status
+		from article_subject as asu
+		left join user as u
+		on asu.create_user = u.id
+		left join files as f
+		on asu.subject_icon_id = f.id
+		left join article_subject_type as ast
+		on asu.subject_type = ast.id
+		order by asu.create_time desc
+		<if test="null != limit and '' != limit and null != offset and '' != offset">
+			limit ${limit},${offset}
+		</if>
+	</select>
+
+	<select id="getSubjectByIdB" resultType="ArticleSubject">
+		select asu.id as id,
+		asu.subject_title as subjectTitle,
+		asu.subject_description as moduleName,
+		asu.subject_description as subjectDescription,
+		f.file_path as subjectIconPath,
+		ast.type_name as subjectTypeName,
+		asu.create_time as createTime,
+		asu.create_user as createUser,
+		u.user_name as createUserName,
+		asu.update_time as updateTime,
+		asu.update_user as updateUser,
+		asu.status as status
+		from article_subject as asu
+		left join user as u
+		on asu.create_user = u.id
+		left join files as f
+		on asu.subject_icon_id = f.id
+		left join article_subject_type as ast
+		on asu.subject_type = ast.id
+		where asu.id = #{id}
+		order by asu.create_time desc
+	</select>
+
+	<select id="getSubjectCountB" resultType="int">
+		select count(*)
+		from article_subject
 	</select>
 	<!-- 查询-->
 	<select id="getSubjectsByUserId" resultType="ArticleSubject">
@@ -91,5 +152,26 @@
 	   create_time,create_user,status) 
 	   values(#{subjectId},#{articleId},#{subjectCreateUserId},
 	   #{createTime},#{createUser},#{status})
-	</insert>  
+	</insert>
+
+	<delete id="delSubjectById" parameterType="int">
+		delete from article_subject where id=#{id}
+	</delete>
+
+	<update id="updateSubject" parameterType="Map">
+		update article_subject set update_time=#{updateTime}, update_user=#{updateUser}
+		<if test="null != subjectTitle and '' != subjectTitle">
+			,subject_title = #{subjectTitle}
+		</if>
+		<if test="null != subjectDescription and '' != subjectDescription">
+			,subject_description = #{subjectDescription}
+		</if>
+		<if test="null != subjectIconId and '' != subjectIconId">
+			,subject_icon_id = #{subjectIconId}
+		</if>
+		<if test="null != #{status} and '' != #{status}">
+			,status = #{status}
+		</if>
+		where id = #{id}
+	</update>
 </mapper>

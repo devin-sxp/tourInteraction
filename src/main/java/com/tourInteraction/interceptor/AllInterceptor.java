@@ -1,41 +1,56 @@
 package com.tourInteraction.interceptor;
 
-import org.springframework.ui.ModelMap;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.context.request.WebRequestInterceptor;
+import com.tourInteraction.config.GlobalConstantKey;
+import com.tourInteraction.entity.User;
+import com.tourInteraction.service.ILoginService;
+import com.tourInteraction.utils.CookieUtil;
+import com.tourInteraction.utils.IPUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
-public class AllInterceptor implements WebRequestInterceptor {
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
-	 /** 
-     * 在请求处理之前执行，该方法主要是用于准备资源数据的，然后可以把它们当做请求属性放到WebRequest中 
-     */  
-    @Override  
-    public void preHandle(WebRequest request) throws Exception {  
-        // TODO Auto-generated method stub  
-        System.out.println("AllInterceptor...............................");  
-        request.setAttribute("request", "request", WebRequest.SCOPE_REQUEST);//这个是放到request范围内的，所以只能在当前请求中的request中获取到  
-        request.setAttribute("session", "session", WebRequest.SCOPE_SESSION);//这个是放到session范围内的，如果环境允许的话它只能在局部的隔离的会话中访问，否则就是在普通的当前会话中可以访问  
-        request.setAttribute("globalSession", "globalSession", WebRequest.SCOPE_GLOBAL_SESSION);//如果环境允许的话，它能在全局共享的会话中访问，否则就是在普通的当前会话中访问  
-    }  
-  
-    /** 
-     * 该方法将在Controller执行之后，返回视图之前执行，ModelMap表示请求Controller处理之后返回的Model对象，所以可以在 
-     * 这个方法中修改ModelMap的属性，从而达到改变返回的模型的效果。 
-     */  
-    @Override  
-    public void postHandle(WebRequest request, ModelMap map) throws Exception {  
-        // TODO Auto-generated method stub  
+public class AllInterceptor implements HandlerInterceptor {
 
-    }  
-  
-    /** 
-     * 该方法将在整个请求完成之后，也就是说在视图渲染之后进行调用，主要用于进行一些资源的释放 
-     */  
-    @Override  
-    public void afterCompletion(WebRequest request, Exception exception)  
-    throws Exception {  
-        // TODO Auto-generated method stub  
-        System.out.println(exception + "-=-=--=--=-=-=-=-=-=-=-=-==-=--=-=-=-=");  
-    }  
-      
+    @Autowired
+    @Qualifier(value = "loginServiceImpl")
+    private ILoginService loginService ;
+    @Override
+    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
+        HttpSession session = httpServletRequest.getSession();
+        // 从session 里面获取用户名的信息
+        User user = (User)session.getAttribute("user");
+
+        //没有登录自动登录
+        if (user == null || "".equals(user.toString())) {
+            Cookie cookie = CookieUtil.getCookieByName(httpServletRequest, GlobalConstantKey.COOKIR_TOUR_AUTO_LOGIN);
+            if(cookie != null){
+                Map<String,Object> mapParam = new HashMap<String,Object>();
+                mapParam.put("cookie",cookie.getValue());
+                mapParam.put("clientIp", IPUtil.getRemoteIpAddr(httpServletRequest));
+                mapParam.put("status",GlobalConstantKey.STATUS_OPEN);
+                String username = loginService.getAutoLogin(mapParam);
+                User user1 = loginService.getUserByUserNameDao(username);
+                session.setAttribute("user",user1);
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
+
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
+
+    }
 }

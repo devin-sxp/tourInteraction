@@ -34,6 +34,18 @@ public class ArticleSubjectServiceImpl implements IArticleSubjectService {
 	}
 
 	@Override
+	public List<ArticleSubject> getSubjectB(String limit, String offset) {
+		// TODO Auto-generated method stub
+		return articleSubjectDao.getSubjectB(limit, offset);
+	}
+
+	@Override
+	public ArticleSubject getSubjectByIdB(int id) {
+		// TODO Auto-generated method stub
+		return articleSubjectDao.getSubjectByIdB(id);
+	}
+
+	@Override
 	public int delSubjectById(int id) {
 		// TODO Auto-generated method stub
 		return articleSubjectDao.delSubjectById(id);
@@ -64,6 +76,12 @@ public class ArticleSubjectServiceImpl implements IArticleSubjectService {
 	}
 
 	@Override
+	public int getSubjectCountB() {
+		// TODO Auto-generated method stub
+		return articleSubjectDao.getSubjectCountB();
+	}
+
+	@Override
 	@Transactional
 	public int requestSubmitArticle(int userId, int subjectId,int subjectCreateUserId, int[] submitArticleIds) {
 		int num = 0;
@@ -79,7 +97,5 @@ public class ArticleSubjectServiceImpl implements IArticleSubjectService {
 		}
 		return num;
 	}
-
-	
 
 }

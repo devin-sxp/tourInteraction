@@ -76,10 +76,12 @@ public class SolrServiceImpl implements ISolrService{
 //        }
 
         // 设置排序
-        if ("desc".equals(sort)) {
+        if ("desc_time".equals(sort)) {
             query.setSort("createTime", SolrQuery.ORDER.desc);
-        } else {
+        } else if("asc_time".equals(sort)) {
             query.setSort("createTime", SolrQuery.ORDER.asc);
+        } else if("desc_commentCount".equals(sort)){
+            query.setSort("articleCommentCount", SolrQuery.ORDER.desc);
         }
 
         // 设置分页信息

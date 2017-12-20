@@ -44,7 +44,8 @@
   </ul>
    <h2><span class="icon-pencil-square-o"></span>文章管理</h2>
    <ul>
-    <li><a href="#" target="right"><span class="icon-bell"></span>审核</a></li>
+       <li><a href="<%=contextPath%>/page/backgroundManagementArticleSubjectManage" target="right"><span class="icon-folder-o"></span>专题管理</a></li>
+       <li><a href="#" target="right"><span class="icon-bell"></span>投稿审核</a></li>
   </ul>
   <h2><span class="icon-code"></span>系统管理</h2>
    <ul>

@@ -50,7 +50,23 @@
 	   where u.status ="1"
 	   and u.user_name = #{username}
 	</select>
-	
+
+	<select id="getAutoLogin" resultType="String">
+		select username
+		from auto_login
+		where status ="1"
+		and cookie = #{cookie} and client_ip=#{clientIp} and sysdate() > create_time and out_of_date > sysdate()
+	</select>
+
+	<!-- 插入自动登录操作 -->
+	<insert id="addAutoLogin" parameterType="int">
+		insert into auto_login(cookie,client_ip,create_time,out_of_date,username,status)
+		values(#{cookie},#{clientIp},#{createTime},#{outOfDate},#{username},#{status})
+	</insert>
+
+	<delete id="clearOutOfDateAutoLoginData">
+		delete from auto_login where create_time > sysdate() or sysdate() > out_of_date
+	</delete>
 	<!-- 删除操作 -->
  <!-- 	<delete id="delete" parameterType="int">
 	  delete from tb_member where id=#{id}

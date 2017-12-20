@@ -62,13 +62,12 @@ var appendUserNode = function(user) {
       "<a class=\"button border-main\" href=\"#add\" onclick=\"getUserById("+user.id+")\"><span class=\"icon-edit\"></span> 修改</a>";
 	var html_tr2 ="";
 	  if(user.status == "0"){
-		  html_tr2 = "<a class=\"button border-main\" href=\"javascript:void(0)\" onclick=\"lockUserById("+user.id+",1)\"><span class=\"icon-lock\">启用</span></a>";
+		  html_tr2 = "<a class=\"button border-green\" href=\"javascript:void(0)\" onclick=\"lockUserById("+user.id+",1)\"><span class=\"icon-lock\">启用</span></a>";
 
 	  }else{
-		  html_tr2 = "<a class=\"button border-red\" href=\"javascript:void(0)\" onclick=\"lockUserById("+user.id+",0)\"><span class=\"icon-lock\">禁用</span></a>";
+		  html_tr2 = "<a class=\"button border-yellow\" href=\"javascript:void(0)\" onclick=\"lockUserById("+user.id+",0)\"><span class=\"icon-lock\">禁用</span></a>";
 	  }
 	var html_tr3 = "<a class=\"button border-red\" href=\"javascript:void(0)\" onclick=\"del("+user.id+")\"><span class=\"icon-trash-o\"></span> 删除</a>"+
-				"<input name=\"user_id\" type=\"hidden\" value=\""+user.id+"\"/>"+
 				"</div></td></tr>";
 	
 	return html_tr1+html_tr2+html_tr3;

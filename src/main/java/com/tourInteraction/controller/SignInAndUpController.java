@@ -3,8 +3,7 @@ package com.tourInteraction.controller;
 import com.tourInteraction.config.GlobalConstantKey;
 import com.tourInteraction.entity.User;
 import com.tourInteraction.service.ILoginService;
-import com.tourInteraction.utils.JSONUtil;
-import com.tourInteraction.utils.MD5Util;
+import com.tourInteraction.utils.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -20,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("signTour")
@@ -76,13 +77,34 @@ public class SignInAndUpController {
 	private String loginIn(HttpServletRequest request,HttpServletResponse response,
 			@RequestParam("name") String name,
 			@RequestParam("password") String password,
-			@RequestParam("checkbox_save_password") String checkbox_save_password){
+			@RequestParam("checkbox_save_password") Boolean checkbox_save_password){
 		logger.info("loginIn.do");
 		User user = new User();
 		System.out.println(checkbox_save_password);
 		user.setUserName(name);
 		user.setPassWord(MD5Util.md5(password));
 		try {
+			if(checkbox_save_password){
+				String clientIp = IPUtil.getRemoteIpAddr(request);
+				Map<String,Object> mapParam = new HashMap<String,Object>();
+				String cookieValue = UUIDUitl.generateString(16);
+				Boolean addCookieSuccess = CookieUtil.addCookie(response,GlobalConstantKey.COOKIR_TOUR_AUTO_LOGIN,cookieValue);
+				if(addCookieSuccess){
+					mapParam.put("cookie",cookieValue);
+					mapParam.put("clientIp",clientIp);
+					mapParam.put("createTime",new Date());
+					mapParam.put("outOfDate", DateUtil.dateAddOrSub(new Date(),GlobalConstantKey.CHANGE_VALUE,GlobalConstantKey.CHANGE_DAY));
+					mapParam.put("username",name);
+					mapParam.put("status",GlobalConstantKey.STATUS_OPEN);
+					int num = loginservice.addAutoLogin(mapParam);
+					if(num>=1){
+						logger.debug("addCookie success");
+					}else {
+						logger.debug("addCookie failed");
+					}
+				}
+			}
+
 			user = loginservice.getUser(user);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -100,11 +122,12 @@ public class SignInAndUpController {
 	}
 	
 	@RequestMapping("signup.do")
-	private String signup(HttpServletRequest request,HttpSession sin){
+	private String signup(HttpServletRequest request,HttpServletResponse response,HttpSession sin){
 		try {
 			logger.info("signup.do被调用");
 			HttpSession session = request.getSession();
 			session.removeAttribute("user");
+			CookieUtil.delCookie(request,response,GlobalConstantKey.COOKIR_TOUR_AUTO_LOGIN);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

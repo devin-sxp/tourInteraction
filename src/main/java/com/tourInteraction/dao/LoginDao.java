@@ -1,10 +1,10 @@
 package com.tourInteraction.dao;
 
-import java.util.List;
-
+import com.tourInteraction.entity.User;
 import org.apache.ibatis.annotations.Param;
 
-import com.tourInteraction.entity.User;
+import java.util.List;
+import java.util.Map;
 
 public interface LoginDao {
 
@@ -16,4 +16,9 @@ public interface LoginDao {
 
 	User getUserByUserNameDao(@Param("username")String username);
 
+	int addAutoLogin(Map<String, Object> mapParam);
+
+    String getAutoLogin(Map<String, Object> mapParam);
+
+    void clearOutOfDateAutoLoginData();
 }

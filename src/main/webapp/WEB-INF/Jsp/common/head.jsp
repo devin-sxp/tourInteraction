@@ -142,10 +142,13 @@
 												<label for="password">密码</label> <input type="password"
 													name="password" id="password" value="" maxlength="16">
 											</fieldset>
-											<input type="button" id="login" value="登录"> <label
-												for="checkbox"><input type="checkbox"
+											<input type="button" id="login" value="登录">
+											<label
+												for="checkbox_save_password">
+												<input type="checkbox" style="box-shadow:none;vertical-align: middle;width: 20px"
 												name="checkbox_save_password" id="checkbox_save_password">
-												<i>记住</i></label>
+												<i>自动登录</i>
+											</label>
 										</fieldset>
 										<span><a href="#">忘记密码?</a></span>
 										<div class="or-grid">
@@ -196,7 +199,9 @@
 <script type="text/javascript">
 var head = {
     data:{
-		search_url:getRootPath()+"/page/search"
+		search_url:getRootPath()+"/page/search",
+		checked:true,
+		unchecked:false
 	},
 	init:function () {
 		head.method.otherSetting();
@@ -270,7 +275,7 @@ var head = {
                     {
                         name:$("#name").val(),
                         password:$("#password").val(),
-                        checkbox_save_password:$("#checkbox_save_password").val()
+                        checkbox_save_password:$("#checkbox_save_password").is(":checked")?head.data.checked:head.data.unchecked
                     },
                     function(result){
                         result = eval(result);

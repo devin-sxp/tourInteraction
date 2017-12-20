@@ -112,7 +112,10 @@ public class PageController {
 	public String backgroundManagementConfigure(HttpServletRequest req){
 		return "backgroundManagement/configure";
 	}
-	
+	@RequestMapping("/backgroundManagementArticleSubjectManage")
+	public String backgroundManagementArticleSubjectManage(HttpServletRequest req){
+		return "backgroundManagement/articleSubjectManage";
+	}
 	/**
 	 * appWeb页面
 	 */
