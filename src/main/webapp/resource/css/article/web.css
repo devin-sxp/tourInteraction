@@ -1,3 +1,188 @@
+.search-trending .search-trending-header {
+    height: 20px;
+    margin-bottom: 10px
+}
+
+.search-trending .search-trending-header span {
+    float: left;
+    font-size: 14px;
+    color: #969696
+}
+
+.search-trending .search-trending-header a {
+    float: right;
+    font-size: 13px;
+    color: #969696;
+    background-color: transparent;
+    border-width: 0;
+    padding: 0
+}
+
+.search-trending .search-trending-header a:hover {
+    color: #2f2f2f
+}
+
+.search-trending .search-trending-header i {
+    display: inline-block;
+    line-height: 1;
+    transition: .5s ease
+}
+
+.search-trending .search-trending-tag-wrap {
+    font-size: 0
+}
+
+.search-trending .search-trending-tag-wrap li {
+    margin: 4px;
+    display: inline-block;
+}
+
+.search-trending .search-trending-tag-wrap li a {
+    padding: 2px 6px;
+    font-size: 12px;
+    color: #787878;
+    border: 1px solid #ddd;
+    border-radius: 3px
+}
+
+.search-trending .search-trending-tag-wrap li a:hover {
+    color: #333;
+    border-color: #b4b4b4
+}
+
+.search-recent .search-recent-header {
+    height: 20px;
+    margin-bottom: 10px
+}
+
+.search-recent .search-recent-header span {
+    float: left;
+    font-size: 14px;
+    color: #969696
+}
+
+.search-recent .search-recent-header a {
+    float: right;
+    font-size: 13px;
+    color: #969696;
+    background-color: transparent;
+    border-width: 0;
+    padding: 0
+}
+
+.search-recent .search-recent-header a:hover {
+    color: #2f2f2f
+}
+
+.search-recent .search-recent-item-wrap li a {
+    display: block;
+    height: 40px;
+    line-height: 20px;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #333;
+    position: relative
+}
+
+.search-recent .search-recent-item-wrap li a:hover {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    color: red;
+}
+
+.search-recent .search-recent-item-wrap li a:hover .ic-unfollow {
+    display: block
+}
+
+.search-recent .search-recent-item-wrap li a .ic-search-history {
+    float: left;
+    margin-right: 10px;
+    font-size: 18px;
+    color: #787878
+}
+
+.search-recent .search-recent-item-wrap li a span {
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    padding-right: 30px
+}
+
+.search-recent .search-recent-item-wrap li a .ic-unfollow {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    color: #a0a0a0;
+    display: none
+}
+
+.search-recent .search-recent-item-wrap li a .ic-unfollow:hover {
+    color: #2f2f2f
+}
+
+#navbar-search-tips {
+    position: fixed;
+    margin-top: 9px;
+    width: 250px;
+    visibility: hidden;
+    opacity: 0;
+    border-radius: 4px
+}
+
+#navbar-search-tips,
+#navbar-search-tips:before {
+    background-color: #fff;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .2)
+}
+
+#navbar-search-tips:before {
+    content: "";
+    left: 27px;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    top: -5px;
+    z-index: -1
+}
+
+#navbar-search-tips:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 12px solid transparent;
+    border-bottom-color: #fff;
+    left: 20px;
+    bottom: 99%
+}
+
+#navbar-search-tips:hover {
+    visibility: visible;
+    opacity: 1
+}
+
+#navbar-search-tips .search-trending {
+    padding: 20px 20px 10px;
+    border-bottom: 1px solid #f0f0f0
+}
+
+#navbar-search-tips .search-recent {
+    padding: 5px
+}
+
+#navbar-search-tips .search-recent ul {
+    list-style-type: none
+}
+
+#navbar-search-tips .search-recent ul li {
+    margin-right: 0;
+    width: 100%;
+}
+
 .trigger-menu {
     margin-bottom: 20px;
     border-bottom: 1px solid #f0f0f0;

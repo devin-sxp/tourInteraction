@@ -78,7 +78,7 @@ input{
 input:focus { 
   outline: none; 
 }
-.wrap a{
+.wrap>a{
   position: absolute;
   top: 0px;
   right: 0px;
@@ -86,7 +86,10 @@ input:focus {
   height: 35px;
   cursor: pointer;
 }
-
+.wrap>input:focus ~ #navbar-search-tips {
+    visibility:visible;
+    opacity: 1;
+}
 body {
     -webkit-user-select: none;
     /* background-color: #444;   */

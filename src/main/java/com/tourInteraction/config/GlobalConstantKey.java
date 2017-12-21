@@ -54,13 +54,19 @@ public class GlobalConstantKey {
     public static final String CHANGE_YEAR="year";
     public static final String CHANGE_MONTH="month";
     public static final String CHANGE_DAY="day";
+    public static final int CHANGE_VALUE_THREE=3;
     public static final int CHANGE_VALUE=7;
 
     /**
-     * cookie存储cookie
+     * 自动登录存储cookie
      * 设置cookie保存7天
      */
     public static final String COOKIR_TOUR_AUTO_LOGIN="cookie_tour_auto_login";
     public static final int COOKIR_AUTO_LOGIN_MAX_AGE=60 * 60 * 24 * 7;
 
+    /**
+     * 搜索历史
+     */
+    public static final int HISTORY_SEARCH_COUNT_DEFAULT=1;
+    public static final int HISTORY_SEARCH_COUNT_ADD=1;
 }

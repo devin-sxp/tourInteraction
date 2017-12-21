@@ -108,25 +108,15 @@
 							</ul>
 						</div>
 						<div class="search-trending">
-							<div class="search-trending-header clearfix"><span>热门搜索</span> <a><i class="iconfont ic-search-change" style="transform: rotate(0deg);"></i> 换一批</a></div>
+							<div class="search-trending-header clearfix"><span>热门搜索</span> <a id="recommend_search_search"><i class="iconfont ic-search-change" style="transform: rotate(0deg);"></i> 换一批</a></div>
 							<ul class="search-trending-tag-wrap">
-								<li><a href="http://www.jianshu.com/search?q=%E7%BA%A2%E9%BB%84%E8%93%9D&amp;utm_source=desktop&amp;utm_medium=search-trending" target="_blank">红黄蓝</a></li>
-								<li><a href="http://www.jianshu.com/search?q=%E8%87%B4%E6%88%91%E4%BB%AC%E5%8D%95%E7%BA%AF%E7%9A%84%E5%B0%8F%E7%BE%8E%E5%A5%BD&amp;utm_source=desktop&amp;utm_medium=search-trending" target="_blank">致我们单纯的小美好</a></li>
-								<li><a href="http://www.jianshu.com/search?q=%E6%95%85%E4%BA%8B&amp;utm_source=desktop&amp;utm_medium=search-trending" target="_blank">故事</a></li>
-								<li><a href="http://www.jianshu.com/search?q=%E6%89%8B%E5%B8%90&amp;utm_source=desktop&amp;utm_medium=search-trending" target="_blank">手帐</a></li>
-								<li><a href="http://www.jianshu.com/search?q=%E5%86%99%E7%BB%99%E6%9C%AA%E6%9D%A5X%E5%85%88%E7%94%9F%E7%9A%84%E4%B8%80%E7%BA%B8%E6%83%85%E4%B9%A6&amp;utm_source=desktop&amp;utm_medium=search-trending" target="_blank">写给未来X先生的一纸情书</a></li>
-								<li><a href="http://www.jianshu.com/search?q=%E9%A5%B1%E9%86%89%E8%B1%9A&amp;utm_source=desktop&amp;utm_medium=search-trending" target="_blank">饱醉豚</a></li>
-								<li><a href="http://www.jianshu.com/search?q=%E5%85%A8%E8%81%8C%E5%A6%88%E5%A6%88&amp;utm_source=desktop&amp;utm_medium=search-trending" target="_blank">全职妈妈</a></li>
-								<li><a href="http://www.jianshu.com/search?q=PPT&amp;utm_source=desktop&amp;utm_medium=search-trending" target="_blank">PPT</a></li>
-								<li><a href="http://www.jianshu.com/search?q=%E5%8D%81%E4%B9%9D%E5%A4%A7&amp;utm_source=desktop&amp;utm_medium=search-trending" target="_blank">十九大</a></li>
-								<li><a href="http://www.jianshu.com/search?q=vue&amp;utm_source=desktop&amp;utm_medium=search-trending" target="_blank">vue</a></li>
+								<%--<li><a href="" target="_blank">vue</a></li>--%>
 							</ul>
 						</div>
 						<div class="search-recent">
-							<div class="search-recent-header clearfix"><span>最近搜索</span> <a>清空</a></div>
+							<div class="search-recent-header clearfix"><span>最近搜索</span> <a id="clear_all_search_history">清空</a></div>
 							<ul class="search-recent-item-wrap">
-								<li><a href="http://www.jianshu.com/search?q=%E7%BA%A2%E9%BB%84%E8%93%9D&amp;utm_source=desktop&amp;utm_medium=search-recent" target="_blank"><i class="iconfont ic-search-history"></i> <span>红黄蓝</span> <i class="iconfont ic-unfollow"></i></a></li>
-								<li><a href="http://www.jianshu.com/search?q=%E6%84%9F%E6%81%A9%E8%8A%82&amp;utm_source=desktop&amp;utm_medium=search-recent" target="_blank"><i class="iconfont ic-search-history"></i> <span>感恩节</span> <i class="iconfont ic-unfollow"></i></a></li>
+								<%--<li><a href="" target="_blank"><i class="iconfont ic-search-history"></i> <span>感恩节</span> <i class="iconfont ic-unfollow"></i></a></li>--%>
 							</ul>
 						</div>
 					</div>

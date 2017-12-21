@@ -8,3 +8,4 @@ target/
 logs/
 build/
 /bin/
+out/

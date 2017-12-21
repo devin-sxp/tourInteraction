@@ -13,7 +13,8 @@
 	href="<%=contextPath%>/resource/css/common/tourCss.css">
 <link rel="stylesheet"
 	href="<%=contextPath%>/resource/css/article/web.css">
-
+	<link rel="stylesheet"
+		  href="<%=contextPath%>/resource/css/article/entry-search.css">
 <style type="text/css">
 .top_menu {
 	background: gold
@@ -77,6 +78,21 @@
 							<div class="wrap">
 								<input id="input_search" type="text" placeholder="开始输入吧">
 								<a id="a_to_search" style="border:none;"><i class="iconfont ic-search"></i></a>
+								<div id="navbar-search-tips" style="">
+									<div class="search-trending">
+										<div class="search-trending-header clearfix"><span>热门搜索</span> <a id="recommend_search_head"><i class="iconfont ic-search-change" style="transform: rotate(0deg);"></i> 换一批</a></div>
+										<ul class="search-trending-tag-wrap">
+											<%--<li><a href="" target="_blank">考研</a></li>--%>
+										</ul>
+									</div>
+									<div class="search-recent">
+										<!---->
+										<ul class="search-recent-item-wrap">
+											<%--<li><a href="" target="_blank"><i class="iconfont ic-search-history"></i> <span>致我们单纯的小美好</span> <i class="iconfont ic-unfollow"></i></a></li>--%>
+										</ul>
+									</div>
+								</div>
+
 							</div>
 
 						</li>
@@ -201,13 +217,21 @@ var head = {
     data:{
 		search_url:getRootPath()+"/page/search",
 		checked:true,
-		unchecked:false
-	},
+		unchecked:false,
+        history_search_name : "history_search_name",
+		history_search_local_max_display_count:5
+    },
+    history_search_condition:{
+        limit:0,
+        offset:10
+    },
 	init:function () {
 		head.method.otherSetting();
 		head.method.isLogined();
         head.method.device_distinguish();
         head.method.loadClickEvent();
+        head.method.getSearchHistory(head.history_search_condition);
+		head.method.getLocalHistorySearch(head.data.history_search_name)
     },
 	method:{
         otherSetting:function () {
@@ -347,11 +371,91 @@ var head = {
                     var search_value = "?search_value=" + $(this).val();
                     window.location.href = head.data.search_url+search_value;
 				}
+            });
+
+            //更换搜索推荐
+			$("#recommend_search_head").on('click',function () {
+				head.method.getSearchHistory(head.history_search_condition);
+			});
+        },
+        getSearchHistory:function (condition) {
+            $(".search-trending-tag-wrap").empty();
+            $.post(getRootPath()+"/historySearch/getHistorySearchList.do",condition,function (data,status) {
+                data = eval(data);
+                console.log(data);
+                $.each(data,function (index,elem) {
+                    $(".search-trending-tag-wrap").each(function () {
+                        head.method.appendHistorySearchNode(elem,$(this))
+                    });
+                })
+            },'json');
+        },
+        appendHistorySearchNode:function (elem,target) {
+            var html="<li>" +
+                "<a href=\""+getRootPath()+"/page/search?search_value="+elem.hitorySearchValue+"\" target=\"_blank\">"+elem.hitorySearchValue+"</a></li>";
+            target.append(html);
+        },
+		getLocalHistorySearch:function (name) {
+            $(".search-recent-item-wrap").empty();
+            $(".search-recent-item-wrap").empty();
+            var start = document.cookie.indexOf(name+'=');
+            if (start == -1){
+                return;
+            }
+            start = start+name.length+1;
+            var end = document.cookie.indexOf(';', start);
+            if (end == -1)
+                end=document.cookie.length;
+            var cookieValue = document.cookie.substring(start, end);
+            cookieValue = decodeURIComponent(cookieValue);
+            if(cookieValue == '' || cookieValue == null){
+                return;
+			}
+            var values = cookieValue.split("|||");
+            for (var i=0;i<values.length;i++) {
+                if(i >= head.data.history_search_local_max_display_count){
+                    break;
+                }
+
+                if(values[i] != "" && values[i] != null){
+                    var html = "<li><a href=\""+getRootPath()+"/page/search?search_value="+values[i]+"\"><i class=\"iconfont ic-search-history\"></i> <span>"+values[i]+"</span> <i onclick=\"return false;\" class=\"iconfont ic-unfollow\"></i></a></li>";
+                    $(".search-recent-item-wrap").each(function () {
+                        $(this).append(html);
+                    });
+				}
+
+            }
+
+            $(".ic-unfollow").on('click',function () {
+                console.log(234324234)
+                head.method.clearSingleHistorySearch(head.data.history_search_name,$(this).prev().text().trim())
             })
+        },
+        clearSingleHistorySearch:function (name,opValue) {
+            var start = document.cookie.indexOf(name+'=');
+            start = start+name.length+1;
+            var end = document.cookie.indexOf(';', start);
+            if (end == -1)
+                end=document.cookie.length;
+            var cookieValue = document.cookie.substring(start, end);
+            cookieValue = decodeURIComponent(cookieValue);
+            var values = cookieValue.split("|||");
+            cookieValue = '';
+            for (var i=0;i<values.length;i++) {
+               if(values[i] != opValue){
+                   cookieValue = cookieValue + values[i];
+                   if(i != values.length - 1 ){
+                       cookieValue = cookieValue + "|||";
+                   }
+			   }
+            }
+            document.cookie = name + "="+ encodeURIComponent(cookieValue)
+            head.method.getLocalHistorySearch(head.data.history_search_name)
+
         }
+
 	}
 };
-
 	head.init();
 
 </script>

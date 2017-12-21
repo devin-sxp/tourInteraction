@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tourInteraction.dao.HistorySearchDao">
+    <!-- 插入操作 -->
+ 	<insert id="addHistorySearch" parameterType="Map">
+	   insert into history_search(history_search_value,history_search_count,create_time,out_of_date,status)
+	   values(#{searchValue},#{historySearchCount},#{createTime},#{outOfDate},#{status})
+	</insert> 
+	
+	<!-- 随机查询 -->
+	<select id="getHistorySearchList" resultType="HistorySearch" parameterType="Map">
+	 select history_search_value as hitorySearchValue,
+		history_search_count as hitorySearchCount from history_search where id >= (select min(id) from history_search) +
+	   (select floor(((select max(id) from history_search) - (select min(id) from history_search) )*rand()) )
+    limit ${limit},${offset}
+	</select>
+
+	<select id="checkSaveThisHistory" parameterType="String" resultType="HistorySearch">
+		select history_search_value as hitorySearchValue,
+		history_search_count as hitorySearchCount
+		from history_search where history_search_value = #{searchValue}
+	</select>
+
+	<update id="updateHistorySearch" parameterType="Map">
+		update history_search
+		set
+		history_search_count = history_search_count + #{historySearchAddCount},
+		create_time = #{createTime},
+		out_of_date = #{outOfDate}
+		where history_search_value = #{searchValue}
+	</update>
+	<!-- 删除操作 -->
+	<delete id="delOutOfdateHistorySearchData" parameterType="int">
+	  delete from history_search where sysdate() > out_of_date or create_time > sysdate()
+	</delete>
+
+	
+</mapper>

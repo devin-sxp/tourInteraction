@@ -1,24 +1,29 @@
 var search = {
     data:{
         condition:{
-            queryString:getUrlParam("search_value")?getUrlParam("search_value"):'',
-            queryType:getUrlParam("search_type")?getUrlParam("search_type"):'article',
+            queryString:getUrlParam("search_value").trim()?getUrlParam("search_value").trim():'',
+            queryType:getUrlParam("search_type").trim()?getUrlParam("search_type").trim():'article',
             sort:"desc_time",
             page:getUrlParam("page")?getUrlParam("page"):1,
             pageSize:5
         },
-        page_offset:3
+        page_offset:3,
+        history_search_cookie_name:"history_search_name"
     },
     init:function () {
         search.method.getData(search.data.condition);
         search.method.loadClickEvents();
         search.method.otherDeal();
+        search.method.saveSearchHistory(search.data.condition.queryString);
     },
     method:{
         getData:function (condition) {
             $.post(getRootPath()+"/solr/getData.do",condition,function (data,status) {
                 data = eval("("+data+")");
-                console.log(data);
+                // console.log(data);
+                if(data == null){
+                    return;
+                }
                 $(".note-list").empty();
                 $(".user-list").empty();
 
@@ -71,7 +76,18 @@ var search = {
                 search.data.condition.sort = $(this).attr("param");
                 search.method.getData(search.data.condition);
 
-            })
+            });
+
+            //清空本地搜索历史
+            $("#clear_all_search_history").on('click',function () {
+                document.cookie=search.data.history_search_cookie_name+'=';
+                $(".search-recent-item-wrap").empty();
+            });
+
+            //更换搜索推荐
+            $("#recommend_search_search").on('click',function () {
+                head.method.getSearchHistory(head.history_search_condition);
+            });
 
         },
         otherDeal:function () {
@@ -143,7 +159,52 @@ var search = {
                 "<a class=\"btn btn-success follow\"><i class=\"iconfont ic-follow\"></i><span>关注</span></a>" +
                 "</li>";
             target.append(html);
+        },
+        saveSearchHistory:function (searchValue) {
+            if (searchValue == null || searchValue == ""){
+                return;
+            }
+            //服务器存储
+            $.post(getRootPath()+"/historySearch/addOrUpdateHistorySearch.do",{searchValue:searchValue},function (data,status) {
+                
+            },'json');
+
+            //本地cookie存储
+            var name = search.data.history_search_cookie_name;
+            var isSave = true;
+            var Days = 7;
+            var exp = new Date();
+            exp.setTime(exp.getTime() + Days*24*60*60*1000);
+            var start = document.cookie.indexOf(name+'=');
+            if (start == -1){
+                document.cookie = name + "="+ encodeURIComponent(searchValue) + ";expires=" + exp.toGMTString();
+                return;
+            }
+            start = start+name.length+1;
+            var end = document.cookie.indexOf(';', start);
+            if (end == -1)
+                end=document.cookie.length;
+            var cookieValue = document.cookie.substring(start, end);
+            cookieValue = decodeURIComponent(cookieValue);
+            var values = cookieValue.split("|||");
+            for (var i=0;i<values.length;i++) {
+                if(values[i] == searchValue){
+                    isSave = false
+                }
+            }
+            if(isSave){
+                if (cookieValue != null && cookieValue != ""){
+                    cookieValue = searchValue + "|||" + cookieValue;
+
+                }else {
+                    cookieValue = searchValue;
+                }
+                document.cookie = name + "="+ encodeURIComponent(cookieValue) + ";expires=" + exp.toGMTString();
+            }
+
+            head.method.getLocalHistorySearch(head.data.history_search_name)
         }
+
     }
 };
 

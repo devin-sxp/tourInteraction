@@ -1,5 +1,6 @@
 package com.tourInteraction.config;
 
+import com.tourInteraction.service.IHistorySearchService;
 import com.tourInteraction.service.ILoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,9 @@ public class OPTask{
     @Autowired
     @Qualifier(value = "loginServiceImpl")
     private ILoginService loginService ;
+
+    @Autowired
+    private IHistorySearchService historySearchService;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -31,5 +35,10 @@ public class OPTask{
     public void clearAutoLoginData(){
         logger.info("定时清除过时自动登录数据");
         loginService.clearOutOfDateAutoLoginData();
+    }
+    @Scheduled(cron = "0/30 * * * * ?")
+    public void delOutOfdateHistorySearchData(){
+        logger.info("定时清除过时搜索记录数据");
+        historySearchService.delOutOfdateHistorySearchData();
     }
 }
