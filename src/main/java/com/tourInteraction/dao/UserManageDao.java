@@ -1,12 +1,11 @@
 package com.tourInteraction.dao;
 
-import java.util.List;
-import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.tourInteraction.entity.Role;
 import com.tourInteraction.entity.User;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 public interface UserManageDao {
 
@@ -30,4 +29,5 @@ public interface UserManageDao {
 
 	int updateUserIcon(Map<String, Object> mapParam);
 
+	List<User> getUserRand(Map<String, Object> mapParam);
 }

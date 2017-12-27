@@ -1,10 +1,10 @@
 package com.tourInteraction.service;
 
-import java.util.List;
-import java.util.Map;
-
 import com.tourInteraction.entity.Role;
 import com.tourInteraction.entity.User;
+
+import java.util.List;
+import java.util.Map;
 
 public interface IUserManageService {
 
@@ -29,4 +29,5 @@ public interface IUserManageService {
 	int updateUserIcon(Map<String, Object> mapParam);
 
 
+    List<User> getUserRand(Map<String, Object> mapParam);
 }

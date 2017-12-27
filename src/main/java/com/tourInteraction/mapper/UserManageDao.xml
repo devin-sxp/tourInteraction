@@ -15,25 +15,43 @@
 	   select 
 	   u.id as id,
 	   u.user_name as userName,
-	   u.password as passWord,
+-- 	   u.password as passWord,
 	   u.email as email,
 	   u.phone_number as phoneNumber,
 	   u.role_id as roleId,
 	   r.role_name as roleName,
+	   f.file_path as userIconPath,
 	   u.integration as integration,
 	   u.status as status 
 	   from user as u
 	   left join role as r
 	   on u.role_id = r.id
+	   left join files as f
+	   on u.user_icon_id = f.id
 	   order by u.create_time desc
 	   limit #{limit},#{offset}
+	</select>
+
+	<select id="getUserRand" resultType="User">
+		select
+		u.id as id,
+		u.user_name as userName,
+		u.user_description as userDescription,
+		f.file_path as userIconPath,
+		u.status as status
+		from user as u
+		left join files as f
+		on u.user_icon_id = f.id
+		where u.id >= (select min(id) from user) +
+	   (select floor(((select max(id) from user) - (select min(id) from user) )*rand()) )
+		limit #{limit},#{offset}
 	</select>
 	
 	<select id="getUserByInteraction" resultType="User">
 	   select 
 	   u.id as id,
 	   u.user_name as userName,
-	   u.password as passWord,
+-- 	   u.password as passWord,
 	   u.email as email,
 	   u.phone_number as phoneNumber,
 	   u.role_id as roleId,
@@ -51,10 +69,11 @@
 	   select 
 	   u.id as id,
 	   u.user_name as userName,
-	   u.password as passWord,
+-- 	   u.password as passWord,
 	   u.email as email,
 	   u.phone_number as phoneNumber,
 	   u.role_id as roleId,
+	   u.user_description as userDescription,
 	   r.role_name as roleName,
 	   f.file_path as userIconPath,
 	   u.integration as integration,

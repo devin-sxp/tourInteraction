@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.tourInteraction.config.GlobalConstantKey;
+import com.tourInteraction.utils.JSONUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -95,8 +97,65 @@ public class ArticleServiceImpl implements IArticleService {
 		return num;
 	}
 
+	@Override
+	@Transactional
+	public int updateArticle(Map<String, Object> map) {
+		return articleDao.updateArticle(map);
+	}
 
+	/**
+	 * 已经喜欢了就取消喜欢，没有喜欢就喜欢
+	 * @param map
+	 * @return
+	 */
+	@Override
+	@Transactional
+	public String loveArticle(Map<String, Object> map) {
+		int num = articleDao.isLoveThisArticle(map);
+		String result="";
+		Map<String,Object> retMap = new HashMap<String,Object>();
 
-	
+		if(num>0){
+			retMap.put("type","cancer_love");
+			int num1 = articleDao.loveArticleToDel(map);
+			map.put("loveCountAddValue", GlobalConstantKey.LOVE_COUNT_SUB_VALUE);
+			int num2 = articleDao.updateArticle(map);
+			if(num1>0 && num2>0){
+				retMap.put("result","取消喜欢成功!");
+				retMap.put("status","success");
+			}else{
+				retMap.put("result","取消喜欢失败!");
+				retMap.put("status","failed");
+			}
+		}else{
+			retMap.put("type","add_love");
+			int num1 = articleDao.loveArticleToAdd(map);
+			map.put("loveCountAddValue", GlobalConstantKey.LOVE_COUNT_ADD_VALUE);
+			int num2 = articleDao.updateArticle(map);
+			if(num1>0 && num2>0){
+				retMap.put("result","喜欢收藏成功!");
+				retMap.put("status","success");
+			}else{
+				retMap.put("result","喜欢收藏失败!");
+				retMap.put("status","failed");
+			}
+		}
+		return JSONUtil.map2json(retMap);
+	}
+
+	@Override
+	public Boolean isLoveThisArticle(Map<String, Object> map) {
+		int num = articleDao.isLoveThisArticle(map);
+		if(num>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	@Override
+	public List<Article> getLovedArticles(Map<String, Object> mapParam) {
+		return articleDao.getLovedArticles(mapParam);
+	}
 
 }

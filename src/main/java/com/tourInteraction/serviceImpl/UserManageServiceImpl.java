@@ -11,6 +11,7 @@ import com.tourInteraction.dao.UserManageDao;
 import com.tourInteraction.entity.Role;
 import com.tourInteraction.entity.User;
 import com.tourInteraction.service.IUserManageService;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("userManageServiceImpl")
 public class UserManageServiceImpl implements IUserManageService {
@@ -70,5 +71,11 @@ public class UserManageServiceImpl implements IUserManageService {
 		return userManageDao.updateUserIcon(mapParam);
 	}
 
-	
+	@Override
+	@Transactional(readOnly = true)
+	public List<User> getUserRand(Map<String, Object> mapParam) {
+		return userManageDao.getUserRand(mapParam);
+	}
+
+
 }

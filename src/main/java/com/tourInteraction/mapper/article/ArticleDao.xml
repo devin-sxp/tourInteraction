@@ -190,4 +190,58 @@
 		article_comment_count = article_comment_count + #{addValue}
 		where id = #{articleId}
 	</update>
+
+	<update id="updateArticle" parameterType="Map">
+		update article
+		set
+		<if test="null != lookCountAddValue and '' != lookCountAddValue">
+			article_look_count = article_look_count + #{lookCountAddValue},
+		</if>
+		<if test="null != loveCountAddValue and '' != loveCountAddValue">
+			article_love_count = article_love_count + #{loveCountAddValue},
+		</if>
+		<if test="null != supportCountAddValue and '' != supportCountAddValue">
+			article_support_count = article_support_count + #{supportCountAddValue},
+		</if>
+		status = #{status}
+		where id = #{articleId}
+	</update>
+
+	<select id="isLoveThisArticle" parameterType="Map" resultType="int">
+		select count(*) from user_love_article where user_id = #{userId} and article_id = #{articleId}
+	</select>
+
+	<delete id="loveArticleToDel" parameterType="Map">
+		delete from user_love_article where user_id = #{userId} and article_id = #{articleId}
+	</delete>
+
+	<insert id="loveArticleToAdd" parameterType="Map">
+		insert into user_love_article(user_id,article_id,status) values(#{userId},#{articleId},#{status})
+	</insert>
+
+	<select id="getLovedArticles" resultType="Article" parameterType="Map">
+		select
+		a.id as id,
+		a.article_name as articleName,
+		a.article_content as articleContent,
+		f.file_path as filePath,
+		a.article_look_count as articleLookCount,
+		a.article_love_count as articleLoveCount,
+		a.article_comment_count as articleCommentCount,
+		a.create_time as createTime,
+		a.create_user as createUser,
+		u.user_name as createUserName
+		from article as a
+		left join user as u
+		on a.create_user = u.id
+		left join files as f
+		on a.article_icon_id = f.id
+		left join user_love_article as ula
+		on ula.article_id = a.id
+		where a.status = "1" and ula.user_id=#{userId}
+		order by a.create_time desc
+		<if test="null != limit and '' != limit and null != offset and '' != offset">
+			limit ${limit},${offset}
+		</if>
+	</select>
 </mapper>

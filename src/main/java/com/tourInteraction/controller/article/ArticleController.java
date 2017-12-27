@@ -49,11 +49,17 @@ public class ArticleController {
 	@RequestMapping("/getNowUserArticle.do")
 	public @ResponseBody String getNowUserArticle(HttpServletRequest request,
 			@RequestParam("limit")String limit,
-			@RequestParam("offset")String offset){
+			@RequestParam("offset")String offset,
+			@RequestParam(value = "lookUserId",defaultValue = "0") String lookUserId){
 		logger.info("article/getNowUserArticle.do被调用");
-		User user = SignInAndUpController.getSignInUser(request);
 		List<Article> list = new ArrayList<Article>();
-		list = articleService.getNowUserArticle(user.getId(),limit,offset);
+		if(lookUserId.equals("0")){
+			User user = SignInAndUpController.getSignInUser(request);
+			list = articleService.getNowUserArticle(user.getId(),limit,offset);
+		}else {
+			list = articleService.getNowUserArticle(Integer.parseInt(lookUserId),limit,offset);
+		}
+
 		Map<String, Object> map = new HashMap<String , Object>();
 		map.put("list", list);
 		String result = JSONUtil.map2json(map);
@@ -61,10 +67,16 @@ public class ArticleController {
 	}
 	
 	@RequestMapping("/getNowUserArticleCount.do")
-	public @ResponseBody int getNowUserArticleCount(HttpServletRequest request){
+	public @ResponseBody int getNowUserArticleCount(HttpServletRequest request,@RequestParam(value = "lookUserId",defaultValue = "0") String lookUserId){
 		logger.info("article/getNowUserArticleCount.do被调用");
-		User user = SignInAndUpController.getSignInUser(request);
-		int count = articleService.getNowUserArticleCount(user.getId());
+		int count = 0;
+		if(lookUserId.equals("0")){
+			User user = SignInAndUpController.getSignInUser(request);
+			count = articleService.getNowUserArticleCount(user.getId());
+		}else{
+			count = articleService.getNowUserArticleCount(Integer.parseInt(lookUserId));
+		}
+
 		return count;
 	}
 	
@@ -157,7 +169,84 @@ public class ArticleController {
 			result = "操作成功！";
 		}
 		return result;
-		
+
 	}
 
+	@RequestMapping("updateArticle.do")
+	@ResponseBody
+	public String updateArticle(HttpServletRequest request, @RequestParam("articleId") int articleId,
+								@RequestParam(value = "needArticleLookCountAdd",defaultValue = GlobalConstantKey.REQUEST_DEFAULT_VALUE) String needArticleLookCountAdd,
+								 @RequestParam(value = "needArticleLoveCountAdd",defaultValue = GlobalConstantKey.REQUEST_DEFAULT_VALUE) String needArticleLoveCountAdd,
+								@RequestParam(value = "needArticleSupportCountAdd",defaultValue = GlobalConstantKey.REQUEST_DEFAULT_VALUE) String needArticleSupportCountAdd){
+		logger.info("article/updateArticle.do");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("articleId", articleId);
+		map.put("status",GlobalConstantKey.STATUS_OPEN);
+		if(!needArticleLookCountAdd.equals(GlobalConstantKey.REQUEST_DEFAULT_VALUE)){
+			map.put("lookCountAddValue", GlobalConstantKey.LOOK_COUNT_ADD_VALUE);
+		}
+		if(!needArticleLoveCountAdd.equals(GlobalConstantKey.REQUEST_DEFAULT_VALUE)){
+			map.put("loveCountAddValue", GlobalConstantKey.LOVE_COUNT_ADD_VALUE);
+		}
+		if(!needArticleSupportCountAdd.equals(GlobalConstantKey.REQUEST_DEFAULT_VALUE)){
+			map.put("supportCountAddValue", GlobalConstantKey.SUPPORT_COUNT_ADD_VALUE);
+		}
+		int num = articleService.updateArticle(map);
+		String result = "更新文章失败！";
+		if(num > 0 ){
+			result = "更新文章成功！";
+		}
+		return result;
+
+	}
+
+	@RequestMapping("loveArticle.do")
+	@ResponseBody
+	public String loveArticle(HttpServletRequest request, @RequestParam("articleId") int articleId){
+		logger.info("article/loveArticle.do");
+		User user = SignInAndUpController.getSignInUser(request);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("articleId", articleId);
+		map.put("userId",user.getId());
+		map.put("status",GlobalConstantKey.STATUS_OPEN);
+
+		String result = articleService.loveArticle(map);
+
+		return result;
+
+	}
+
+	@RequestMapping("isLoveThisArticle.do")
+	@ResponseBody
+	public boolean isLoveThisArticle(HttpServletRequest request, @RequestParam("articleId") int articleId){
+		logger.info("article/isLoveThisArticle.do");
+		User user = SignInAndUpController.getSignInUser(request);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("articleId", articleId);
+		map.put("userId",user.getId());
+		Boolean result = articleService.isLoveThisArticle(map);
+		return result;
+	}
+
+	@RequestMapping("/getLovedArticles.do")
+	public @ResponseBody String getLovedArticles(HttpServletRequest request,
+											@RequestParam("limit")String limit,
+											@RequestParam("offset")String offset,
+											@RequestParam(value = "userId",defaultValue = GlobalConstantKey.REQUEST_DEFAULT_VALUE) String userId){
+		logger.info("article/getLovedArticles.do被调用");
+		if(userId.equals(GlobalConstantKey.REQUEST_DEFAULT_VALUE)){
+			userId = SignInAndUpController.getSignInUser(request).getId()+"";
+		}
+		Map<String,Object> mapParam = new HashMap<String , Object>();
+		mapParam.put("userId",Integer.parseInt(userId));
+		mapParam.put("limit",limit);
+		mapParam.put("offset",offset);
+		List<Article> list = new ArrayList<Article>();
+		list = articleService.getLovedArticles(mapParam);
+
+		Map<String,Object> map = new HashMap<String , Object>();
+		map.put("list", list);
+		String result = JSONUtil.map2json(map);
+		return result;
+	}
 }

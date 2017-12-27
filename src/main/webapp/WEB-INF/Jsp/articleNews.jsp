@@ -123,12 +123,10 @@
 					<div class="like">
 						<div class="btn like-group">
 							<div class="btn-like">
-								<a
-									href="http://www.jianshu.com/sign_in?utm_source=desktop&amp;utm_medium=not-signed-in-like-button"><i
-									class="iconfont ic-like"></i>喜欢</a>
+								<a><i id="i_icon_like" class="iconfont ic-like"></i>喜欢</a>
 							</div>
 							<div class="modal-wrap">
-								<a>138</a>
+								<a id="a_love_text">0</a>
 							</div>
 						</div>
 						<!---->
@@ -180,148 +178,6 @@
 							<!---->
 							<!---->
 							<div id="comment-lists">
-								<div class="comments-placeholder" style="display: none;">
-									<div class="author">
-										<div class="avatar"></div>
-										<div class="info">
-											<div class="name"></div>
-											<div class="meta"></div>
-										</div>
-									</div>
-									<div class="text"></div>
-									<div class="text animation-delay"></div>
-									<div class="tool-group">
-										<i class="iconfont ic-zan-active"></i>
-										<div class="zan"></div>
-										<i class="iconfont ic-list-comments"></i>
-										<div class="zan"></div>
-									</div>
-								</div>
-								<div class="comment">
-									<div>
-										<div class="author">
-											<a href=""	target="_blank" class="avatar"><img src=""></a>
-											<div class="info">
-												<a href="" target="_blank" class="name">雪花如糖</a> <span
-													class="author-tag">作者</span>
-												<div class="meta">
-													<span>2楼 · 2017.08.27 12:35</span>
-												</div>
-											</div>
-										</div>
-										<div class="comment-wrap">
-											<p>本打算只写2千多字。结果絮絮叨叨了近4千字，有点多了，阅读需要极大的耐心😊</p>
-											<div class="tool-group">
-												<a class=""><i class="iconfont ic-zan"></i> <span>4人赞</span></a>
-												<a class=""><i class="iconfont ic-comment"></i> <span>回复</span></a>
-											</div>
-										</div>
-									</div>
-									<div class="sub-comment-list">
-										<div id="comment-14512030" class="sub-comment">
-											<p>
-												<a href="http://www.jianshu.com/u/df7c363d4643"
-													target="_blank">柳荷</a>： <span> <a
-													href="http://www.jianshu.com/users/74307f7c1d61"
-													class="maleskine-author" target="_blank"
-													data-user-slug="74307f7c1d61">@雪花如糖</a> 还是写少了，感觉不过瘾😊
-												</span>
-											</p>
-											<div class="sub-tool-group">
-												<span>2017.08.27 12:53</span> <a class=""><i
-													class="iconfont ic-comment"></i> <span>回复</span></a>
-												<!---->
-												<!---->
-											</div>
-										</div>
-										<div id="comment-14512138" class="sub-comment">
-											<p>
-												<a href="http://www.jianshu.com/u/74307f7c1d61"
-													target="_blank">雪花如糖</a>： <span> <a
-													href="http://www.jianshu.com/users/df7c363d4643"
-													class="maleskine-author" target="_blank"
-													data-user-slug="df7c363d4643">@柳荷</a>
-													万分感谢🙏不敢展开多写，字数太多，读者一般就失去耐心。
-												</span>
-											</p>
-											<div class="sub-tool-group">
-												<span>2017.08.27 12:56</span> <a class=""><i
-													class="iconfont ic-comment"></i> <span>回复</span></a>
-												<!---->
-												<!---->
-											</div>
-										</div>
-										<div id="comment-14513496" class="sub-comment">
-											<p>
-												<a href="http://www.jianshu.com/u/96a22cdf4370"
-													target="_blank">能辽</a>： <span> <a
-													href="http://www.jianshu.com/users/74307f7c1d61"
-													class="maleskine-author" target="_blank"
-													>@雪花如糖</a> 可以考虑写成系列
-												</span>
-											</p>
-											<div class="sub-tool-group">
-												<span>2017.08.27 13:40</span> <a class=""><i
-													class="iconfont ic-comment"></i> <span>回复</span></a>
-												<!---->
-												<!---->
-											</div>
-										</div>
-										<div class="sub-comment more-comment">
-											<a class="add-comment-btn"><i
-												class="iconfont ic-subcomment"></i> <span>添加新评论</span></a> <span
-												class="line-warp"> 还有5条评论， <a>展开查看</a></span>
-											<!---->
-											<!---->
-										</div>
-										<!---->
-									</div>
-								</div>
-								<div class="comment">
-									<div>
-										<div class="author">
-											<a href="http://www.jianshu.com/u/cd9be1d83139"
-												target="_blank" class="avatar"><img src="./2.jpg"></a>
-											<div class="info">
-												<a href="http://www.jianshu.com/u/cd9be1d83139"
-													target="_blank" class="name">猫娃瓜瓜</a>
-												<!---->
-												<div class="meta">
-													<span>4楼 · 2017.08.27 13:17</span>
-												</div>
-											</div>
-										</div>
-										<div class="comment-wrap">
-											<p>能像你这样扎实地读一本书就好了👍</p>
-											<div class="tool-group">
-												<a class=""><i class="iconfont ic-zan"></i> <span>1人赞</span></a>
-												<a class=""><i class="iconfont ic-comment"></i> <span>回复</span></a>
-												<!---->
-												<!---->
-											</div>
-										</div>
-									</div>
-									<div class="sub-comment-list">
-										<div id="comment-14513059" class="sub-comment">
-											<p>
-												<a href="http://www.jianshu.com/u/74307f7c1d61"
-													target="_blank">雪花如糖</a>： <span>
-													@猫娃瓜着过奖了~枕边堆着许多书，但真正看进去的也就一两本。只有自己觉得是好书，才能静下心来慢慢读。</span>
-											</p>
-											<div class="sub-tool-group">
-												<span>2017.08.27 13:23</span> <a class=""><i
-													class="iconfont ic-comment"></i> <span>回复</span></a>
-												<!---->
-												<!---->
-											</div>
-										</div>
-										<div class="sub-comment more-comment">
-											<a class="add-comment-btn"><i
-												class="iconfont ic-subcomment"></i> <span>添加新评论</span></a>
-
-										</div>
-									</div>
-								</div>
 							</div>
 						</div>
 					</div>

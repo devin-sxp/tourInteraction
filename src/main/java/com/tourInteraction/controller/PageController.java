@@ -34,6 +34,11 @@ public class PageController {
 	public String userPage(HttpServletRequest req){
 		return "userPage";
 	}
+
+	@RequestMapping("/otherUserPage")
+	public String otherUserPage(HttpServletRequest req){
+		return "otherUserPage";
+	}
 	
 	@RequestMapping("/newsCenter")
 	public String newsCenter(HttpServletRequest req){

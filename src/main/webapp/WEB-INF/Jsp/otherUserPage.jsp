@@ -10,7 +10,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>个人主页</title>
+<title>用户页</title>
 <!-- Custom Theme files -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -52,10 +52,6 @@
 	<jsp:include page="common/head.jsp"></jsp:include>
 	<!--//header-->
 
-	<!-- banner -->
-	<jsp:include page="common/banner.jsp"></jsp:include>
-	<!-- banner -->
-
 	<!-- banner-bottom -->
 	<div class="banner-bottom" style="padding: 1em 0 0 0">
 		<!-- container -->
@@ -63,26 +59,18 @@
         <div class="row">
             <div id="main_content_left" class="col-xs-1 main">
                 <div class="main-top">
-                    <a class="avatar" href="<%=contextPath%>/page/userPage">
-                        <img src="<%=contextPath%><%
-                        	if(user != null){
-                        		out.print(user.getUserIconPath());
-                        	}
-                        %>" alt="240">
+                    <a class="avatar" href="">
+                        <img id="i_user_icon" src="" alt="240">
                     </a>
 
                     <div class="title">
-                        <a class="name" href="<%=contextPath%>/page/userPage"><%
-                        	if(user != null){
-                        		out.print(user.getUserName());
-                        	}
-                        %></a>
+                        <a id="a_create_user_name" class="name" href=""></a>
                     </div>
                     <div class="info">
                         <ul>
                             <li>
                                 <div class="meta-block">
-                                    <a href="http://www.jianshu.com/users/2d0700f3a80a/following">
+                                    <a href="">
                                         <p>0</p>
                                         关注 <i class="iconfont ic-arrow"></i>
                                     </a>
@@ -90,7 +78,7 @@
                             </li>
                             <li>
                                 <div class="meta-block">
-                                    <a href="http://www.jianshu.com/users/2d0700f3a80a/followers">
+                                    <a href="">
                                         <p>0</p>
                                         粉丝 <i class="iconfont ic-arrow"></i>
                                     </a>
@@ -140,27 +128,15 @@
 
             <div id="main_content_right" class="col-xs-2 col-xs-offset-1 aside">
                 <div class="title">个人介绍</div>
-                <a class="function-btn" href="javascript:void(0)"><i class="iconfont ic-edit-s"></i>编辑</a>
-                <div class="profile-edit js-intro-form" >
-                    <textarea id="text_user_description"><%
-                    			if (user != null){
-			                     out.print(user.getUserDescription());
-			                   } %></textarea>
-                    <input type="button" id="btn_save_user_description" value="保存" style="width:30%" class="btn btn-hollow btn-info" >
-                    <a id="cancel-edit-intro" href="javascript:void(null);">取消</a>
-                </div>
                 <div class="description">
-                    <div class="js-intro"><%
-							if (user != null){
-		                     out.print(user.getUserDescription());
-		                   } %></div>
+                    <div class="js-intro">太懒了,没有简介...</div>
                 </div>
                 <div id="user-publications">
                 </div>
                 <ul class="list user-dynamic">
                     <li>
-                        <a href="">
-                            <i class="iconfont ic-collection"></i> <span>我关注的专题/文集</span>
+                        <a href="http://www.jianshu.com/users/2d0700f3a80a/subscriptions">
+                            <i class="iconfont ic-collection"></i> <span>关注的专题/文集</span>
                         </a>
                     </li>
                     <li>
@@ -173,8 +149,7 @@
                 <div>
                     <div>
                         <!---->
-                        <div class="title">我创建的栏目</div>
-                        <a class="function-btn new-collection-btn"><i class="iconfont ic-follow"></i><span>新建栏目</span></a>
+                        <div class="title">创建的栏目</div>
                     	<ul class="my_subject_list list">
 <!--                     		<li>
                     			<a href="" target="_blank" class="avatar-collection">
@@ -206,54 +181,12 @@
 	<!-- footer -->
 	<jsp:include page="common/footer.jsp"></jsp:include>
 	<!-- footer -->
-	<!--创建栏目  start-->
 
-	<div class="popinto" id="create_subject">
-		<h3 class="" style="margin-top: 5px">
-			<span class="pull-left ">创建栏目</span> <i
-				class="fa fa-times pull-right font18" onclick="closepop()"></i>
-		</h3>
-		<br>
-		<hr>
-		<div class="popcon">
-			<ul class="list-group">
-				<li class="list-group-item"><input type="text"
-					id="input_subject_title" placeholder="请输入标题" class="form-control"
-					maxlength="50"></li>
-				<li class="list-group-item">
-					<label>请选择栏目图标：</label>
-					<input type="file" id="input_file" name="input_file"
-					class="form-control" multiple="multiple" data-show-caption="true"></li>
-
-				<li class="list-group-item">
-				<textarea id="textarea_subject_description"
-					style="height: 200px; width: 100%;border: 1px solid #ccc;border-radius: 4px;">
-        	    </textarea>
-				</li>
-			</ul>
-
-			<p class="pop_p">
-				<button type="button" class="btn btn-primary pop_btn"
-					style="padding: 10px" id="btn_news_create_subject_sure">创建</button>
-				<button type="button" class="btn btn-defalut pop_btn"
-					style="padding: 10px" onclick="closepop()">取消</button>
-			</p>
-		</div>
-	</div>
-	<!--发布弹窗 end-->
-	<div class="pop" onclick="closepop()"></div>
-	<script defer src="<%=contextPath%>/resource/js/pop/pop.js"></script>
-
-	<script defer src="<%=contextPath%>/resource/js/myJs/userPage.js"></script>
+	<script defer src="<%=contextPath%>/resource/js/myJs/otherUserPage.js"></script>
 	<script type="text/javascript"
 		src="<%=contextPath%>/resource/js/common/convertTime.js"></script>
-	<script defer src="<%=contextPath%>/resource/js/fileInput/fileinput.js"></script>
-	<script defer
-		src="<%=contextPath%>/resource/js/fileInput/fileinput_locale_zh.js"></script>
-	<script type="text/javascript"
-	src="<%=contextPath%>/resource/js/common/fileUpload.js"></script>
-	<div class="pop" onclick="closepop()"></div>
-
+    <script type="text/javascript"
+            src="<%=contextPath%>/resource/js/common/getUrlParam.js"></script>
 	<script type="text/javascript">
 		if (isPhone()) {
 			$(".aside .board a img").css({
@@ -268,14 +201,7 @@
 		});
 		$(this).addClass('active');
 	});
-	
-	$(".function-btn").on('click',function(){
-		$(this).next().css({'display':'block'});
-	});
-	$("#cancel-edit-intro").on('click',function(){
-		$(this).parent().css({'display':'none'});
-	});
-	
+
 	if (isPhone()) {
 		$("#main_content_right").addClass("hidden");
 		$("#main_content_left").css({'width':"100%"});

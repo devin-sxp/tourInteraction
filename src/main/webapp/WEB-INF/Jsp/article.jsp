@@ -142,56 +142,22 @@
 					<!-- 推荐作者 -->
 					<div class="recommended-authors">
 						<div class="title">
-							<span>推荐作者</span> <a class="page-change"><i
-								class="iconfont ic-search-change"
-								style="transform: rotate(0deg);"></i> 换一批 </a>
+							<span>推荐作者</span>
+							<a class="page-change">
+								<i	class="iconfont ic-search-change"	style="transform: rotate(0deg);"></i>
+								换一批
+							</a>
 						</div>
-						<ul class="list">
-							<li><a
-								href="http://www.jianshu.com/u/5SqsuF?utm_source=desktop&amp;utm_medium=index-users"
-								target="_blank" class="avatar"><img style="height: 100%;"
+						<ul class="list" id="user_rand_list">
+							<li>
+								<a target="_blank" class="avatar"><img style="height: 100%;"
 									src="<%=contextPath%>/resource/images/article/1.jpg"></a> <a
-								class="follow" state="0"><i class="iconfont ic-follow"></i>关注
-							</a> <a
-								href="http://www.jianshu.com/u/5SqsuF?utm_source=desktop&amp;utm_medium=index-users"
-								target="_blank" class="name"> 刘淼 </a>
-								<p>写了320.3k字 · 19.4k喜欢</p></li>
-							<li><a
-								href="http://www.jianshu.com/u/4062aaeba322?utm_source=desktop&amp;utm_medium=index-users"
-								target="_blank" class="avatar"><img style="height: 100%;"
-									src="<%=contextPath%>/resource/images/article/1.jpg"></a> <a
-								class="follow" state="0"><i class="iconfont ic-follow"></i>关注
-							</a> <a
-								href="http://www.jianshu.com/u/4062aaeba322?utm_source=desktop&amp;utm_medium=index-users"
-								target="_blank" class="name"> 念远怀人 </a>
-								<p>写了90.9k字 · 405喜欢</p></li>
-							<li><a
-								href="http://www.jianshu.com/u/66c9f67ba2e0?utm_source=desktop&amp;utm_medium=index-users"
-								target="_blank" class="avatar"><img style="height: 100%;"
-									src="<%=contextPath%>/resource/images/article/1.jpg"></a> <a
-								class="follow" state="0"><i class="iconfont ic-follow"></i>关注
-							</a> <a
-								href="http://www.jianshu.com/u/66c9f67ba2e0?utm_source=desktop&amp;utm_medium=index-users"
-								target="_blank" class="name"> 占芳 </a>
-								<p>写了94.1k字 · 482喜欢</p></li>
-							<li><a
-								href="http://www.jianshu.com/u/5462ec6828f6?utm_source=desktop&amp;utm_medium=index-users"
-								target="_blank" class="avatar"><img style="height: 100%;"
-									src="<%=contextPath%>/resource/images/article/1.jpg"></a> <a
-								class="follow" state="0"><i class="iconfont ic-follow"></i>关注
-							</a> <a
-								href="http://www.jianshu.com/u/5462ec6828f6?utm_source=desktop&amp;utm_medium=index-users"
-								target="_blank" class="name"> 魏童 </a>
-								<p>写了23.8k字 · 344喜欢</p></li>
-							<li><a
-								href="http://www.jianshu.com/u/78f970537a5e?utm_source=desktop&amp;utm_medium=index-users"
-								target="_blank" class="avatar"><img style="height: 100%;"
-									src="<%=contextPath%>/resource/images/article/1.jpg"></a> <a
-								class="follow" state="0"><i class="iconfont ic-follow"></i>关注
-							</a> <a
-								href="http://www.jianshu.com/u/78f970537a5e?utm_source=desktop&amp;utm_medium=index-users"
-								target="_blank" class="name"> 名贵的考拉熊 </a>
-								<p>写了29.9k字 · 1.4k喜欢</p></li>
+									class="follow" state="0"><i class="iconfont ic-follow"></i>关注
+								</a>
+								<a	target="_blank" class="name"> 刘淼 </a>
+								<p>写了320.3k字 · 19.4k喜欢</p>
+							</li>
+
 						</ul>
 					</div>
 				</div>

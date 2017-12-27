@@ -35,10 +35,14 @@ public class GlobalConstantKey {
     public static final int COMMENT_REPLY_COUNT = 0;
 
     /**
-     * 文章评论和回复增值
+     * 评论赞、评论和回复、文章看、喜欢、支持增减值
      */
     public static final int PRAISE_COUNT_ADD_VALUE = 1;
     public static final int REPLY_COUNT_ADD_VALUE = 1;
+    public static final int LOOK_COUNT_ADD_VALUE = 1;
+    public static final int LOVE_COUNT_ADD_VALUE = 1;
+    public static final int LOVE_COUNT_SUB_VALUE = -1;
+    public static final int SUPPORT_COUNT_ADD_VALUE = 1;
 
     /**
      * solr
@@ -69,4 +73,9 @@ public class GlobalConstantKey {
      */
     public static final int HISTORY_SEARCH_COUNT_DEFAULT=1;
     public static final int HISTORY_SEARCH_COUNT_ADD=1;
+
+    /**
+     * request请求传递参数默认值
+     */
+    public static final String REQUEST_DEFAULT_VALUE = "false";
 }

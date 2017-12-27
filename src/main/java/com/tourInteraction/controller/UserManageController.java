@@ -43,6 +43,20 @@ public class UserManageController {
 		String result = JSONUtil.map2json(map);
 		return result;
 	}
+
+	@RequestMapping("getUserRand.do")
+	public @ResponseBody String getUserRand( @RequestParam("limit") int limit,@RequestParam("offset") int offset){
+
+		logger.info("userManage/getUserRand.do被调用");
+		List<User> list = new ArrayList<User>();
+		Map<String, Object> mapParam = new HashMap<String, Object>();
+
+		mapParam.put("limit", limit);
+		mapParam.put("offset", offset);
+		list = userManageService.getUserRand(mapParam);
+		String result = JSONUtil.list2json(list);
+		return result;
+	}
 	
 	@RequestMapping("getUserByInteraction.do")
 	public @ResponseBody String getUserByInteraction( @RequestParam("limit") int limit,@RequestParam("offset") int offset){

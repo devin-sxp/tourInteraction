@@ -1,20 +1,38 @@
-var fileuploadedId = "";
 var userId = $("#userId").val();
-
+var lookUserId = parseInt(getUrlParam("lookUserId").trim());
 var articleWordsCount = 0;
 var page = 0;
 var getCount = 5;
 var articleCount = 0;
 $(function() {
-	getNowUserArticleCount();
-	getNowUserArticle(page*getCount,getCount);
-	getSubjectsByUserId();
-})
+	if (lookUserId == null || isNaN(lookUserId)){
+		return;
+	}
+	getUserArticleCount(lookUserId);
+	getUserArticle(page*getCount,getCount,lookUserId);
+	getSubjectsByUserId(lookUserId);
+	getUserData(lookUserId);
+});
 
+var getUserData =  function (lookUserId){
 
-var getNowUserArticleCount =  function (){
+    $.post(getRootPath()+"/userManage/getUserById.do",{userId:lookUserId}, function(data, textStatus, req) {
+        if(textStatus == "success"){
+            data = eval("("+data+")");
+            console.log(data)
+            $(".js-intro").text(data.userDescription);
+            $("#a_create_user_name").text(data.createUserName).attr('href',getRootPath()+"/page/otherUserPage?lookUserId="+data.id);
+            $("#i_user_icon").attr('src',getRootPath()+data.userIconPath).parent().attr("href",getRootPath()+"/page/otherUserPage?lookUserId="+data.id);
 
-	$.post(getRootPath()+"/article/getNowUserArticleCount.do", function(data, textStatus, req) {
+        }else{
+            toastr.error("用户数据失败！");
+        }
+    },'json')
+};
+
+var getUserArticleCount =  function (lookUserId){
+
+	$.post(getRootPath()+"/article/getNowUserArticleCount.do",{lookUserId:lookUserId}, function(data, textStatus, req) {
 		if(textStatus == "success"){
 			articleCount = eval(data);
 			$("#my_article_count").text(articleCount);
@@ -24,12 +42,12 @@ var getNowUserArticleCount =  function (){
 	})
 };
 
-var getNowUserArticle =  function (limit,offset){
+var getUserArticle =  function (limit,offset,lookUserId){
 
-	$.post(getRootPath()+"/article/getNowUserArticle.do",{limit:limit,offset:offset}, function(data, textStatus, req) {
+	$.post(getRootPath()+"/article/getNowUserArticle.do",{limit:limit,offset:offset,lookUserId:lookUserId}, function(data, textStatus, req) {
 		if(textStatus == "success"){
 			data = eval("("+data+")");
-			console.log(data)
+			// console.log(data)
 			$.each(data.list, function(objIndex, article) {
 				var html = "<li><div class=\"content\"><div class=\"author\">"+
 						   "<span class=\"time\">"+stampToStandard(article.createTime.time)+"</span></div>"+
@@ -49,8 +67,8 @@ var getNowUserArticle =  function (limit,offset){
 	},'json')
 };
 
-var getSubjectsByUserId = function(){
-	$.post(getRootPath()+"/articleSubject/getSubjectsByUserId.do",{userId:0}, function(data, textStatus, req) {
+var getSubjectsByUserId = function(lookUserId){
+	$.post(getRootPath()+"/articleSubject/getSubjectsByUserId.do",{userId:lookUserId}, function(data, textStatus, req) {
 		data = eval(data);
 		$.each(data, function(objIndex, subject) {
 			var html = "<li>"+
@@ -60,83 +78,27 @@ var getSubjectsByUserId = function(){
 			$(".my_subject_list").append(html);
 		})
 	},'json');
-}
+};
 
 $(".load-more").on('click',function(){
-	page++;
-	var activedId = 0;
-	$(".trigger-menu li").each(function () {
-		if($(this).attr("class") != null && $(this).attr("class") != ""){
+    page++;
+    var activedId = 0;
+    $(".trigger-menu li").each(function () {
+        if($(this).attr("class") != null && $(this).attr("class") != ""){
             activedId = $(this).attr("id");
             return;
-		}
+        }
     });
-	if(activedId == "li_user_article"){
+    if(activedId == "li_user_article"){
         if(page*getCount > articleCount){
             toastr.info("没有更多了");
             return;
         }
-        getNowUserArticle(page*getCount,getCount);
+        getUserArticle(page*getCount,getCount,lookUserId);
     }else if(activedId == "li_liked_article"){
-        var data = {limit:page*getCount,offset:getCount};
+        var data = {limit:page*getCount,offset:getCount,userId:lookUserId};
         getLovedArticles(data);
-	}
-})
-
-
-$("#btn_save_user_description").on('click', function() {
-	var description = $("#text_user_description").val();
-	$.post(getRootPath()+"/userManage/updateUserDescription.do", {userDescription:description}, function(data, textStatus, req) {
-		if(textStatus =='success'){
-			toastr.info(eval(data))
-			$(".js-intro").text(description)
-		}
-	})
-	$(this).parent().css({'display':'none'});
-})
-
-/**
- * 创建专题
- */
-$(".new-collection-btn").click(function() {
-	if(userId == null || userId =="" ){
-		toastr.warning("请先登录！");
-		return;
-	}
-	create_subject();
-	var uploadUrl = getRootPath() + "/fileManage/uploadFile.do";
-	var data = {
-		fileUse : 'subject_icon',
-		inputFile : 'input_file' //input file标签的name值传到后台，用于后台获取file
-	}
-	upLoadFileInput("input_file", uploadUrl, data);
-})
-
-$("#btn_news_create_subject_sure").on('click',function(){
-	if(returnUploadedData != "" && returnUploadedData != null && returnUploadedData != "undefine"){
-		fileuploadedId = returnUploadedData;
-		console.log(fileuploadedId);
-	}else{
-		toastr.info("上传未完毕或返回数据为空");
-		return;
-	}
-	
-	var subjectTitle = $("#input_subject_title").val();
-	var subjectDescription = $("#textarea_subject_description").val();
-	var subjectIconId = fileuploadedId;
-	
-	$.post(getRootPath()+"/articleSubject/addSubject.do", {subjectTitle:subjectTitle,subjectDescription:subjectDescription,
-		subjectIconId:subjectIconId,subjectType:2}, function(data, textStatus, req) {
-		if(textStatus == "success"){
-			data = eval(data);
-			toastr.success(data);
-			closepop();
-		}else{
-			toastr.error(data);
-		}
-	});
-	
-	location.reload();
+    }
 });
 
 var getLovedArticles = function (data) {
@@ -159,26 +121,28 @@ var getLovedArticles = function (data) {
         }
     },'json');
 }
+
 $("#li_liked_article").click(function () {
-	$(".note-list").empty();
-	page=0;
-    var data = {limit:0,offset:getCount};
+    $(".note-list").empty();
+    page=0;
+    var data = {limit:0,offset:getCount,userId:lookUserId};
     getLovedArticles(data);
 });
 
 $("#li_user_article").click(function () {
     $(".note-list").empty();
     page=0;
-    getNowUserArticle(0,getCount);
+    getUserArticle(page*getCount,getCount,lookUserId);
 });
 
 $("#a_my_liked_article").click(function () {
     $(".trigger-menu li").each(function () {
-       $(this).removeClass("active")
+        $(this).removeClass("active")
     });
     $("#li_liked_article").addClass("active")
     $(".note-list").empty();
     page=0;
-    var data = {limit:0,offset:getCount};
+    var data = {limit:0,offset:getCount,userId:lookUserId};
     getLovedArticles(data);
 })
+

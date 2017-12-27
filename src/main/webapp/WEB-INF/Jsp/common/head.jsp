@@ -122,11 +122,11 @@
 									class="iconfont ic-navigation-profile"></i><span>我的主页</span>
 							</a></li>
 							<li>
-								<!-- TODO bookmarks_path --> <a href="/bookmarks"> <i
-									class="iconfont ic-navigation-mark"></i><span>收藏的文章</span>
+								<!-- TODO bookmarks_path --> <a href="<%=contextPath %>/page/userPage#li_liked_article"> <i
+									class="iconfont ic-navigation-mark"></i><span>我的的文章</span>
 							</a>
 							</li>
-							<li><a href="/users/2d0700f3a80a/liked_notes"> <i
+							<li><a href="<%=contextPath %>/page/userPage#li_liked_article"> <i
 									class="iconfont ic-navigation-like"></i><span>喜欢的文章</span>
 							</a></li>
 							<li>
@@ -382,7 +382,7 @@ var head = {
             $(".search-trending-tag-wrap").empty();
             $.post(getRootPath()+"/historySearch/getHistorySearchList.do",condition,function (data,status) {
                 data = eval(data);
-                console.log(data);
+//                console.log(data);
                 $.each(data,function (index,elem) {
                     $(".search-trending-tag-wrap").each(function () {
                         head.method.appendHistorySearchNode(elem,$(this))

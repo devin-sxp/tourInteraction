@@ -11,12 +11,17 @@ $(function(){
 	getArticleCount();
 	getArticles(page*getCount,getCount);
 	getRecommendSubjects();
+	var data = {
+		limit:0,
+		offset:5
+	};
+    getUserRand(data)
 });
 let getArticleCount = ()=> {
 	$.post(getRootPath()+"/article/getArticleCount.do", function(data, textStatus, req) {
 		if(textStatus == "success"){
 			articleCount = eval(data);
-			console.log(data)
+			// console.log(data)
 		}else{
 			toastr.error("获取文章数量失败！请稍后重试！");
 		}
@@ -32,9 +37,11 @@ let getArticles = (limit,offset) => {
 				var html = "<li class=\"have-img\">"+
 						"<a class=\"wrap-img\" href=\"\" target=\"_blank\"> "+
 						"<img class=\"img-blur-done\" src=\""+ getRootPath()+article.filePath +"\" alt=\"120\">"+
-						"</a><div class=\"content\"><div class=\"author\"><a class=\"avatar\" target=\"_blank\" href=\"\">"+
+						"</a><div class=\"content\"><div class=\"author\"><a class=\"avatar\" target=\"_blank\" href=\"" +
+						getRootPath()+"/page/otherUserPage?lookUserId="+article.createUser+"\">"+
 						"<img src=\""+getRootPath()+article.userIconPath+"\" alt=\"64\">"+
-						"</a><div class=\"name\"><a class=\"blue-link\" target=\"_blank\" href=\"\">"+article.createUserName+"</a>"+
+						"</a><div class=\"name\"><a class=\"blue-link\" target=\"_blank\" href=\"" +
+                        getRootPath()+"/page/otherUserPage?lookUserId="+article.createUser+"\">"+article.createUserName+"</a>"+
 						"<span class=\"time\" data-shared-at=\"2017-09-09T01:08:56+08:00\">"+stampToStandard(article.createTime.time)+"</span></div>"+
 						"</div><a class=\"title\" target=\"_blank\" href=\""+getRootPath()+"/page/articleNews?articleId="+article.id+"\">"+article.articleName+"</a>"+
 						"<p class=\"abstract txt-limit-3\">&nbsp;&nbsp;&nbsp;&nbsp;"+article.articleContent.replace(/<[^>]+>/g,"")+"</p>"+
@@ -117,3 +124,35 @@ let getRecommendSubjects = function(){
 	},'json');
 }
 
+/**
+ * 获取随机推荐用户
+ */
+let getUserRand = function(data){
+    $.post(getRootPath()+"/userManage/getUserRand.do", data, function(data, textStatus, req) {
+        data = eval("("+data+")");
+        console.log(data);
+        $("#user_rand_list").empty();
+        $.each(data, function(i, user) {
+        	if(user.userDescription == "" || user.userDescription == null){
+                user.userDescription = "他还没有简介";
+			};
+            var html = "<li>" +
+                "<a href='"+getRootPath()+"/page/otherUserPage?lookUserId="+user.id+"' target=\"_blank\" class=\"avatar\"><img style=\"height: 100%;\"" +
+                "src=\""+getRootPath()+user.userIconPath+"\"></a> <a " +
+                "class=\"follow\" state=\"0\"><i class=\"iconfont ic-follow\"></i>关注" +
+                "</a>" +
+                "<a href='"+getRootPath()+"/page/otherUserPage?lookUserId="+user.id+"' target=\"_blank\" class=\"name\">"+user.userName+"</a>" +
+                "<p>"+user.userDescription+"</p>" +
+                "</li>";
+            $("#user_rand_list").append(html);
+        })
+    },'json');
+};
+
+$(".page-change").click(function () {
+	var data = {
+		limit:0,
+		offset:5
+	};
+    getUserRand(data);
+});

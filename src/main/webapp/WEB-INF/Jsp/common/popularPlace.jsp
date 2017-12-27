@@ -82,7 +82,7 @@
 
 								},
 								success : function(result) {
-									console.log(result)
+//									console.log(result)
 									result = eval("("+result+")");
 									var html_tr ="";
 								    $.each(result.list, function (objIndex, module) {

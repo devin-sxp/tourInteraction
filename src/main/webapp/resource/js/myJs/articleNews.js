@@ -20,14 +20,41 @@ let replyHtml = "<div><form class=\"new-comment\">" +
  */
 let getArticles = (articleId) => {
     $.post(getRootPath()+"/article/getArticleById.do", {articleId:articleId}, function(data, textStatus, req) {
-        data = eval("("+ data +")")
+        data = eval("("+ data +")");
+        // console.log(data);
         $("title").append("--"+data.articleName);
         $("#h_article_title").text(data.articleName);
         $("#input_hide_article_id").val(data.id);
         $("#img_article_icon").attr("src", getRootPath()+data.filePath);
         $("#div_article_content").append(data.articleContent);
-        $("#a_create_user_name").text(data.createUserName);
-        $("#i_user_icon").attr('src',getRootPath()+data.userIconPath);
+        $("#a_create_user_name").text(data.createUserName).attr('href',getRootPath()+"/page/otherUserPage?lookUserId="+data.createUser);
+        $("#i_user_icon").attr('src',getRootPath()+data.userIconPath).parent().attr("href",getRootPath()+"/page/otherUserPage?lookUserId="+data.createUser);
+        $("#a_love_text").text(data.articleLoveCount).parent().parent().on('click',function(){
+            var condition = {
+                articleId:articleId
+            };
+            var $target = $("#i_icon_like");
+            $.post(getRootPath()+"/article/loveArticle.do",condition,function (loveData,status) {
+                loveData = eval("("+loveData+")");
+
+                if(loveData.status == 'success'){
+                    toastr.success(loveData.result);
+                    if(loveData.type == 'cancer_love'){
+                        $target.removeClass("ic-like-active");
+                        $target.addClass("ic-like");
+
+                        $("#a_love_text").text(parseInt($("#a_love_text").text().trim())-1);
+                    }else{
+                        $target.removeClass("ic-like");
+                        $target.addClass("ic-like-active");
+                        $("#a_love_text").text(parseInt($("#a_love_text").text().trim())+1);
+
+                    }
+                }else{
+                    toastr.error(loveData.result);
+                }
+            },'json');
+        });
         articleCreateUserId = data.createUser;
     }, "json")
 }
@@ -62,7 +89,7 @@ let getArticleComments = function(data,isLookAuthor){
     $.post(getRootPath()+"/articleCommentAndReply/getArticleComments.do", data, function(data, textStatus, req) {
         if(textStatus == "success"){
             data = eval("("+data+")")
-            console.log(data);
+            // console.log(data);
             $("#s_article_comment_count").text(data.count+" 条评论")
             $("#comment-lists").empty();
             $.each(data.list, function(i, comment) {
@@ -452,9 +479,30 @@ $(".author-only").on('click', function() {
         offset:currentPage*pageSize,
         getMethod:CommentGetMethod,
         articleId:articleId
-    }
+    };
     getArticleComments(data,isLookAuthor);
 });
+
+/**
+ * 浏览文章增加观看数
+ */
+let watchArticleAddCount = function (data) {
+    $.post(getRootPath()+"/article/updateArticle.do",data,function (data,status) {
+
+    },'json');
+};
+
+/**
+ * 检查该文章是否已经喜欢
+ */
+let isLoveThisArticle = function (data) {
+    $.post(getRootPath()+"/article/isLoveThisArticle.do",data,function (data,status) {
+        if(data == "true"){
+            $("#i_icon_like").removeClass("ic-like");
+            $("#i_icon_like").addClass("ic-like-active");
+        }
+    });
+};
 
 $(()=>{
     getArticles(articleId);
@@ -463,7 +511,18 @@ $(()=>{
 		offset:currentPage*pageSize,
 		getMethod:CommentGetMethod,
 		articleId:articleId
-	}
+	};
 	getArticleComments(data,isLookAuthor);
-})
+
+	var condition = {
+        needArticleLookCountAdd:"true",
+        articleId:articleId
+    };
+    watchArticleAddCount(condition);
+
+    var condition1 = {
+        articleId:articleId
+    };
+    isLoveThisArticle(condition1);
+});
 

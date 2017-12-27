@@ -1,13 +1,12 @@
 package com.tourInteraction.dao.article;
 
+import com.tourInteraction.entity.article.Article;
+import com.tourInteraction.entity.article.ArticleRequestSubmit;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
-
-import com.tourInteraction.entity.article.Article;
-import com.tourInteraction.entity.article.ArticleRequestSubmit;
 
 public interface ArticleDao{
 
@@ -38,4 +37,14 @@ public interface ArticleDao{
 	int passSubmitArticle(Map<String, Object> map);
 
 	int updateArticleCommentCount(@Param("articleId")int articleId, @Param("addValue")int addValue);
+
+    int updateArticle(Map<String, Object> map);
+
+	int isLoveThisArticle(Map<String, Object> map);
+
+	int loveArticleToDel(Map<String, Object> map);
+
+	int loveArticleToAdd(Map<String, Object> map);
+
+	List<Article> getLovedArticles(Map<String, Object> mapParam);
 }

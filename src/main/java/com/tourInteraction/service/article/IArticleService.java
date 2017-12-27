@@ -1,10 +1,10 @@
 package com.tourInteraction.service.article;
 
-import java.util.List;
-import java.util.Map;
-
 import com.tourInteraction.entity.article.Article;
 import com.tourInteraction.entity.article.ArticleRequestSubmit;
+
+import java.util.List;
+import java.util.Map;
 
 public interface IArticleService {
 
@@ -28,4 +28,11 @@ public interface IArticleService {
 
 	int dealArticleRequestSubmitNews(Map<String, Object> map);
 
+    int updateArticle(Map<String, Object> map);
+
+    String loveArticle(Map<String, Object> map);
+
+    Boolean isLoveThisArticle(Map<String, Object> map);
+
+	List<Article> getLovedArticles(Map<String, Object> mapParam);
 }
