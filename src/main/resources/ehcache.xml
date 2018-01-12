@@ -33,4 +33,11 @@
 		   timeToIdleSeconds="600"
 		   timeToLiveSeconds="600">
 	</cache>
+
+	<cache name="messageRemindCache"
+		   maxElementsInMemory="10000"
+		   eternal="false"
+		   timeToIdleSeconds="600"
+		   timeToLiveSeconds="600">
+	</cache>
 </ehcache>

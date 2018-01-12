@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tourInteraction.dao.MessageRemindDao">
+    <!-- 插入操作 -->
+ 	<insert id="insertMessageRemind" parameterType="int">
+	   insert into message_remind(type,remind_link_id,remind_position,target_user_id,create_time,create_user,status)
+	    values(#{type},#{remindLinkId},#{remindPosition},#{targetUserId},#{createTime},#{createUser},#{status})
+	</insert>
+
+	<select id="getMessageRemind" parameterType="Map" resultType="MessageRemind">
+		select mr.id,
+		type,
+		remind_link_id as remindLinkId,
+		remind_position as remindPosition,
+		mr.create_time as createTime,
+		mr.create_user as createUser,
+		u.user_name as createUserName,
+		f.file_path as userIconPath,
+		CASE
+		WHEN type = "news" THEN
+			(
+				SELECT
+					news_title
+				FROM
+					news
+				WHERE
+					id = mr.remind_link_id
+			)
+		when type = "article" THEN
+		(
+				SELECT
+				 article_name
+				from
+				 article
+				where
+				  id = mr.remind_link_id
+		)
+		END AS remindLinkTitle
+		from message_remind as mr
+		left join user as u
+		on mr.create_user = u.id
+		left join files as f
+		on f.id = u.user_icon_id
+		where mr.status = "1" and mr.target_user_id = #{targetUserId}
+		limit #{limit},#{offset}
+	</select>
+
+	<select id="getMessageRemindAllCount" parameterType="Map" resultType="int">
+		select count(*)
+		from message_remind as mr
+		where mr.status = "1" and mr.target_user_id = #{targetUserId}
+	</select>
+
+	<select id="getArticleRequestSubmitNewsCount" parameterType="Map" resultType="int">
+		select count(*)
+		from article_request_submit as r
+		where r.status = "1" and r.request_subject_create_user_id = #{targetUserId}
+	</select>
+
+	<select id="getMessageRemindCount" parameterType="Map" resultType="MessageRemindCount">
+		select type,count(*) as count
+		from message_remind as mr
+		where mr.status = "1" and mr.target_user_id = #{targetUserId}
+		GROUP BY type
+	</select>
+
+	<delete id="delMessageRemind">
+		delete from message_remind where id = #{id}
+	</delete>
+</mapper>

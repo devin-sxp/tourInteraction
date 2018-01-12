@@ -118,7 +118,7 @@
 .notification .main .other-list li,
 .notification .main .pay-list li {
     padding: 20px;
-    border-top: 1px solid #f0f0f0
+    border-top: 1px solid #f18c8c
 }
 
 .notification .main .comment-list li:last-child,
@@ -126,7 +126,7 @@
 .notification .main .like-list li:last-child,
 .notification .main .other-list li:last-child,
 .notification .main .pay-list li:last-child {
-    border-bottom: 1px solid #f0f0f0
+    border-bottom: 1px solid #f18c8c
 }
 
 .notification .main .comment-list li:hover .meta .report,
@@ -490,12 +490,12 @@
 }
 
 .notification .main .push-list li {
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid #f18c8c;
     margin-bottom: 10px;
 }
 
 .notification .main .push-list li:last-child {
-    border-bottom: 1px solid #f0f0f0
+    border-bottom: 1px solid #f18c8c;
 }
 
 .notification .main .push-list li.unread {

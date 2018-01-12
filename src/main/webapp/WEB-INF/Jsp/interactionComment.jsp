@@ -7,7 +7,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Home</title>
+<title>互动贴</title>
 <!-- Custom Theme files -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -16,7 +16,19 @@
 	Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript">
 	
-	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+	 addEventListener("load", function() {
+	     setTimeout(goToPosition, 0);
+	     }, false);
+	 function goToPosition(){
+         //如果需要跳到位置就跳到指定位置
+         var position = getUrlParam("position").trim();
+//        if(position != undefined && position != null && position != "" && location.hash == ""){
+//                location.hash=position;
+//        };
+         if(position != undefined && position != null && position != ""){
+             document.getElementById(position).scrollIntoView(true);
+         };
+	 }
 
 </script>
 <!-- //Custom Theme files -->

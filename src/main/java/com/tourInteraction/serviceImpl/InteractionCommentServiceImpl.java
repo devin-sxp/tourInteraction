@@ -6,6 +6,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.tourInteraction.config.GlobalConstantKey;
+import com.tourInteraction.dao.MessageRemindDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tourInteraction.dao.InteractionCommentDao;
@@ -20,6 +23,8 @@ public class InteractionCommentServiceImpl implements IInteractionCommentService
 	@Resource
 	private  InteractionCommentDao interactionCommentDao;
 
+	@Autowired
+	private MessageRemindDao messageRemindDao;
 	@Override
 	public int getCommentCount(Map<String, Object> mapParam) {
 
@@ -44,12 +49,22 @@ public class InteractionCommentServiceImpl implements IInteractionCommentService
 
 	@Override
 	public int addComment(Map<String, Object> mapParam) {
-		return interactionCommentDao.addComment(mapParam);
+		int num = interactionCommentDao.addComment(mapParam);
+		mapParam.put("type","news");
+		mapParam.put("remindLinkId",mapParam.get("newsId"));
+		mapParam.put("remindPosition", GlobalConstantKey.MESSAGE_REMIND_PRE_NEWS+mapParam.get("id"));
+		num = messageRemindDao.insertMessageRemind(mapParam);
+		return num;
 	}
 
 	@Override
 	public int addReply(Map<String, Object> mapParam) {
-		return interactionCommentDao.addReply(mapParam);
+		int num = interactionCommentDao.addReply(mapParam);
+		mapParam.put("type","news");
+		mapParam.put("remindLinkId",mapParam.get("newsId"));
+		mapParam.put("remindPosition", GlobalConstantKey.MESSAGE_REMIND_PRE_NEWS+mapParam.get("commentId"));
+		num = messageRemindDao.insertMessageRemind(mapParam);
+		return  num;
 	}
 
 	

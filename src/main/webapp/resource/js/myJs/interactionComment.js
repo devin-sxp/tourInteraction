@@ -2,12 +2,15 @@
  * 
  */
 var userId = $("#userId").val();
+var newsCreateUser = null;
+var newsId = null;
 $(function() {
 	newsId = getUrlParam("newsId");
 	getNews(newsId);
 	if(userId != null && userId != ""){
 		addIntegration(2);
 	}
+
 });
 
 /**
@@ -120,10 +123,9 @@ var getInteractionReply = function(commentId,htmlComment,interactionComment) {
  * 回复和评论
  * @type {null}
  */
-var news_id=null;
 var comment_id=null;
-var replyuser_id=null;
 var target_user_id =null;
+var method_type=null;
 $(".reply").live('click',function () {
 	if(userId == null || userId =="" ){
 		toastr.warning("请先登录！");
@@ -137,12 +139,15 @@ $(".reply").live('click',function () {
             editor.$txt.html(t);
         }
     });
-    news_id=null;
     comment_id=null;
-    target_user_id=null;
-    news_id =  $(this).nextAll("input[name='news_id']").val();
+    target_user_id=0;
+    method_type="comment";
     comment_id =  $(this).nextAll("input[name='comment_id']").val();
-    target_user_id =  $(this).nextAll("input[name='target_user_id']").val();
+    // console.log($(this).attr("param-id"))
+    if($(this).attr("param-id") != "comment"){
+        target_user_id =  $(this).nextAll("input[name='target_user_id']").val();
+        method_type = "reply";
+    }
     edit_text();
 });
 
@@ -161,10 +166,12 @@ $("#reply_sure").click(function () {
         toastr.warning('不能为空');
     }else {
         var condition={
-            newsId:news_id,
+            newsId:newsId,
             commentId:comment_id,
             targetUser:target_user_id,
-            commentContent:commentContent
+            commentContent:commentContent,
+            newsCreateUser:newsCreateUser,
+            methodType:method_type
         };
         addCommentAndReply(condition);
         closepop();
@@ -238,12 +245,13 @@ var addIntegration =function (integration) {
  * @returns {string}
  */
 var appendInteractionNewsNode = function (interactionNews) {
+    $("title").append("--"+interactionNews.newsTitle);
+    newsCreateUser = interactionNews.createUser;
     var html_main = "<div class=\"panel-heading\"><h3 class=\"panel-title\"><span style=\"color: yellow;\">" + interactionNews.createUserName + "</span>&nbsp;发表于&nbsp;" + stampToStandard(interactionNews.createTime.time) +
         "</h3></div> <h3 align=\"center\">" + interactionNews.newsTitle + "</h3><div style='margin: 0 1% 0 1%;'>" + interactionNews.newsContent +
         "</div></div>" +
-        "<button type=\"button\" class=\"btn btn-link blue reply\" style=\"color:indigo;\" onclick=\"javascript:void(0);\">评论</button>"+
-        "<input type=\"hidden\" name=\"news_id\" value=\""+interactionNews.id+"\">";
-  
+        "<button type=\"button\" param-id='comment' class=\"btn btn-link blue reply\" style=\"color:indigo;\" onclick=\"javascript:void(0);\">评论</button>";
+
     return html_main
 };
 
@@ -255,7 +263,7 @@ var appendInteractionNewsNode = function (interactionNews) {
 var appendInteractionCommentNode = function (interactionComment) {
     var html_comment=null;
         html_comment =
-            "<tr><td style=\"vertical-align: top; text-align: left; \"><span style=\"color: red;\">"+interactionComment.createUserName+"</span>&nbsp; 评论于&nbsp; "+stampToStandard(interactionComment.createTime.time)+
+            "<tr id='news_comment_"+interactionComment.id+"'><td style=\"vertical-align: top; text-align: left; \"><span style=\"color: red;\">"+interactionComment.createUserName+"</span>&nbsp; 评论于&nbsp; "+stampToStandard(interactionComment.createTime.time)+
             "</td></tr>" +
             "<tr><td colspan=\"2\" style=\"word-break: break-all;vertical-align: 20px; text-align: left; padding-left: 5px; padding-top: 10px; margin-left: 5px;\">"+
             "</span><p>"+interactionComment.commentContent+"</p><div style=\"margin-left:3%; margin-right: 20px\" data-1=\"5482918\" id=\"reply_area\">";

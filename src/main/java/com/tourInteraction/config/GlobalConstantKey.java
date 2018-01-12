@@ -78,4 +78,14 @@ public class GlobalConstantKey {
      * request请求传递参数默认值
      */
     public static final String REQUEST_DEFAULT_VALUE = "false";
+
+    public static final String MESSAGE_REMIND_PRE_ARTICLE = "article_comment_";
+    public static final String MESSAGE_REMIND_PRE_NEWS = "news_comment_";
+
+    /**
+     * 互动信息回复、评论类型
+     */
+    public static final String NEWS_METHOD_TYPE_COMMENT = "comment";
+    public static final String NEWS_METHOD_TYPE_REPLY = "reply";
+
 }

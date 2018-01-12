@@ -70,14 +70,17 @@
 	</select>
 	
 	<!-- 插入操作 -->
- 	<insert id="addArticleComment" parameterType="Map" useGeneratedKeys="true">
-	   insert into article_comment(article_id,comment_content,comment_reply_count,comment_praise_count,
+ 	<insert id="addArticleComment" parameterType="Map" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		<selectKey resultType="int" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() as id
+		</selectKey>
+		insert into article_comment(article_id,comment_content,comment_reply_count,comment_praise_count,
 	   create_time,create_user,status) 
 	   values(#{articleId},#{commentContent},#{commentReplyCount},#{commentPraiseCount},#{createTime},#{createUser},#{status})
 	</insert> 
 	
- 	<insert id="addCommentReply" parameterType="Map" useGeneratedKeys="true">
-	   insert into article_reply(comment_id,reply_content,target_user,
+ 	<insert id="addCommentReply" parameterType="Map" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into article_reply(comment_id,reply_content,target_user,
 	   create_time,create_user,status) 
 	   values(#{commentId},#{replyContent},#{targetUserId},#{createTime},#{createUser},#{status})
 	</insert> 

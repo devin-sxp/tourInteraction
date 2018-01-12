@@ -80,6 +80,10 @@
 
 	<insert id="addComment" useGeneratedKeys="true" parameterType="Map"
 		keyProperty="id">
+		<!-- 可不用设置 selectKey ，传入为 对象 会返回id在传入对象中 ，传入为map会返回id在传入map中-->
+		<!--<selectKey resultType="int" order="AFTER" keyProperty="id">-->
+			<!--SELECT LAST_INSERT_ID() as id-->
+		<!--</selectKey>-->
 		insert into comment
 		(news_id,comment_content,create_time,create_user,update_time,update_user,status)
 		values
@@ -87,7 +91,7 @@
 	</insert>
 
 	<insert id="addReply" useGeneratedKeys="true" parameterType="Map"
-		keyProperty="id">
+		keyProperty="id" keyColumn="id">
 		insert into reply
 		(comment_id,reply_content,target_user,create_time,create_user,update_time,update_user,status)
 		values

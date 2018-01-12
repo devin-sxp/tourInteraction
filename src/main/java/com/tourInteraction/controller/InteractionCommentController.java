@@ -65,24 +65,32 @@ public class InteractionCommentController {
 			@RequestParam(value="newsId",defaultValue="0") int newsId, 
 			@RequestParam(value="commentId",defaultValue="0") int commentId, 
 			@RequestParam(value="targetUser",defaultValue="0") int targetUser,
-			@RequestParam("commentContent") String commentContent){
+			@RequestParam(value = "newsCreateUser",defaultValue = "0") int newsCreateUser,
+			@RequestParam("commentContent") String commentContent,
+			@RequestParam(value = "methodType") String methodType){
 		
 		logger.info("addCommentAndReply.do被调用");
 		int num = 0;
 		User user = SignInAndUpController.getSignInUser(req);
 		Map<String, Object> mapParam = new HashMap<String, Object>();
+		if (targetUser == 0){
+			mapParam.put("targetUserId",newsCreateUser);
+		}else{
+			mapParam.put("targetUserId",targetUser);
+		}
 		mapParam.put("targetUser", targetUser);
 		mapParam.put("commentOrReplyContent", commentContent);
 		mapParam.put("createTime", new Date());
 		mapParam.put("createUser", user.getId());
 		mapParam.put("status", GlobalConstantKey.STATUS_OPEN);
 		
-		if(newsId != 0){
+		if(methodType.equals(GlobalConstantKey.NEWS_METHOD_TYPE_COMMENT)){
 			mapParam.put("newsId", newsId);
 			num = interactionCommentService.addComment(mapParam);
 
-		}else{
+		}else if (methodType.equals(GlobalConstantKey.NEWS_METHOD_TYPE_REPLY)){
 			mapParam.put("commentId", commentId);
+			mapParam.put("newsId", newsId);
 			num = interactionCommentService.addReply(mapParam);
 
 		}
@@ -94,4 +102,5 @@ public class InteractionCommentController {
 		}
 		return result;
 	}
+
 }

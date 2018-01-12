@@ -113,9 +113,11 @@
 				<div class="dropdown-grids" style="top: 3px;position: fixed;right: 3%;">
 					<div id="div_loginup" class="user" hidden>
 						<div data-hover="dropdown">
-							<a class="avatar"><img id="nav_user_icon"
+							<a class="avatar nav-noti-link-1" id="a_noti_icon"><img id="nav_user_icon"
 								src=""
-								alt="120"></a>
+								alt="120">
+								<%--<div class="nav-noti-counter-1 nav-noti-counter-red">41</div>--%>
+							</a>
 						</div>
 						<ul class="dropdown-menu" style="margin-top:0px; left:auto;right:0px;top:auto;min-width:120px">
 							<li><a href="<%=contextPath %>/page/userPage"> <i
@@ -133,8 +135,9 @@
 							<li><a href="<%=contextPath %>/page/userCenter"> <i
 									class="iconfont ic-navigation-settings"></i><span>设置</span>
 							</a></li>
-							<li><a href="<%=contextPath %>/page/newsCenter"> <i
+							<li><a href="<%=contextPath %>/page/newsCenter" class="nav-noti-link" id="a_noti_msg"> <i
 									class="iconfont ic-navigation-feedback"></i><span>消息</span>
+								<%--<div class="nav-noti-counter-2 nav-noti-counter-red">41</div>--%>
 							</a></li>
 							<li><a id="btn_loginup" rel="nofollow">
 									<i class="iconfont ic-navigation-signout"></i><span>退出</span>
@@ -231,7 +234,10 @@ var head = {
         head.method.device_distinguish();
         head.method.loadClickEvent();
         head.method.getSearchHistory(head.history_search_condition);
-		head.method.getLocalHistorySearch(head.data.history_search_name)
+		head.method.getLocalHistorySearch(head.data.history_search_name);
+		if($("#userId").val() != ""){
+		    head.method.getMsgNotiCount();
+		}
     },
 	method:{
         otherSetting:function () {
@@ -452,6 +458,15 @@ var head = {
             document.cookie = name + "="+ encodeURIComponent(cookieValue)
             head.method.getLocalHistorySearch(head.data.history_search_name)
 
+        },
+		getMsgNotiCount:function () {
+			$.post(getRootPath()+"/messageRemind/getMessageRemindCount.do",{},function (data,status) {
+				data = eval(data);
+				if(data>0){
+                    $("#a_noti_msg").append("<div class=\"nav-noti-counter-2 nav-noti-counter-red\">"+data+"</div>");
+                    $("#a_noti_icon").append("<div class=\"nav-noti-counter-1 nav-noti-counter-red\">"+data+"</div>");
+				}
+            },'text');
         }
 
 	}

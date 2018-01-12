@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.tourInteraction.config.GlobalConstantKey;
+import com.tourInteraction.dao.MessageRemindDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
@@ -29,6 +31,8 @@ public class ArticleCommentAndReplyServiceImpl implements IArticleCommentAndRepl
 	@Qualifier("articleDao")
 	private ArticleDao articleDao;
 
+	@Autowired
+	private MessageRemindDao messageRemindDao;
 	@Override
 	@Transactional(readOnly=true)
 	@Cacheable("articleCommentAndReplyCache")
@@ -59,8 +63,12 @@ public class ArticleCommentAndReplyServiceImpl implements IArticleCommentAndRepl
 	@Transactional
 	@CacheEvict(value = "articleCommentAndReplyCache",allEntries = true)
 	public int addArticleComment(Map<String, Object> map) {
-		int num = articleCommentAndReplyDao.addArticleComment(map);
-		num = articleDao.updateArticleCommentCount((Integer)map.get("articleId"),1);
+		int num = articleDao.updateArticleCommentCount((Integer)map.get("articleId"),1);
+		num = articleCommentAndReplyDao.addArticleComment(map);
+		map.put("type","article");
+		map.put("remindLinkId",map.get("articleId"));
+		map.put("remindPosition",GlobalConstantKey.MESSAGE_REMIND_PRE_ARTICLE+map.get("id"));
+		num = messageRemindDao.insertMessageRemind(map);
 		return num;
 	}
 
@@ -76,8 +84,12 @@ public class ArticleCommentAndReplyServiceImpl implements IArticleCommentAndRepl
 	@CacheEvict(value = "articleCommentAndReplyCache",allEntries = true)
 	public int addCommentReply(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		int num = articleCommentAndReplyDao.addCommentReply(map);
-		num = articleCommentAndReplyDao.updateArticleComment(map);
+		int num = articleCommentAndReplyDao.updateArticleComment(map);
+		num = articleCommentAndReplyDao.addCommentReply(map);
+		map.put("type","article");
+		map.put("remindLinkId",map.get("articleId"));
+		map.put("remindPosition",GlobalConstantKey.MESSAGE_REMIND_PRE_ARTICLE+map.get("commentId"));
+		num = messageRemindDao.insertMessageRemind(map);
 		return num;
 	}
 

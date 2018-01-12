@@ -38,6 +38,20 @@
 			fit : true
 		});
 	});
+
+    addEventListener("load", function() {
+        setTimeout(goToPosition, 0);
+    }, false);
+    function goToPosition(){
+        //如果需要跳到位置就跳到指定位置
+        let position = getUrlParam("position").trim();
+//        if(position != undefined && position != null && position != "" && location.hash == ""){
+//                location.hash=position;
+//        };
+        if(position != undefined && position != null && position != ""){
+            document.getElementById(position).scrollIntoView(true);
+        };
+    }
 </script>
 
 </head>
@@ -179,7 +193,7 @@
 							<!---->
 							<div id="comment-lists">
 							</div>
-						</div>
+							<a class="btn btn-danger load-more-btn" data-next-page="2" style="width: 10%;border-radius: 100px;">加载更多</a>						</div>
 					</div>
 				</div>
 			</div>
@@ -222,7 +236,8 @@
 
  		$("#img-comment-user-icon").attr('src','<%if (user != null) out.print(contextPath+user.getUserIconPath());%>'.trim());
  		
-	} 
+	}
+
 	</script>
 </body>
 </html>

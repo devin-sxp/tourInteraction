@@ -85,13 +85,18 @@ let addArticleComment = function(data){
 /**
  * 获取评论
  */
-let getArticleComments = function(data,isLookAuthor){
-    $.post(getRootPath()+"/articleCommentAndReply/getArticleComments.do", data, function(data, textStatus, req) {
+let getArticleComments = function(data1,isLookAuthor){
+    $.post(getRootPath()+"/articleCommentAndReply/getArticleComments.do", data1, function(data, textStatus, req) {
         if(textStatus == "success"){
             data = eval("("+data+")")
             // console.log(data);
-            $("#s_article_comment_count").text(data.count+" 条评论")
+            $("#s_article_comment_count").text(data.count+" 条评论");
             $("#comment-lists").empty();
+            if(data1.loadMore == true){
+                if (data.count < data1.offset){
+                    toastr.info("评论加载完了");
+                }
+            }
             $.each(data.list, function(i, comment) {
                 if(isLookAuthor == true){
                     if(articleCreateUserId == comment.createUser){
@@ -126,7 +131,7 @@ let getArticleComments = function(data,isLookAuthor){
                         $("#comment-lists").append(html);
                     }
                 }else{
-                    var html="<div class=\"comment\" param-id=\""+comment.id+"\">"+
+                    var html="<div id='article_comment_"+comment.id+"' class=\"comment\" param-id=\""+comment.id+"\">"+
                         "<div>"+
                         "<div class=\"author\">"+
                         "<a href=\""+comment.createUser+"\"	target=\"_blank\" class=\"avatar\"><img src=\""+getRootPath()+comment.userIconPath+"\"></a>"+
@@ -196,7 +201,8 @@ let getReply = function (condition,target,$position) {
             var $replyBtn = $(this).parents(".sub-comment-list").find(".line-warp a");
             var condition = {
                 commentId:commentId,
-                targetUserId:targetUserId
+                targetUserId:targetUserId,
+                articleId:articleId
             };
             $(this).parents(".sub-comment-list").find("form").parent().remove();
             $(this).parents(".sub-comment-list").append(replyHtml);
@@ -305,7 +311,8 @@ let getArticleAfterLoad = function(){
 
         var condition = {
             commentId:commentId,
-            targetUserId:targetUserId
+            targetUserId:targetUserId,
+            articleId:articleId
         };
 
         /**
@@ -358,7 +365,8 @@ let getArticleAfterLoad = function(){
         var targetUserId = $(this).attr("param-user-id");
         var condition = {
             commentId:commentId,
-            targetUserId:targetUserId
+            targetUserId:targetUserId,
+            articleId:articleId
         };
         /**
          * 加载emoji表情
@@ -439,8 +447,9 @@ $("#a_comment_send").on('click',function(){
     }
     var data = {
         commentContent:$("#textarea_content").val(),
-        articleId:articleId
-    }
+        articleId:articleId,
+        articleCreateUserId:articleCreateUserId
+    };
     addArticleComment(data);
 });
 
@@ -484,6 +493,22 @@ $(".author-only").on('click', function() {
 });
 
 /**
+ * 加载更多
+ */
+$(".load-more-btn").click(function () {
+    currentPage = parseInt($(this).attr("data-next-page"))
+    var data = {
+        limit:0,
+        offset:currentPage*pageSize,
+        getMethod:CommentGetMethod,
+        articleId:articleId,
+        loadMore:true
+    };
+    getArticleComments(data,isLookAuthor);
+    $(this).attr("data-next-page",currentPage+1)
+});
+
+/**
  * 浏览文章增加观看数
  */
 let watchArticleAddCount = function (data) {
@@ -524,5 +549,6 @@ $(()=>{
         articleId:articleId
     };
     isLoveThisArticle(condition1);
+
 });
 

@@ -54,7 +54,8 @@ public class ArticleCommentAndReplyController {
 	@ResponseBody
 	public String addArticleComment(HttpServletRequest request,
 			@RequestParam("commentContent") String commentContent,
-			@RequestParam("articleId") int articleId){
+			@RequestParam("articleId") int articleId,
+			@RequestParam(value = "articleCreateUserId") int articleCreateUserId){
 		logger.info("articleCommentAndReply/addArticleComment.do被调用");
 		String result = "评论失败！";
 		Map<String,Object> map = new HashMap<String, Object>();
@@ -62,6 +63,7 @@ public class ArticleCommentAndReplyController {
 		map.put("commentPraiseCount", GlobalConstantKey.COMMENT_PRAISE_COUNT);
 		map.put("commentReplyCount", GlobalConstantKey.COMMENT_REPLY_COUNT);
 		map.put("commentContent", commentContent);
+		map.put("targetUserId",articleCreateUserId);
 		map.put("createUser", SignInAndUpController.getSignInUser(request).getId());
 		map.put("createTime", new Date());
 		map.put("status", "1");
@@ -95,10 +97,12 @@ public class ArticleCommentAndReplyController {
 	public String addCommentReply(HttpServletRequest request,
 			@RequestParam("textarea_reply_content") String replyContent,
 			@RequestParam("commentId") int commentId,
-			@RequestParam("targetUserId") int targetUserId){
+			@RequestParam("targetUserId") int targetUserId,
+			@RequestParam("articleId") int articleId){
 		logger.info("articleCommentAndReply/addCommentReply.do被调用");
 		String result = "回复失败！";
 		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("articleId", articleId);
 		map.put("commentId", commentId);
 		map.put("replyContent", replyContent);
 		map.put("targetUserId", targetUserId);
