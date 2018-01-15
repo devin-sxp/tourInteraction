@@ -47,7 +47,7 @@ var news_center = {
                             "<span class=\"comment-slogan\">在 </span><a href=\""+getRootPath()+"/page/articleNews?articleId="+obj.remindLinkId+"\">"+obj.remindLinkTitle+"</a>" +
                             "<span class=\"comment-slogan\">中回复了你</span></div> <div class=\"time\">"+stampToStandard(obj.createTime.time)+"</div></div>" +
 							"<div class=\"meta\">" +
-                            "    <a class=\"function-btn\" onclick='"+news_center.option.delMessageRemind(obj.id)+"'>" +
+                            "    <a class=\"function-btn\" onclick='news_center.option.delMessageRemind("+obj.id+",\"article\""+",this)'>" +
                             "        <i class=\"iconfont ic-delete\"></i>" +
                             "        <span>删除</span>" +
                             "    </a>" +
@@ -66,7 +66,7 @@ var news_center = {
                             "<span class=\"comment-slogan\">在 </span><a href=\""+getRootPath()+"/page/interactionComment?newsId="+obj.remindLinkId+"\">"+obj.remindLinkTitle+"</a>" +
                             "<span class=\"comment-slogan\">中回复了你</span></div> <div class=\"time\">"+stampToStandard(obj.createTime.time)+"</div></div>" +
 							"<div class=\"meta\">" +
-                            "    <a class=\"function-btn\" onclick='news_center.option.delMessageRemind("+obj.id+")'>" +
+                            "    <a class=\"function-btn\" onclick='news_center.option.delMessageRemind("+obj.id+",\"news\""+",this)'>" +
                             "        <i class=\"iconfont ic-delete\"></i>" +
                             "        <span>删除</span>" +
                             "    </a>" +
@@ -82,12 +82,39 @@ var news_center = {
                 console.log(data);
             },'json')
         },
-		delMessageRemind:function (messageRemindId) {
+		delMessageRemind:function (messageRemindId,type,obj) {
 			$.post(getRootPath()+"/messageRemind/delMessageRemind.do",{messageRemindId:messageRemindId},function (data,status) {
 				data = eval(data);
 				if(data == "success"){
 					toastr.success("删除成功！");
-					location.reload();
+					// location.reload();
+					var delNode = obj.parentNode.parentNode;
+					delNode.parentNode.removeChild(delNode);
+                    // 显示通知数变化
+                    var count = parseInt($("#a_noti_icon div").text().trim())-1;
+                    if(count <= 0){
+                        $("#a_noti_msg div").remove();
+                        $("#a_noti_icon div").remove();
+					}else{
+                        $("#a_noti_msg div").text(count);
+                        $("#a_noti_icon div").text(count);
+					}
+
+                    if(type == "article"){
+                    	if(parseInt($("#a_article div").text().trim())-1 <= 0){
+                            $("#a_article div").remove()
+						}else{
+                            $("#a_article div").text(parseInt($("#a_article div").text().trim())-1);
+                        }
+
+                    }else if(type == "news"){
+                    	if(parseInt($("#a_news div").text().trim())-1 <= 0){
+                            $("#a_news div").remove()
+						}else{
+                            $("#a_news div").text(parseInt($("#a_news div").text().trim())-1);
+                        }
+
+					}
 				}else {
 					toastr.error("删除失败，请稍后再试！")
 				}

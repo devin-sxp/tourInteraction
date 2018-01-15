@@ -69,6 +69,7 @@ public class ArticleCommentAndReplyServiceImpl implements IArticleCommentAndRepl
 		map.put("remindLinkId",map.get("articleId"));
 		map.put("remindPosition",GlobalConstantKey.MESSAGE_REMIND_PRE_ARTICLE+map.get("id"));
 		num = messageRemindDao.insertMessageRemind(map);
+
 		return num;
 	}
 

@@ -215,6 +215,7 @@
 	src="<%=contextPath%>/resource/js/common/isPhone.js"></script>
 <script src="<%=contextPath%>/resource/js/easyResponsiveTabs.js"
 	type="text/javascript"></script>
+<script src="<%=contextPath%>/resource/js/webSocket/NotifyWebSocket.js" type="text/javascript"></script>
 <script type="text/javascript">
 var head = {
     data:{

@@ -6,6 +6,7 @@ import com.tourInteraction.entity.InteractionReply;
 import com.tourInteraction.entity.User;
 import com.tourInteraction.service.IInteractionCommentService;
 import com.tourInteraction.utils.JSONUtil;
+import com.tourInteraction.websocket.NotifyWebSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -98,6 +99,8 @@ public class InteractionCommentController {
 		String result = "回复失败";
 		if(num>0){
 			result = "回复成功";
+			//发送通知
+			NotifyWebSocket.sendUser(commentContent,mapParam.get("targetUserId")+"");
 			return result;
 		}
 		return result;

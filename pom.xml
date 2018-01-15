@@ -71,7 +71,11 @@
 			<artifactId>spring-web</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
-		
+	<!--  <dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-websocket</artifactId>
+		  <version>${org.springframework.version}</version>
+	  </dependency>-->
 		<!-- spring mvc -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -269,6 +273,13 @@
 		  <version>${solr.version}</version>
 	  </dependency>
 
+	  <!--webSocket -->
+	  <dependency>
+		  <groupId>javax</groupId>
+		  <artifactId>javaee-api</artifactId>
+		   <version>8.0</version>
+		  <scope>provided</scope>
+	  </dependency>
   </dependencies>
   <build>
     <plugins>

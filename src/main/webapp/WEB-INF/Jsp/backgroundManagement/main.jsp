@@ -3,6 +3,8 @@
     pageEncoding="utf-8"%>
 <%
 	String contextPath = request.getContextPath();
+    User user = new User();
+    user = (User) session.getAttribute("user");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -11,7 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="renderer" content="webkit">
-    <title>后台管理中心</title>  
+    <title>Tour后台管理中心</title>
     <link rel="stylesheet" href="<%=contextPath%>/resource/css/pintuer.css">
     <link rel="stylesheet" href="<%=contextPath%>/resource/css/admin.css">
     <script src="<%=contextPath%>/resource/js/jquery.js"></script>
@@ -19,7 +21,13 @@
 <body style="background-color:#f2f9fd;">
 <div class="header bg-main">
   <div class="logo margin-big-left fadein-top">
-    <h1><a title="点击进入设置" href="<%=contextPath%>/page/userCenter"><img id="nav_user_icon" src="<%=contextPath%>/resource/images/y.jpg" class="radius-circle rotate-hover" height="50" alt="个人头像" /></a>管理中心</h1>
+    <h1>
+        <input type="hidden" id="userId" value="<%=user.getId()%>">
+        <a title="点击进入设置" href="<%=contextPath%>/page/userCenter">
+            <img id="nav_user_icon" src="<%=contextPath%>/resource/images/y.jpg" class="radius-circle rotate-hover" height="50" alt="个人头像" />
+        </a>
+        管理中心
+    </h1>
   </div>
   <div class="head-l"><a class="button button-little bg-green" href="<%=contextPath%>/page/homeDisplay" target="_blank"><span class="icon-home"></span> 前台首页</a> &nbsp;&nbsp;
 <!--   <a href="##" class="button button-little bg-blue"><span class="icon-wrench"></span> 清除缓存</a> &nbsp;&nbsp;
@@ -78,8 +86,6 @@ $(function(){
  
 <script type="text/javascript">
 
-<%User user = new User();
-user = (User) session.getAttribute("user");%>
 
 $("#nav_user_icon").attr('src','<%if (user != null) out.print(contextPath+user.getUserIconPath());%>'.trim());
 
@@ -126,4 +132,6 @@ function signup(){
 	});
 }
 </script>
+<script type="text/javascript" src="<%=contextPath%>/resource/js/common/getPath.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/resource/js/webSocket/NotifyWebSocket.js"></script>
 </html>

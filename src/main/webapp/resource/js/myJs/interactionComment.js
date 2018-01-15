@@ -245,7 +245,7 @@ var addIntegration =function (integration) {
  * @returns {string}
  */
 var appendInteractionNewsNode = function (interactionNews) {
-    $("title").append("--"+interactionNews.newsTitle);
+    $("title").text("互动贴--"+interactionNews.newsTitle);
     newsCreateUser = interactionNews.createUser;
     var html_main = "<div class=\"panel-heading\"><h3 class=\"panel-title\"><span style=\"color: yellow;\">" + interactionNews.createUserName + "</span>&nbsp;发表于&nbsp;" + stampToStandard(interactionNews.createTime.time) +
         "</h3></div> <h3 align=\"center\">" + interactionNews.newsTitle + "</h3><div style='margin: 0 1% 0 1%;'>" + interactionNews.newsContent +

@@ -4,6 +4,7 @@ import com.tourInteraction.config.GlobalConstantKey;
 import com.tourInteraction.controller.SignInAndUpController;
 import com.tourInteraction.service.article.IArticleCommentAndReplyService;
 import com.tourInteraction.utils.JSONUtil;
+import com.tourInteraction.websocket.NotifyWebSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -70,6 +71,8 @@ public class ArticleCommentAndReplyController {
 		int num = articleCommentAndReplyService.addArticleComment(map);
 		if(num>0){
 			result = "评论成功！";
+			//发送通知
+			NotifyWebSocket.sendUser(commentContent,map.get("targetUserId")+"");
 		}
 		return result;
 	}
@@ -112,6 +115,8 @@ public class ArticleCommentAndReplyController {
 		map.put("status", "1");
 		int num = articleCommentAndReplyService.addCommentReply(map);
 		if(num>0){
+			//发送通知
+			NotifyWebSocket.sendUser(replyContent,map.get("targetUserId")+"");
 			result = "回复成功！";
 		}
 		return result;

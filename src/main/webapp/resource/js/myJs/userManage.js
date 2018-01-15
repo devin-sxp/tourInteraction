@@ -29,7 +29,7 @@ var getUser = function(condition) {
 
 		},
 		success : function(result) {
-			console.log(result)
+			// console.log(result)
 			result = eval("("+result+")");
 		    $.each(result.list, function (objIndex, user) {
                 var html_tr = appendUserNode(user);
