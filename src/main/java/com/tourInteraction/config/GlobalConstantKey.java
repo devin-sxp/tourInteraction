@@ -1,5 +1,8 @@
 package com.tourInteraction.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GlobalConstantKey {
 
     /**
@@ -88,4 +91,8 @@ public class GlobalConstantKey {
     public static final String NEWS_METHOD_TYPE_COMMENT = "comment";
     public static final String NEWS_METHOD_TYPE_REPLY = "reply";
 
+    /**
+     * 文章（知识）类型
+     */
+    public static final String[] ARTICLE_SUBJECT_TYPES = {"官方","用户"};
 }

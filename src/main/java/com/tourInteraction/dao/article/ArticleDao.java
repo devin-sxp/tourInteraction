@@ -47,4 +47,6 @@ public interface ArticleDao{
 	int loveArticleToAdd(Map<String, Object> map);
 
 	List<Article> getLovedArticles(Map<String, Object> mapParam);
+
+    List<ArticleRequestSubmit> getArticleRequestSubmitNewsByType(@Param("type") String type);
 }

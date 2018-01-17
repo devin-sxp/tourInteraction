@@ -50,10 +50,10 @@
  	<li><a href="<%=contextPath%>/page/backgroundManagementModuleManage" target="right"><span class="icon-bullhorn"></span>模块管理</a></li>  
     <li><a href="<%=contextPath%>/page/backgroundManagementNewsManage" target="right"><span class="icon-comments"></span>信息管理</a></li>     
   </ul>
-   <h2><span class="icon-pencil-square-o"></span>文章管理</h2>
+   <h2><span class="icon-pencil-square-o"></span>知识管理</h2>
    <ul>
-       <li><a href="<%=contextPath%>/page/backgroundManagementArticleSubjectManage" target="right"><span class="icon-folder-o"></span>专题管理</a></li>
-       <li><a href="#" target="right"><span class="icon-bell"></span>投稿审核</a></li>
+       <li><a href="<%=contextPath%>/page/backgroundManagementArticleSubjectManage" target="right"><span class="icon-folder-o"></span>栏目管理</a></li>
+       <li><a href="<%=contextPath%>/page/backgroundManagementArticleRequestSubmit" target="right"><span class="icon-bell"></span>投稿审核</a></li>
   </ul>
   <h2><span class="icon-code"></span>系统管理</h2>
    <ul>

@@ -169,6 +169,37 @@
 		on ars.request_subject_id = ast.id
 		where ars.status = "1" and ars.request_subject_create_user_id = #{userId}
 	</select>
+
+	<select id="getArticleRequestSubmitNewsByType" resultType="ArticleRequestSubmit">
+		select
+		ars.id as id,
+		a.article_name as articleName,
+		a.article_content as articleContent,
+		f.file_path as filePath,
+		ars.create_time as createTime,
+		ars.create_user as createUser,
+		u.user_name as createUserName,
+		fu.file_path as userIconPath,
+		ars.request_subject_id as requestSubjectId,
+		ars.request_article_id as requestArticleId,
+		ast.subject_title as requestSubjectTitle
+		from article_request_submit as ars
+		left join article as a
+		on ars.request_article_id = a.id
+		left join user as u
+		on a.create_user = u.id
+		left join files as f
+		on a.article_icon_id = f.id
+		left join files as fu
+		on u.user_icon_id = fu.id
+		left join article_subject as ast
+		on ars.request_subject_id = ast.id
+		left join article_subject_type ast2
+		on ast.subject_type = ast2.id
+		where ars.status = "1" and ast2.type_name = #{type}
+	</select>
+
+
 	
 	<update id="updateArticleRequestSubmit" parameterType="Map">
 		update article_request_submit 

@@ -35,4 +35,6 @@ public interface IArticleService {
     Boolean isLoveThisArticle(Map<String, Object> map);
 
 	List<Article> getLovedArticles(Map<String, Object> mapParam);
+
+    List<ArticleRequestSubmit> getArticleRequestSubmitNewsByType(String type);
 }

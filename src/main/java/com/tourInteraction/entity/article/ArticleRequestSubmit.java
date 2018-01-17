@@ -12,6 +12,7 @@ public class ArticleRequestSubmit extends Base{
 	private String articleContent;
 	private String filePath;
 	private String userIconPath;
+	private String requestSubjectTitle;
 
 	public int getRequestSubjectId() {
 		return requestSubjectId;
@@ -55,5 +56,12 @@ public class ArticleRequestSubmit extends Base{
 	public void setUserIconPath(String userIconPath) {
 		this.userIconPath = userIconPath;
 	}
-	
+
+	public String getRequestSubjectTitle() {
+		return requestSubjectTitle;
+	}
+
+	public void setRequestSubjectTitle(String requestSubjectTitle) {
+		this.requestSubjectTitle = requestSubjectTitle;
+	}
 }

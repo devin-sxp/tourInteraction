@@ -138,13 +138,29 @@ public class ArticleController {
 		
 	}
 	
-	//根据专题获取投稿申请信息
+	//根据用户获取投稿申请信息
 	@RequestMapping("getArticleRequestSubmitNews.do")
 	public @ResponseBody String getArticleRequestSubmitNews(HttpServletRequest request){
 		logger.info("article/getArticleRequestSubmitNews.do被调用");
 		User user =SignInAndUpController.getSignInUser(request);
 		List<ArticleRequestSubmit> list = articleService.getArticleRequestSubmitNews(user.getId());
 		String result = JSONUtil.list2json(list);
+		return result;
+	}
+
+	//根据类型获取投稿申请信息
+	@RequestMapping("getArticleRequestSubmitNewsByType.do")
+	public @ResponseBody String getArticleRequestSubmitNewsByType(@RequestParam("type") String type){
+		logger.info("article/getArticleRequestSubmitNewsByType.do被调用");
+		int index = 0;
+		String result ="没有该类型";
+		while (index < GlobalConstantKey.ARTICLE_SUBJECT_TYPES.length){
+			if(GlobalConstantKey.ARTICLE_SUBJECT_TYPES[index].equals(type)){
+				List<ArticleRequestSubmit> list = articleService.getArticleRequestSubmitNewsByType(type);
+				result = JSONUtil.list2json(list);
+			}
+			index++;
+		}
 		return result;
 	}
 	

@@ -158,4 +158,9 @@ public class ArticleServiceImpl implements IArticleService {
 		return articleDao.getLovedArticles(mapParam);
 	}
 
+	@Override
+	public List<ArticleRequestSubmit> getArticleRequestSubmitNewsByType(String type) {
+		return articleDao.getArticleRequestSubmitNewsByType(type);
+	}
+
 }
