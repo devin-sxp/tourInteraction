@@ -20,4 +20,8 @@ public interface MessageRemindDao {
 	int getArticleRequestSubmitNewsCount(Map<String, Object> mapParam);
 
     int delMessageRemind(@Param("id") int id);
+
+	int insertMessageRemindDetail(Map<String, Object> map);
+
+    int delMessageRemindDetail(@Param("msgRemindId")int msgRemindId);
 }

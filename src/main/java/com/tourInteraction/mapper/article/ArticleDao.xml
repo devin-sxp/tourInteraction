@@ -275,4 +275,12 @@
 			limit ${limit},${offset}
 		</if>
 	</select>
+
+	<delete id="delArticleById" parameterType="int">
+		delete from article where id = #{articleId}
+	</delete>
+
+	<update id="updateArticleStatus" parameterType="String">
+		update article set status = #{status} where id = #{articleId}
+	</update>
 </mapper>

@@ -116,7 +116,7 @@ public class ArticleCommentAndReplyController {
 		int num = articleCommentAndReplyService.addCommentReply(map);
 		if(num>0){
 			//发送通知
-			NotifyWebSocket.sendUser(replyContent,map.get("targetUserId")+"");
+			NotifyWebSocket.sendUser(replyContent,targetUserId+"");
 			result = "回复成功！";
 		}
 		return result;

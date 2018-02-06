@@ -9,6 +9,8 @@ public class MessageRemind extends Base{
     private String remindPosition;
     private String targetUserId;
     private String userIconPath;
+    private String notifyTitle;
+    private String notifyDescription;
 
     public String getType() {
         return type;
@@ -56,5 +58,21 @@ public class MessageRemind extends Base{
 
     public void setUserIconPath(String userIconPath) {
         this.userIconPath = userIconPath;
+    }
+
+    public String getNotifyTitle() {
+        return notifyTitle;
+    }
+
+    public void setNotifyTitle(String notifyTitle) {
+        this.notifyTitle = notifyTitle;
+    }
+
+    public String getNotifyDescription() {
+        return notifyDescription;
+    }
+
+    public void setNotifyDescription(String notifyDescription) {
+        this.notifyDescription = notifyDescription;
     }
 }

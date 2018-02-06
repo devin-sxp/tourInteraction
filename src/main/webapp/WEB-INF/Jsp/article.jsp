@@ -69,7 +69,7 @@
 		<!-- container -->
 		<div class="container index">
 			<button id="btn_write_article" class="btn write-btn">
-				<i class="iconfont ic-write"></i>写文章
+				<i class="iconfont ic-write"></i>写知识
 			</button>
 			<div class="row">
 				<div class="col-xs-16 main">
@@ -181,7 +181,7 @@
 
 	<div class="popinto" id="write_article">
 		<h3 class="" style="margin-top: 5px">
-			<span class="pull-left ">写文章</span> <i
+			<span class="pull-left ">写知识</span> <i
 				class="fa fa-times pull-right font18" onclick="closepop()"></i>
 		</h3>
 		<br>

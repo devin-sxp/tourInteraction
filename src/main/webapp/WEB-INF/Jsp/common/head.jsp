@@ -73,7 +73,7 @@
 						<li id="li_article"
 							style="width: 15%; margin-right: 2%; margin-left: 0% "><a
 							href="<%=contextPath%>/page/article" style="text-align: center;"
-							class="top_menu">文章区</a></li>
+							class="top_menu">知识区</a></li>
 						<li style="width: 40%; margin-left: 0% ">
 							<div class="wrap">
 								<input id="input_search" type="text" placeholder="开始输入吧">
@@ -125,11 +125,11 @@
 							</a></li>
 							<li>
 								<!-- TODO bookmarks_path --> <a href="<%=contextPath %>/page/userPage#li_liked_article"> <i
-									class="iconfont ic-navigation-mark"></i><span>我的的文章</span>
+									class="iconfont ic-navigation-mark"></i><span>我的的知识</span>
 							</a>
 							</li>
 							<li><a href="<%=contextPath %>/page/userPage#li_liked_article"> <i
-									class="iconfont ic-navigation-like"></i><span>喜欢的文章</span>
+									class="iconfont ic-navigation-like"></i><span>喜欢的知识</span>
 							</a></li>
 							<li>
 							<li><a href="<%=contextPath %>/page/userCenter"> <i

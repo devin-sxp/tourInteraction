@@ -32,8 +32,10 @@ public class MessageRemindServiceImpl implements IMessageRemindService {
 	}
 
 	@Override
+	@Transactional
 	public String delMessageRemind(int id) {
 		int num = messageRemindDao.delMessageRemind(id);
+		messageRemindDao.delMessageRemindDetail(id);
 		if(num>0){
 			return "success";
 		}else{

@@ -6,7 +6,6 @@ var page = 0;
 var getCount = 5;
 var articleCount = 0;
 $(function() {
-	getNowUserArticleCount();
 	getNowUserArticle(page*getCount,getCount);
 	getSubjectsByUserId();
 })
@@ -25,7 +24,7 @@ var getNowUserArticleCount =  function (){
 };
 
 var getNowUserArticle =  function (limit,offset){
-
+    getNowUserArticleCount();
 	$.post(getRootPath()+"/article/getNowUserArticle.do",{limit:limit,offset:offset}, function(data, textStatus, req) {
 		if(textStatus == "success"){
 			data = eval("("+data+")");
@@ -156,6 +155,7 @@ var getLovedArticles = function (data) {
                 $(".note-list").append(html);
                 articleWordsCount = articleWordsCount + article.articleName.replace(/<[^>]+>/g,"").length + article.articleContent.replace(/<[^>]+>/g,"").length;
             })
+            $("#my_article_count").text(data.list.length);
         }
     },'json');
 }
@@ -172,7 +172,7 @@ $("#li_user_article").click(function () {
     getNowUserArticle(0,getCount);
 });
 
-$("#a_my_liked_article").click(function () {
+	$("#a_my_liked_article").click(function () {
     $(".trigger-menu li").each(function () {
        $(this).removeClass("active")
     });

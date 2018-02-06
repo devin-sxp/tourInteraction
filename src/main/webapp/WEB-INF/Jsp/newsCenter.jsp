@@ -68,6 +68,9 @@
 		                <li class="" param="comments">
 							<a href="#comments" class="nav-noti-link" id="a_article"><i class="iconfont ic-chats"></i> <span>知识消息</span> <!----></a>
 						</li>
+						<li class="" param="notify">
+							<a href="#notify" class="nav-noti-link" id="a_notify"><i class="iconfont ic-info"></i> <span>系统通知</span> <!----></a>
+						</li>
 		                <li class="" param="likes">
 							<a href="#likes" class="nav-noti-link"><i class="iconfont ic-likes"></i> <span>喜欢和赞</span> <!----></a>
 						</li>
@@ -141,6 +144,14 @@
 								</div>
 
 							</li>--%>
+
+						</ul>
+
+					</div>
+
+					<div param="notify" class="hidden">
+						<div class="menu">收到的通知消息</div>
+						<ul class="comment-list" id="ul_notify_list">
 
 						</ul>
 

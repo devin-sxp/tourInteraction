@@ -1,14 +1,15 @@
 package com.tourInteraction.serviceImpl.article;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Resource;
 
 import com.tourInteraction.config.GlobalConstantKey;
+import com.tourInteraction.controller.SignInAndUpController;
+import com.tourInteraction.dao.MessageRemindDao;
 import com.tourInteraction.utils.JSONUtil;
+import com.tourInteraction.websocket.NotifyWebSocket;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,9 @@ public class ArticleServiceImpl implements IArticleService {
 
 	@Resource
 	private ArticleDao articleDao;
+
+	@Autowired
+	private MessageRemindDao messageRemindDao;
 
 	@Override
 	public List<Article> getNowUserArticle(int userId, String limit, String offset) {
@@ -161,6 +165,44 @@ public class ArticleServiceImpl implements IArticleService {
 	@Override
 	public List<ArticleRequestSubmit> getArticleRequestSubmitNewsByType(String type) {
 		return articleDao.getArticleRequestSubmitNewsByType(type);
+	}
+
+	@Override
+	@Transactional
+	public Boolean delArticleById(int articleId, int level, String opIdentity, String articleName, int targetUserId,int createUser) {
+		int num = 0;
+		String opString = "";
+		if(level == GlobalConstantKey.DELETE_LEVEL_ONE){
+			num = articleDao.updateArticleStatus("0",articleId);
+			opString = "被管理员删除";
+		}else if (level == GlobalConstantKey.DELETE_LEVEL_TWO) {
+			num = articleDao.delArticleById(articleId);
+			opString = "被管理员彻底删除";
+		}else {
+			return false;
+		}
+		if(opIdentity.equals(GlobalConstantKey.OP_USER_IDENTITY_ADMIN)){
+			Map<String,Object> map = new HashMap<String, Object>();
+			map.put("targetUserId", targetUserId);
+			map.put("createUser",createUser);
+			map.put("createTime", new Date());
+			map.put("status", "1");
+			map.put("type","notify");
+			map.put("msgRemindId",0);
+			num = messageRemindDao.insertMessageRemind(map);//msgRemindId被设置为新id
+			map.put("notifyTitle","<font style='color:red'>《"+articleName+"》</font>"+opString);
+			map.put("notifyDescription","<font style='color:red'>《"+articleName+"》</font>"+opString);
+			num = messageRemindDao.insertMessageRemindDetail(map);
+			if(num>0){
+				NotifyWebSocket.sendUser(articleName,targetUserId+"");
+				return true;
+			}
+		}
+		if(num>0){
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 }

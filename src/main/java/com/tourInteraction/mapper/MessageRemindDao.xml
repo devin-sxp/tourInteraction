@@ -4,9 +4,16 @@
 
 <mapper namespace="com.tourInteraction.dao.MessageRemindDao">
     <!-- 插入操作 -->
- 	<insert id="insertMessageRemind" parameterType="int">
-	   insert into message_remind(type,remind_link_id,remind_position,target_user_id,create_time,create_user,status)
+ 	<insert id="insertMessageRemind" parameterType="Map" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		<selectKey resultType="int" order="AFTER" keyProperty="msgRemindId">
+			SELECT LAST_INSERT_ID() as msgRemindId
+		</selectKey>
+		insert into message_remind(type,remind_link_id,remind_position,target_user_id,create_time,create_user,status)
 	    values(#{type},#{remindLinkId},#{remindPosition},#{targetUserId},#{createTime},#{createUser},#{status})
+	</insert>
+	<insert id="insertMessageRemindDetail" parameterType="Map">
+		insert into message_remind_detail(notify_title,notify_description,msg_remind_id,create_time,create_user,status)
+		values(#{notifyTitle},#{notifyDescription},#{msgRemindId},#{createTime},#{createUser},#{status})
 	</insert>
 
 	<select id="getMessageRemind" parameterType="Map" resultType="MessageRemind">
@@ -14,6 +21,8 @@
 		type,
 		remind_link_id as remindLinkId,
 		remind_position as remindPosition,
+		mrd.notify_title as notifyTitle,
+		mrd.notify_description as notifyDescription,
 		mr.create_time as createTime,
 		mr.create_user as createUser,
 		u.user_name as createUserName,
@@ -43,6 +52,8 @@
 		on mr.create_user = u.id
 		left join files as f
 		on f.id = u.user_icon_id
+		left join message_remind_detail as mrd
+		on mr.id = mrd.msg_remind_id
 		where mr.status = "1" and mr.target_user_id = #{targetUserId}
 		limit #{limit},#{offset}
 	</select>
@@ -68,5 +79,9 @@
 
 	<delete id="delMessageRemind">
 		delete from message_remind where id = #{id}
+	</delete>
+
+	<delete id="delMessageRemindDetail">
+		delete from message_remind_detail where msg_remind_id = #{msgRemindId}
 	</delete>
 </mapper>

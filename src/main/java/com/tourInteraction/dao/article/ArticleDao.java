@@ -49,4 +49,8 @@ public interface ArticleDao{
 	List<Article> getLovedArticles(Map<String, Object> mapParam);
 
     List<ArticleRequestSubmit> getArticleRequestSubmitNewsByType(@Param("type") String type);
+
+    int delArticleById(@Param("articleId") int articleId);
+
+	int updateArticleStatus(@Param("status") String status,@Param("articleId") int articleId);
 }

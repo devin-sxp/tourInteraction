@@ -37,4 +37,6 @@ public interface IArticleService {
 	List<Article> getLovedArticles(Map<String, Object> mapParam);
 
     List<ArticleRequestSubmit> getArticleRequestSubmitNewsByType(String type);
+
+	Boolean delArticleById(int articleId, int level, String opIdentity, String articleName, int targetUserId, int createUser);
 }

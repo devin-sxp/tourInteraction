@@ -5,6 +5,10 @@
 	String contextPath = request.getContextPath();
     User user = new User();
     user = (User) session.getAttribute("user");
+    int userId = 0;
+    if(user != null){
+        userId = user.getId();
+    }
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -22,7 +26,7 @@
 <div class="header bg-main">
   <div class="logo margin-big-left fadein-top">
     <h1>
-        <input type="hidden" id="userId" value="<%=user.getId()%>">
+        <input type="hidden" id="userId" value="<%=userId%>">
         <a title="点击进入设置" href="<%=contextPath%>/page/userCenter">
             <img id="nav_user_icon" src="<%=contextPath%>/resource/images/y.jpg" class="radius-circle rotate-hover" height="50" alt="个人头像" />
         </a>
@@ -48,13 +52,14 @@
    <h2><span class="icon-wechat"></span>互动管理</h2>
    <ul>
  	<li><a href="<%=contextPath%>/page/backgroundManagementModuleManage" target="right"><span class="icon-bullhorn"></span>模块管理</a></li>  
-    <li><a href="<%=contextPath%>/page/backgroundManagementNewsManage" target="right"><span class="icon-comments"></span>信息管理</a></li>     
+    <li><a href="<%=contextPath%>/page/backgroundManagementNewsManage" target="right"><span class="icon-comments"></span>互动信息管理</a></li>
   </ul>
-   <h2><span class="icon-pencil-square-o"></span>知识管理</h2>
+   <h2><span class="icon-database"></span>知识管理</h2>
    <ul>
-       <li><a href="<%=contextPath%>/page/backgroundManagementArticleSubjectManage" target="right"><span class="icon-folder-o"></span>栏目管理</a></li>
        <li><a href="<%=contextPath%>/page/backgroundManagementArticleRequestSubmit" target="right"><span class="icon-bell"></span>投稿审核</a></li>
-  </ul>
+       <li><a href="<%=contextPath%>/page/backgroundManagementArticleSubjectManage" target="right"><span class="icon-folder-o"></span>栏目管理</a></li>
+       <li><a href="<%=contextPath%>/page/backgroundManagementArticleManage" target="right"><span class="icon-pencil-square-o"></span>知识信息管理</a></li>
+   </ul>
   <h2><span class="icon-code"></span>系统管理</h2>
    <ul>
     <li><a href="<%=contextPath%>/page/backgroundManagementRoleManage" target="right"><span class="icon-pinterest"></span>角色管理</a></li>

@@ -29,19 +29,19 @@
 <body>
 	<div class="panel admin-panel">
 		<div class="panel-head">
-			<strong class="icon-reorder"> 消息列表</strong>
+			<strong class="icon-reorder"> 知识列表</strong>
 		</div>
 
 		<table class="table table-hover text-center" id="table_news">
 			<tr>
 				<th width="5%">ID</th>
-				<th width="5">模块ID</th>
+				<th width="15%">所在栏目</th>
 				<th width="15%">标题</th>
-				<th width="10%">标签</th>
-				<th width="15%">地点</th>
-				<th width="30%">操作</th>
+				<th width="15%">创作人</th>
+				<th width="20%">创作时间</th>
+				<th width="25%">操作</th>
 			</tr>
-			<tbody id="tbody_news">
+			<tbody id="tbody_article">
 				<tr>
 					<td>1</td>
 					<td><img src="" alt="" width="120" height="50" /></td>
@@ -50,10 +50,14 @@
 					<td>1</td>
 					<td><div class="button-group">
 							<a class="button border-main" href="#add"><span
-								class="icon-edit"></span> 修改</a> <a class="button border-red"
-								href="javascript:void(0)" onclick="return del(1,1)"><span
-								class="icon-trash-o"></span> 删除</a>
-						</div></td>
+								class="icon-edit"></span> 修改</a>
+							<a class="button border-yellow"
+								href="javascript:void(0)" onclick=""><span
+								class="icon-lock"></span>冻结</a>
+							<a class="button border-red"
+						  		 href="javascript:void(0)" onclick=""><span
+								class="icon-trash-o"></span> 彻底删除</a>
+					</div></td>
 				</tr>
 			</tbody>
 
@@ -140,9 +144,11 @@
 <script src="<%=contextPath%>/resource/js/jquery.min.js"></script>
 <script src="<%=contextPath%>/resource/js/pintuer.js"></script>
 <script type="text/javascript"
-	src="<%=contextPath%>/resource/js/myJs/newsManage.js"></script>
-<script type="text/javascript"
-	src="<%=contextPath%>/resource/js/common/pagination.js"></script>
+		src="<%=contextPath%>/resource/js/common/pagination.js"></script>
+<script src="<%=contextPath%>/resource/js/myJs/articleManage.js"></script>
+<script src="<%=contextPath%>/resource/js/common/getPath.js"></script>
+<script src="<%=contextPath%>/resource/js/common/convertTime.js"></script>
+
 <script type="text/javascript"
 	src="<%=contextPath%>/resource/js/toastr/toastr.js"></script>
 <script type="text/javascript">

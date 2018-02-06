@@ -34,7 +34,9 @@ var news_center = {
                         $("#a_article").append(" <div class=\"nav-noti-counter-2 nav-noti-counter-red\">"+obj.count+"</div> ");
                     }else if(obj.type == "news"){
                         $("#a_news").append(" <div class=\"nav-noti-counter-2 nav-noti-counter-red\">"+obj.count+"</div> ");
-                    }
+                    }else if(obj.type == "notify"){
+                        $("#a_notify").append(" <div class=\"nav-noti-counter-2 nav-noti-counter-red\">"+obj.count+"</div> ");
+					}
                 });
 
                 $.each(data.list,function (index,obj) {
@@ -77,7 +79,20 @@ var news_center = {
                             "</div>"+
                             "</li>";
                         $("#ul_news_list").append(html);
-                    }
+                    }else if (obj.type == "notify"){
+                        var html = "<li class=\"\">" +
+                            "<div class=\"info\"><div>" +
+                            "<span class=\"comment-slogan\">" +obj.notifyTitle+
+                            " </span></div> <div class=\"time\">"+stampToStandard(obj.createTime.time)+"</div></div>" +
+                            "<div class=\"meta\">" +
+                            "    <a class=\"function-btn\" onclick='news_center.option.delMessageRemind("+obj.id+",\"notify\""+",this)'>" +
+                            "        <i class=\"iconfont ic-delete\"></i>" +
+                            "        <span>删除</span>" +
+                            "    </a>" +
+                            "</div>"+
+                            "</li>";
+                        $("#ul_notify_list").append(html);
+					}
                 });
                 console.log(data);
             },'json')
@@ -114,6 +129,12 @@ var news_center = {
                             $("#a_news div").text(parseInt($("#a_news div").text().trim())-1);
                         }
 
+					}else if(type == "notify"){
+                        if(parseInt($("#a_notify div").text().trim())-1 <= 0){
+                            $("#a_notify div").remove()
+                        }else{
+                            $("#a_notify div").text(parseInt($("#a_notify div").text().trim())-1);
+                        }
 					}
 				}else {
 					toastr.error("删除失败，请稍后再试！")

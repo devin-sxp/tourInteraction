@@ -95,4 +95,15 @@ public class GlobalConstantKey {
      * 文章（知识）类型
      */
     public static final String[] ARTICLE_SUBJECT_TYPES = {"官方","用户"};
+
+
+    /**
+     * 删除级别
+     * DELETE_LEVEL_ONE: 保存删除 (status 变为 0)
+     * DELETE_LEVEL_TWO: 彻底删除
+     * OP_USER_IDENTITY_ADMIN 操作身份
+     */
+    public static final int DELETE_LEVEL_ONE = 1;
+    public static final int DELETE_LEVEL_TWO = 2;
+    public static final String OP_USER_IDENTITY_ADMIN = "admin";
 }

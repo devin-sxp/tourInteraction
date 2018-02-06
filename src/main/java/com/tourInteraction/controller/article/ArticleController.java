@@ -244,6 +244,14 @@ public class ArticleController {
 		return result;
 	}
 
+	/**
+	 * 获取喜欢的文章
+	 * @param request
+	 * @param limit
+	 * @param offset
+	 * @param userId
+	 * @return
+	 */
 	@RequestMapping("/getLovedArticles.do")
 	public @ResponseBody String getLovedArticles(HttpServletRequest request,
 											@RequestParam("limit")String limit,
@@ -265,4 +273,21 @@ public class ArticleController {
 		String result = JSONUtil.map2json(map);
 		return result;
 	}
+
+	@RequestMapping("/delArticleById.do")
+	@ResponseBody
+	public String delArticleById(HttpServletRequest request,
+								 @RequestParam("articleId")int articleId,
+								 @RequestParam("articleName") String articleName,
+								 @RequestParam("level")int level,
+								 @RequestParam("opIdentity") String opIdentity,
+								 @RequestParam("targetUserId") int targetUserId
+								 ){
+		logger.info("article/delArticleById.do被调用");
+		int createUser = SignInAndUpController.getSignInUser(request).getId();
+
+		Boolean isSuccess = articleService.delArticleById(articleId,level,opIdentity,articleName,targetUserId, createUser);
+		return isSuccess.toString();
+	}
+
 }
