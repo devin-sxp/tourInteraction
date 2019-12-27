@@ -9,7 +9,7 @@
   <properties>
     <webVersion>3.0</webVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	<org.springframework.version>4.3.9.RELEASE</org.springframework.version>
+	<org.springframework.version>5.2.2.RELEASE</org.springframework.version>
 	<solr.version>7.1.0</solr.version>
   </properties>
   <dependencies>
